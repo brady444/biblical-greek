@@ -5,10 +5,25 @@
 import { html } from "uhtml";
 
 import constants from "/src/constants.js";
+import utilities from "/src/utilities.js";
 
 export default {
 	setup: path => {
-		pageData.word = constants.vocabularyMap [path [1].replaceAll ("_", " ")];
+		const pathWord = path [1];
+		
+		if (utilities.isNumber (pathWord)) {
+			const word = constants.vocabularyNumberMap [pathWord];
+			
+			if (word !== undefined) {
+				navigate ("word/" + word.lexicalForm.replaceAll (" ", "_"));
+				
+				return false;
+			}
+		}
+		
+		else {
+			pageData.word = constants.vocabularyMap [path [1].replaceAll ("_", " ")];
+		}
 		
 		if (pageData.word === undefined) {
 			navigate ("dictionary");

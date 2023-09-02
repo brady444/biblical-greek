@@ -3,7 +3,7 @@ import data from "/res/data.json";
 export default {
 	...data,
 	
-	//used for tooltips on word page
+	//used for tooltips on principal parts
 	principalParts: ["present", "future", "aorist active", "perfect active", "perfect middle/passive", "aorist passive"],
 	
 	practiceVocabularyChoiceCount: 8,
@@ -273,7 +273,7 @@ export default {
 				]
 			},
 			
-			"Indicative Verbs": {
+			"Indicative Verb Forms": {
 				elementFontClass: "medium-font",
 				
 				columnLabels: [
@@ -342,6 +342,20 @@ export default {
 					{ text: "ο/ε" },
 					{ text: "Primary Middle/Passive" },
 					
+					{ text: "1st Future Passive" },
+					{ answered: true },
+					{ text: "Aorist Passive" },
+					{ text: "θησ" },
+					{ text: "ο/ε" },
+					{ text: "Primary Middle/Passive" },
+					
+					{ text: "2nd Future Passive" },
+					{ answered: true },
+					{ text: "Aorist Passive" },
+					{ text: "ησ" },
+					{ text: "ο/ε" },
+					{ text: "Primary Middle/Passive" },
+					
 					{ text: "1st Aorist Active" },
 					{ text: "ε" },
 					{ text: "Aorist Active" },
@@ -375,7 +389,21 @@ export default {
 					{ text: "Aorist Active" },
 					{ answered: true },
 					{ text: "ο/ε" },
-					{ text: "Secondary Middle/Passive" }
+					{ text: "Secondary Middle/Passive" },
+					
+					{ text: "1st Aorist Passive" },
+					{ text: "ε" },
+					{ text: "Aorist Passive" },
+					{ text: "θη" },
+					{ answered: true },
+					{ text: "Secondary Active" },
+					
+					{ text: "2nd Aorist Passive" },
+					{ text: "ε" },
+					{ text: "Aorist Passive" },
+					{ text: "η" },
+					{ answered: true },
+					{ text: "Secondary Active" }
 				]
 			}
 		},

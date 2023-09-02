@@ -53,22 +53,20 @@ export default {
 				<div class = "flex-column small-gap">
 					<p class = "medium-font">MorphGNT: SBLGNT Edition</p>
 					
-					<p class = "x-small-font grayA">Tauber, J. K., ed. (2017) MorphGNT: SBLGNT Edition. Version 6.12 [Data set]. https://github.com/morphgnt/sblgnt DOI: 10.5281/zenodo.376200</p>
+					<p class = "x-small-font grayA">Tauber, J. K., ed. (2017) MorphGNT: SBLGNT Edition. Version 6.12 [Data set]. <a class = "grayA" href = "https://github.com/morphgnt/sblgnt">https://github.com/morphgnt/sblgnt</a> DOI: 10.5281/zenodo.376200</p>
 					
 					<p class = "x-small-font grayA">Project to merge the MorphGNT analysis with the SBLGNT text.</p>
 					
 					<p class = "x-small-font grayA">The SBLGNT text itself is subject to the SBLGNT EULA and the morphological parsing and lemmatization is made available under a CC-BY-SA License.</p>
 					
-					<p class = "x-small-font grayA">https://creativecommons.org/licenses/by-sa/3.0/legalcode</p>
+					<a class = "x-small-font grayA" href = "https://creativecommons.org/licenses/by-sa/3.0/legalcode">https://creativecommons.org/licenses/by-sa/3.0/legalcode</a>
 					
-					<p class = "x-small-font grayA">https://creativecommons.org/licenses/by-sa/4.0/legalcode</p>
+					<a class = "x-small-font grayA" href = "https://creativecommons.org/licenses/by-sa/4.0/legalcode">https://creativecommons.org/licenses/by-sa/4.0/legalcode</a>
 				</div>
 			
 			${ constants.errors.length > 0 ? html
 				`<div class = "medium-width flex-column-top large-gap">
-					<p class = "small-font">This website uses an automated parser to generate its data. The parser's source code can be viewed <a class = "grayA" href = "https://github.com/brady444/biblical-greek-data">here</a>.</p>
-					
-					<p class = "small-font">The data on this website may contain inaccuracies or errors. Some errors are caught during the parsing process. These errors are listed below. There may be errors with the data that are not listed. These errors may also be outdated or inaccurate.</p>
+					<p class = "small-font">This website uses an automated parser to generate its data. The data may contain inaccuracies or errors. Some errors are caught during the parsing process. These errors are listed below. There may be more errors that are not listed. These errors may also be outdated or inaccurate.</p>
 					
 					<div class = "flex-column medium-width x-large-gap">
 						<div class = "flex-column-left full-width small-gap">

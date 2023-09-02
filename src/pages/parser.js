@@ -191,7 +191,7 @@ export default {
 								}
 								
 								${ selectedForm.lexicalForm === undefined || !pageData.showLexicalForms ? null : html
-									`<a class = "small-font grayA" href = ${ "#/word/" + selectedForm.lexicalForm.replaceAll (" ", "-") }>${ selectedForm.lexicalForm }</a>`
+									`<a class = "small-font grayA" href = ${ "#/word/" + selectedForm.lexicalForm.replaceAll (" ", "_") }>${ selectedForm.lexicalForm }</a>`
 								}
 								
 								${ selectedForm.principalParts === undefined || !pageData.showPrincipalParts ? null : html

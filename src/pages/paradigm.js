@@ -14,7 +14,7 @@ export default {
 				pageData.currentParadigmName = paradigmName;
 				
 				//change path
-				utilities.setPath (path [0] + "/" + pageData.currentParadigmName.replaceAll (" ", "-"));
+				utilities.setPath (path [0] + "/" + pageData.currentParadigmName.replaceAll (" ", "_"));
 			}
 			
 			const paradigm = constants.paradigms [pageData.currentCategory] [pageData.currentParadigmName];
@@ -105,7 +105,7 @@ export default {
 		
 		pageData.practiceMode = false;
 		
-		const pathParadigm = path [1]?.replaceAll ("-", " ");
+		const pathParadigm = path [1]?.replaceAll ("_", " ");
 		
 		for (const category in constants.paradigms) {
 			for (const paradigm in constants.paradigms [category]) {

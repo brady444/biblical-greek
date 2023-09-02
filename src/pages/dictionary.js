@@ -20,7 +20,7 @@ export default {
 			for (let i = 0; i < vocabulary.length; i++) {
 				let letter = vocabulary [i].lexicalForm [0];
 				
-				if (letter === "-") {
+				if (letter === "-" || letter === "\"") {
 					letter = vocabulary [i].lexicalForm [1];
 				}
 				
@@ -49,21 +49,28 @@ export default {
 		pageData.search = query => {
 			const vocabulary = [];
 			
-			const formattedQuery = query.trim ().toLowerCase ();
+			const trimmedQuery = query.trim ();
+			const formattedQuery = trimmedQuery.toLowerCase ();
 			const parsedQuery = utilities.simplifyGreek (utilities.englishToGreek (formattedQuery));
+			
+			const isNumber = utilities.isNumber (trimmedQuery);
 			
 			for (let i = 0; i < constants.vocabulary.length; i++) {
 				const dictionaryWord = {
 					lexicalForm: constants.vocabulary [i].lexicalForm
 				};
 				
-				if (constants.vocabulary [i].simplifiedLexicalForm.includes (parsedQuery)) {
-					vocabulary.push (dictionaryWord);
+				if (isNumber) {
+					if (constants.vocabulary [i].number.startsWith (trimmedQuery)) {
+						dictionaryWord.subtitle = constants.vocabulary [i].number;
+						
+						vocabulary.push (dictionaryWord);
+					}
+					
+					continue;
 				}
 				
-				else if (constants.vocabulary [i].simplifiedDefinition.includes (formattedQuery)) {
-					dictionaryWord.subtitle = constants.vocabulary [i].definition;
-					
+				if (constants.vocabulary [i].simplifiedLexicalForm.includes (parsedQuery)) {
 					vocabulary.push (dictionaryWord);
 				}
 				
@@ -85,12 +92,12 @@ export default {
 	content: () => html
 		`<div class = "page-container flex-column-top grow full-width full-height">
 			<div class = "medium-width flex medium-padding">
-				<input id = "search-input" class = "full-width medium-font small-padding" placeholder = "Search..." oninput = "pageData.search (this.value)" />
+				<input id = "search-input" class = "full-width medium-font small-padding" placeholder = "Search by lexical form, number, or gloss..." oninput = "pageData.search (this.value)" />
 			</div>
 			
 			<div class = "full-width flex-top flex-wrap">
 				${ pageData.vocabularySections.map (vocabularySection => html
-					`<div class = "section-group full-width flex-column small-gap large-padding">
+					`<div class = "section-group full-width flex-column large-gap large-padding">
 						<p class = "medium-font">${ vocabularySection.letter }</p>
 						
 						<div class = "flex flex-wrap x-large-gap">
