@@ -8,7 +8,7 @@ export default {
 	
 	overrides: {},
 	
-	//used for sorting forms
+	// Used for sorting forms
 	formUseProperties: {
 		mood: [
 			"indicative",

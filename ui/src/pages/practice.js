@@ -9,14 +9,14 @@ import utilities from "/src/utilities.js";
 
 export default {
 	setup: () => {
-		//functions for all modes
+		// Functions for all modes
 		
 		pageData.updateCurrentVocabulary = () => {
 			pageData.currentVocabulary = [];
 			
 			for (let i = 0; i < pageData.currentSet.vocabulary.length; i++) {
 				if (pageData.currentChapters.has (pageData.currentSet.vocabulary [i].chapter)) {
-					//TODO
+					// TODO
 					if (pageData.currentModeName === "Roots" && pageData.currentSet.vocabulary [i].roots === undefined) {
 						continue;
 					}
@@ -58,7 +58,7 @@ export default {
 			pageData.updateCurrentVocabulary ();
 		};
 		
-		//modes
+		// Modes
 		pageData.modes = {
 			Vocabulary: {
 				body: () => pageData.noTerms ? null : html
@@ -91,12 +91,12 @@ export default {
 					
 					pageData.remainingTerms.splice (termIndex, 1);
 					
-					//shuffle pageData.currentVocabulary
+					// Shuffle pageData.currentVocabulary
 					pageData.currentVocabulary.sort (() => Math.random () - 0.5);
 					
 					let choicesIncludesCurrentWord = false;
 					
-					//add the first few elements of pageData.currentVocabulary to pageData.currentChoices
+					// Add the first few elements of pageData.currentVocabulary to pageData.currentChoices
 					pageData.modes.Vocabulary.currentChoices = pageData.currentVocabulary.slice (0, constants.practiceVocabularyChoiceCount).map (word => {
 						if (word === pageData.modes.Vocabulary.currentWord) {
 							choicesIncludesCurrentWord = true;
@@ -107,9 +107,9 @@ export default {
 						};
 					});
 					
-					//if pageData.currentWord is not already in pageData.currentChoices
+					// If pageData.currentWord is not already in pageData.currentChoices
 					if (!choicesIncludesCurrentWord) {
-						//replace a random element in pageData.currentChoices with pageData.currentWord
+						// Replace a random element in pageData.currentChoices with pageData.currentWord
 						pageData.modes.Vocabulary.currentChoices.splice (utilities.randomInteger (0, constants.practiceVocabularyChoiceCount - 1), 1, {
 							word: pageData.modes.Vocabulary.currentWord
 						});
@@ -168,7 +168,7 @@ export default {
 						return;
 					}
 					
-					//reset input
+					// Reset input
 					pageData.modes.Roots.inputIncorrect = false;
 					
 					const rootsInput = document.getElementById ("roots-input");
@@ -177,7 +177,7 @@ export default {
 						rootsInput.value = "";
 					}
 					
-					//get new word
+					// Get new word
 					const termIndex = utilities.randomInteger (0, pageData.remainingTerms.length - 1);
 					
 					pageData.modes.Roots.currentWord = pageData.remainingTerms [termIndex];
@@ -355,7 +355,7 @@ export default {
 			}
 		};
 		
-		//sets
+		// Sets
 		pageData.sets = [
 			{
 				name: "All",
@@ -393,7 +393,7 @@ export default {
 			}
 		];
 		
-		//setup for modes
+		// Setup for modes
 		
 		pageData.modes.Vocabulary.setup = pageData.modes.Vocabulary.updateRemainingTerms;
 		pageData.modes.Roots.setup = pageData.modes.Roots.updateRemainingTerms;
@@ -404,17 +404,17 @@ export default {
 		pageData.currentModeName = pageData.modeNames [0];
 		pageData.currentMode = pageData.modes [pageData.currentModeName];
 		
-		//parsing: map lexicalForms to a list of form texts used by the word
+		// Parsing: map lexicalForms to a list of form texts used by the word
 		for (let i = 0; i < constants.vocabulary.length; i++) {
 			const formTexts = [];
 			
 			let formTextsIncludesLexicalForm = false;
 			
 			for (let j = 0; j < constants.vocabulary [i].forms.length; j++) {
-				//add a lexicalForm reference to each form
+				// Add a lexicalForm reference to each form
 				constants.vocabulary [i].forms [j].lexicalForm = constants.vocabulary [i].lexicalForm;
 				
-				//add the text of each form to formTexts
+				// Add the text of each form to formTexts
 				formTexts.push (constants.vocabulary [i].forms [j].text);
 				
 				if (constants.vocabulary [i].forms [j].text === constants.vocabulary [i].forms [j].lexicalForm) {
@@ -426,24 +426,24 @@ export default {
 				formTexts.push (constants.vocabulary [i].lexicalForm);
 			}
 			
-			//sort formTexts
+			// Sort formTexts
 			formTexts.sort ();
 			
-			//map this lexicalForm to formTexts
+			// Map this lexicalForm to formTexts
 			pageData.modes.Parsing.forms [constants.vocabulary [i].lexicalForm] = formTexts;
 		}
 		
-		//setup for chapters
+		// Setup for chapters
 		
 		pageData.currentChapters = new Set (constants.chapters);
 		
-		//setup for sets
+		// Setup for sets
 		
 		pageData.currentSet = pageData.sets [0];
 		
-		//populate sets
+		// Populate sets
 		for (let i = 0; i < constants.vocabulary.length; i++) {
-			//Prepositions set
+			// Prepositions set
 			if (constants.vocabulary [i].forms.find (form => form.uses.find (use => use.partOfSpeech?.includes ("prep")) !== undefined) !== undefined) {
 				const caseGlosses = constants.vocabulary [i].shortGloss.split ("\n").filter (glossLine => !glossLine.includes (": ") || glossLine.includes ("nominative") || glossLine.includes ("genitive") || glossLine.includes ("dative") || glossLine.includes ("accusative")).map (glossLine => glossLine.includes (": ") ? glossLine.replaceAll (/preposition \((nominative|genitive|dative|accusative)\)/gu, "$1").split (": ") : [constants.vocabulary [i].forms [0]?.uses?.[0]?.case, glossLine]);
 				
@@ -460,7 +460,7 @@ export default {
 				}
 			}
 			
-			//Present Indicative Verbs set
+			// Present Indicative Verbs set
 			if (constants.vocabulary [i].forms.find (form => form.uses.find (use => use.tense === "present" && use.mood === "indicative") !== undefined) !== undefined) {
 				const word = {
 					lexicalForm: constants.vocabulary [i].lexicalForm,
@@ -481,7 +481,7 @@ export default {
 				pageData.sets [4].vocabulary.push (word);
 			}
 			
-			//Future Indicative Verbs set
+			// Future Indicative Verbs set
 			if (constants.vocabulary [i].forms.find (form => form.uses.find (use => use.tense === "future" && use.mood === "indicative") !== undefined) !== undefined) {
 				const word = {
 					lexicalForm: constants.vocabulary [i].lexicalForm,
@@ -503,7 +503,7 @@ export default {
 			}
 		}
 		
-		//setup for all modes
+		// Setup for all modes
 		
 		pageData.noTerms = false;
 		

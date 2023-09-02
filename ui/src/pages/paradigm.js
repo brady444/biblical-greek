@@ -13,7 +13,7 @@ export default {
 			if (paradigmName !== undefined) {
 				pageData.currentParadigmName = paradigmName;
 				
-				//change path
+				// Change path
 				utilities.setPath (path [0] + "/" + pageData.currentParadigmName.replaceAll (" ", "_"));
 			}
 			
@@ -30,16 +30,16 @@ export default {
 				pageData.paradigm.elements.push ({
 					text: paradigm.elements [i].text,
 					underlined: paradigm.elements [i].underlined,
-					//TODO remove after no paradigms use answered elements
+					// TODO remove after no paradigms use answered elements
 					answered: paradigm.elements [i].answered
 				});
 			}
 			
 			if (pageData.practiceMode) {
-				//TODO uncomment after no paradigms use answered elements
-				// pageData.remainingElements = pageData.paradigm.elements.slice (0);
+				// TODO uncomment after no paradigms use answered elements
+				// PageData.remainingElements = pageData.paradigm.elements.slice (0);
 				
-				//TODO remove after no paradigms use answered elements
+				// TODO remove after no paradigms use answered elements
 				pageData.remainingElements = [];
 				
 				for (let i = 0; i < pageData.paradigm.elements.length; i++) {
@@ -47,7 +47,7 @@ export default {
 						pageData.remainingElements.push (pageData.paradigm.elements [i]);
 					}
 				}
-				//END TODO
+				// END TODO
 				
 				pageData.currentElement = utilities.randomElement (pageData.remainingElements);
 			}
@@ -74,19 +74,19 @@ export default {
 		};
 		
 		pageData.paradigmElementOnClick = element => {
-			//if answer is correct
+			// If answer is correct
 			if (pageData.currentElement.text === element.text && pageData.currentElement.underlined === element.underlined) {
 				element.answered = true;
 				
-				//remove element from pageData.remainingElements
+				// Remove element from pageData.remainingElements
 				pageData.remainingElements.splice (pageData.remainingElements.indexOf (element), 1);
 				
-				//set incorrect to false for all remainingElements
+				// Set incorrect to false for all remainingElements
 				for (let i = 0; i < pageData.remainingElements.length; i++) {
 					pageData.remainingElements [i].incorrect = false;
 				}
 				
-				//if paradigm is complete
+				// If paradigm is complete
 				if (pageData.remainingElements.length < 1) {
 					pageData.updateParadigm ();
 				}
@@ -118,7 +118,7 @@ export default {
 			}
 		}
 		
-		//if we didn't find a matching paradigm, use a default category and paradigm
+		// If we didn't find a matching paradigm, use a default category and paradigm
 		pageData.updateCategory (Object.keys (constants.paradigms) [0]);
 	},
 	

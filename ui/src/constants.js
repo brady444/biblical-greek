@@ -10,12 +10,12 @@ const constants = {
 	vocabularyMap: [],
 	vocabularyNumberMap: [],
 	
-	//used for tooltips on principal parts
+	// Used for tooltips on principal parts
 	principalParts: ["present", "future", "aorist active", "perfect active", "perfect middle/passive", "aorist passive"],
 	
 	practiceVocabularyChoiceCount: 8,
 	
-	//used for parsing mode on the practice page
+	// Used for parsing mode on the practice page
 	formUseProperties: [
 		{
 			name: "person",
