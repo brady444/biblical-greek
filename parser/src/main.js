@@ -703,6 +703,11 @@ for (let i = 0; i < data.errors.length; i++) {
 
 console.log ("Error count: " + data.errors.length.toLocaleString () + "\n");
 
+// Delete redundant data
+
+delete data.vocabularyMap;
+delete data.vocabularyNumberMap;
+
 // Output data
 
 const output = JSON.stringify (data, null, "\t");

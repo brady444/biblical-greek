@@ -1,7 +1,14 @@
 import data from "/res/data.json";
 
-export default {
-	...data,
+const constants = {
+	// Import data from the parser
+	vocabulary: data.vocabulary,
+	vocabularyFormsMap: data.vocabularyFormsMap,
+	newTestament: data.newTestament,
+	errors: data.errors,
+	
+	vocabularyMap: [],
+	vocabularyNumberMap: [],
 	
 	//used for tooltips on principal parts
 	principalParts: ["present", "future", "aorist active", "perfect active", "perfect middle/passive", "aorist passive"],
@@ -1063,3 +1070,14 @@ export default {
 		}
 	}
 };
+
+const vocabularyLength = constants.vocabulary.length;
+
+for (let i = 0; i < vocabularyLength; i++) {
+	const word = constants.vocabulary [i];
+	
+	constants.vocabularyMap [word.lexicalForm] = word;
+	constants.vocabularyNumberMap [word.number] = word;
+}
+
+export default constants;
