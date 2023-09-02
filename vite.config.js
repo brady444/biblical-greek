@@ -8,9 +8,8 @@ export default {
 		outDir: "../docs"
 	},
 	
-	define: {
-		"\t": "",
-		"\t$": "$"
+	server: {
+		host: true
 	},
 	
 	plugins: [
