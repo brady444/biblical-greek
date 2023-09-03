@@ -16,6 +16,7 @@
 		"uhtml": "^3.2.1",
 		"vite": "^4.4.9",
 		"vite-plugin-eslint": "^1.8.1",
+		"vite-plugin-filter-replace": "^0.1.12",
 		"vite-plugin-stylelint": "^5.1.1"
 	}
 }

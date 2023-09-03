@@ -589,7 +589,7 @@ for (let i = 0; i < lines.length; i++) {
 		
 		let existingForm;
 		
-		// If the simplified form text already exists in vocabularyFormsMap
+		// If simplifiedFormText is already a key of vocabularyFormsMap
 		if (existingFormList) {
 			for (let j = 0; j < existingFormList.length; j++) {
 				// If existingFormList [j] matches the current form
