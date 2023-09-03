@@ -16,9 +16,9 @@ export default {
 			</div>
 			
 			<div class = "section-group full-width flex large-padding xx-large-gap">
-				<a class = "small-font grayA" href = "#/paradigm">Paradigms</a>
-				
 				<a class = "small-font grayA" href = "#/practice">Practice</a>
+				
+				<a class = "small-font grayA" href = "#/paradigm">Paradigms</a>
 			</div>
 			
 			<div class = "section-group full-width flex large-padding">
