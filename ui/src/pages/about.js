@@ -71,7 +71,7 @@ export default {
 					<div class = "flex-column medium-width x-large-gap">
 						<div class = "flex-column-left full-width small-gap">
 							${ constants.errors.map (error => html
-								`<pre class = "text-left extra-small-font grayA">${ error }</pre>`
+								`<pre class = "text-left x-small-font grayA">${ error }</pre>`
 							) }
 						</div>
 					</div>

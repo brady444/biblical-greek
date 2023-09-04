@@ -44,6 +44,7 @@ p, a, pre {
 	margin: 0;
 	text-align: center;
 	word-break: break-word;
+	white-space: pre-wrap;
 	color: white;
 	font-family: Times New Roman;
 }
@@ -172,7 +173,7 @@ option {
 	gap: 5.2029vmin;
 }
 
-/* .extra-small-padding { */
+/* .x-small-padding { */
 /* 	padding: 0.5202vmin; */
 /* } */
 
@@ -188,7 +189,7 @@ option {
 	padding: 2.0811vmin;
 }
 
-.extra-small-font {
+.x-small-font {
 	font-size: calc(0.4rem + 0.8949vmin);
 }
 

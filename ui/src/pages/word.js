@@ -47,13 +47,23 @@ export default {
 					) }</p>` : null
 				}
 				
-				<p class = "small-font">${ pageData.word.definition }</p>
-				
-				${ pageData.word.kjvDefinition ? html
-					`<p class = "small-font">KJV: ${ pageData.word.kjvDefinition }</p>` : null
+				${ pageData.word.definition ? html
+					`<div class = "flex-column-left x-small-gap">
+						${ pageData.word.definition.map (line => line.trim ()).map (line => html
+							`<p class = "small-font text-left">${ line }</p>`
+						) }
+						
+						<p class = "small-font">${ pageData.word.kjvDefinition }</p>
+						
+						<p class = "x-small-font grayA">Strong's</p>
+					</div>` : null
 				}
 				
-				<p class = "small-font">Frequency: ${ pageData.word.frequency }</p>
+				<div class = "flex-column-left x-small-gap">
+					<p class = "small-font">x${ pageData.word.frequency }</p>
+					
+					<p class = "x-small-font grayA">Frequency</p>
+				</div>
 			</div>
 			
 			${ pageData.word.forms.length > 0 ? html
