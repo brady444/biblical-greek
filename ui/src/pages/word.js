@@ -55,14 +55,14 @@ export default {
 						
 						<p class = "small-font">${ pageData.word.kjvDefinition }</p>
 						
-						<p class = "x-small-font grayA">Strong's</p>
+						<p class = "small-font grayA">Strong's</p>
 					</div>` : null
 				}
 				
 				<div class = "flex-column-left x-small-gap">
 					<p class = "small-font">x${ pageData.word.frequency }</p>
 					
-					<p class = "x-small-font grayA">Frequency</p>
+					<p class = "small-font grayA">Frequency</p>
 				</div>
 			</div>
 			

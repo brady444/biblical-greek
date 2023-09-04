@@ -20,48 +20,48 @@ export default {
 					<p class = "small-font">JSON Version</p>
 					
 					<div class = "flex-column small-gap">
-						<p class = "x-small-font grayA">Copyright 2009, Open Scriptures. CC-BY-SA. Derived from XML.</p>
+						<p class = "small-font grayA">Copyright 2009, Open Scriptures. CC-BY-SA. Derived from XML.</p>
 						
-						<a class = "x-small-font grayA" href = "https://openscriptures.org">https://openscriptures.org</a>
+						<a class = "small-font grayA" href = "https://openscriptures.org">https://openscriptures.org</a>
 						
-						<a class = "x-small-font grayA" href = "https://github.com/openscriptures/strongs/blob/master/greek/strongs-greek-dictionary.js">https://github.com/openscriptures/strongs/blob/master/greek/strongs-greek-dictionary.js</a>
+						<a class = "small-font grayA" href = "https://github.com/openscriptures/strongs/blob/master/greek/strongs-greek-dictionary.js">https://github.com/openscriptures/strongs/blob/master/greek/strongs-greek-dictionary.js</a>
 						
-						<a class = "x-small-font grayA" href = "https://creativecommons.org/licenses/by-sa/3.0/legalcode">https://creativecommons.org/licenses/by-sa/3.0/legalcode</a>
+						<a class = "small-font grayA" href = "https://creativecommons.org/licenses/by-sa/3.0/legalcode">https://creativecommons.org/licenses/by-sa/3.0/legalcode</a>
 						
-						<a class = "x-small-font grayA" href = "https://creativecommons.org/licenses/by-sa/4.0/legalcode">https://creativecommons.org/licenses/by-sa/4.0/legalcode</a>
+						<a class = "small-font grayA" href = "https://creativecommons.org/licenses/by-sa/4.0/legalcode">https://creativecommons.org/licenses/by-sa/4.0/legalcode</a>
 						
-						<p class = "x-small-font grayA">Modified to use ES6 module format.</p>
+						<p class = "small-font grayA">Modified to use ES6 module format.</p>
 					</div>
 					
 					<p class = "small-font">XML e-text Version</p>
 					
 					<div class = "flex-column small-gap">
-						<p class = "x-small-font grayA">The XML version of this work was prepared in 2006 by Ulrik Petersen (<a class = "grayA" href = "http://ulrikp.org">http://ulrikp.org</a>)</p>
+						<p class = "small-font grayA">The XML version of this work was prepared in 2006 by Ulrik Petersen (<a class = "grayA" href = "http://ulrikp.org">http://ulrikp.org</a>)</p>
 					</div>
 				</div>
 				
 				<div class = "flex-column small-gap">
 					<p class = "medium-font">The SBLGNT</p>
 					
-					<p class = "x-small-font grayA">The SBLGNT, jointly published by both the Society of Biblical Literature and Logos Bible Software.</p>
+					<p class = "small-font grayA">The SBLGNT, jointly published by both the Society of Biblical Literature and Logos Bible Software.</p>
 					
-					<a class = "x-small-font grayA" href = "https://sblgnt.com">https://sblgnt.com</a>
+					<a class = "small-font grayA" href = "https://sblgnt.com">https://sblgnt.com</a>
 					
-					<p class = "x-small-font grayA">Licensed under the Creative Commons Attribution 4.0 International Public License: <a class = "grayA" href = "https://sblgnt.com/license">https://sblgnt.com/license</a>
+					<p class = "small-font grayA">Licensed under the Creative Commons Attribution 4.0 International Public License: <a class = "grayA" href = "https://sblgnt.com/license">https://sblgnt.com/license</a>
 				</div>
 				
 				<div class = "flex-column small-gap">
 					<p class = "medium-font">MorphGNT: SBLGNT Edition</p>
 					
-					<p class = "x-small-font grayA">Tauber, J. K., ed. (2017) MorphGNT: SBLGNT Edition. Version 6.12 [Data set]. <a class = "grayA" href = "https://github.com/morphgnt/sblgnt">https://github.com/morphgnt/sblgnt</a> DOI: 10.5281/zenodo.376200</p>
+					<p class = "small-font grayA">Tauber, J. K., ed. (2017) MorphGNT: SBLGNT Edition. Version 6.12 [Data set]. <a class = "grayA" href = "https://github.com/morphgnt/sblgnt">https://github.com/morphgnt/sblgnt</a> DOI: 10.5281/zenodo.376200</p>
 					
-					<p class = "x-small-font grayA">Project to merge the MorphGNT analysis with the SBLGNT text.</p>
+					<p class = "small-font grayA">Project to merge the MorphGNT analysis with the SBLGNT text.</p>
 					
-					<p class = "x-small-font grayA">The SBLGNT text itself is subject to the SBLGNT EULA and the morphological parsing and lemmatization is made available under a CC-BY-SA License.</p>
+					<p class = "small-font grayA">The SBLGNT text itself is subject to the SBLGNT EULA and the morphological parsing and lemmatization is made available under a CC-BY-SA License.</p>
 					
-					<a class = "x-small-font grayA" href = "https://creativecommons.org/licenses/by-sa/3.0/legalcode">https://creativecommons.org/licenses/by-sa/3.0/legalcode</a>
+					<a class = "small-font grayA" href = "https://creativecommons.org/licenses/by-sa/3.0/legalcode">https://creativecommons.org/licenses/by-sa/3.0/legalcode</a>
 					
-					<a class = "x-small-font grayA" href = "https://creativecommons.org/licenses/by-sa/4.0/legalcode">https://creativecommons.org/licenses/by-sa/4.0/legalcode</a>
+					<a class = "small-font grayA" href = "https://creativecommons.org/licenses/by-sa/4.0/legalcode">https://creativecommons.org/licenses/by-sa/4.0/legalcode</a>
 				</div>
 			
 			${ constants.errors.length > 0 ? html
@@ -71,7 +71,7 @@ export default {
 					<div class = "flex-column medium-width x-large-gap">
 						<div class = "flex-column-left full-width small-gap">
 							${ constants.errors.map (error => html
-								`<pre class = "text-left x-small-font grayA">${ error }</pre>`
+								`<pre class = "text-left small-font grayA">${ error }</pre>`
 							) }
 						</div>
 					</div>

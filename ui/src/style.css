@@ -189,10 +189,6 @@ option {
 	padding: 2.0811vmin;
 }
 
-.x-small-font {
-	font-size: calc(0.4rem + 0.8949vmin);
-}
-
 .small-font {
 	font-size: calc(0.4rem + 1.207vmin);
 }
