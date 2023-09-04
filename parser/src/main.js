@@ -444,34 +444,41 @@ const getPrincipalParts = word => {
 			// Forms and uses should already be sorted, so use the first use that matches the criteria
 			// The active voice should also be used automatically before the middle voice, because the uses are already sorted
 			
+			// Present
 			if (principalParts [0] === "-" &&
 				use.tense === "present") {
 				principalParts [0] = form.text;
 			}
 			
+			// Future Active/Middle
 			if (principalParts [1] === "-" &&
-				use.tense === "future") {
+				use.tense === "future" &&
+				use.tense !== "passive") {
 				principalParts [1] = form.text;
 			}
 			
+			// Aorist Active/Middle
 			if (principalParts [2] === "-" &&
 				use.tense === "aorist" &&
-				use.voice === "active") {
+				use.voice !== "passive") {
 				principalParts [2] = form.text;
 			}
 			
+			// Perfect Active
 			if (principalParts [3] === "-" &&
 				use.tense === "perfect" &&
 				use.voice === "active") {
 				principalParts [3] = form.text;
 			}
 			
+			// Perfect Middle/Passive
 			if (principalParts [4] === "-" &&
 				use.tense === "perfect" &&
-				(use.voice === "middle" || use.voice === "passive")) {
+				use.voice !== "active") {
 				principalParts [4] = form.text;
 			}
 			
+			// Aorist Passive
 			if (principalParts [5] === "-" &&
 				use.tense === "aorist" &&
 				use.voice === "passive") {

@@ -11,7 +11,7 @@ const constants = {
 	vocabularyNumberMap: [],
 	
 	// Used for tooltips on principal parts
-	principalParts: ["present", "future", "aorist active", "perfect active", "perfect middle/passive", "aorist passive"],
+	principalParts: ["present", "future active/middle", "aorist active/middle", "perfect active", "perfect middle/passive", "aorist passive"],
 	
 	practiceVocabularyChoiceCount: 8,
 	
