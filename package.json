@@ -5,9 +5,9 @@
 	"type": "module",
 	"scripts": {
 		"prepare": "husky install",
-		"parser": "node parser/src/main.js",
-		"start": "vite",
-		"build": "eslint_d parser/src/**/*.js && vite build --emptyOutDir"
+		"parser": "eslint_d parser/src/**/*.js && node parser/src/main.js",
+		"start": "npm run parser && vite",
+		"build": "npm run parser && vite build --emptyOutDir"
 	},
 	"devDependencies": {
 		"eslint": "^8.48.0",
