@@ -10,8 +10,6 @@ const data = {
 	vocabulary: [],
 	// Map lexicalForm -> word
 	vocabularyMap: {},
-	// Map Strong's number -> word
-	vocabularyNumberMap: {},
 	// Map simplified form text -> array of matching forms
 	vocabularyFormsMap: {},
 	newTestament: [],
@@ -420,8 +418,52 @@ const sortFormUses = (a, b) => {
 	return 0;
 };
 
+const approximatePrincipalPart = (formText, use) => {
+	const endingCategories = constants.personalEndings [use.tense === "present" || use.tense === "future" ? "primary" : "secondary"] [use.person];
+	
+	for (let i = 0; i < endingCategories.length; i++) {
+		for (let j = 0; j < endingCategories [i].length; j++) {
+			const endingGroup = endingCategories [i] [j];
+			
+			for (let k = 0; k < endingGroup.endings.length; k++) {
+				if (formText.endsWith (endingGroup.endings [k])) {
+					return "[" + formText.replace (endingGroup.endings [k], endingGroup.firstSingular) + "]";
+				}
+			}
+		}
+	}
+	
+	return "[" + formText + "]";
+};
+
 const getPrincipalParts = word => {
-	let principalParts;
+	let hasVerbUse = false;
+	
+	const principalPartsData = [
+		{
+			text: "-"
+		},
+		
+		{
+			text: "-"
+		},
+		
+		{
+			text: "-"
+		},
+		
+		{
+			text: "-"
+		},
+		
+		{
+			text: "-"
+		},
+		
+		{
+			text: "-"
+		}
+	];
 	
 	for (let j = 0; j < word.forms.length; j++) {
 		const form = word.forms [j];
@@ -433,61 +475,111 @@ const getPrincipalParts = word => {
 				continue;
 			}
 			
-			if (principalParts === undefined) {
-				principalParts = ["-", "-", "-", "-", "-", "-"];
-			}
+			hasVerbUse = true;
 			
-			if (use.person !== "1st" || use.number !== "singular" || use.mood !== "indicative") {
+			if (use.mood !== "indicative") {
 				continue;
 			}
 			
-			// Forms and uses should already be sorted, so use the first use that matches the criteria
-			// The active voice should also be used automatically before the middle voice, because the uses are already sorted
+			// Assign partIndex based on tense and voice of the current use
+			
+			let partIndex;
 			
 			// Present
-			if (principalParts [0] === "-" &&
-				use.tense === "present") {
-				principalParts [0] = form.text;
+			if (use.tense === "present") {
+				partIndex = 0;
 			}
 			
 			// Future Active/Middle
-			if (principalParts [1] === "-" &&
-				use.tense === "future" &&
-				use.tense !== "passive") {
-				principalParts [1] = form.text;
+			else if (use.tense === "future" &&
+				use.voice !== "passive") {
+				partIndex = 1;
 			}
 			
 			// Aorist Active/Middle
-			if (principalParts [2] === "-" &&
-				use.tense === "aorist" &&
+			else if (use.tense === "aorist" &&
 				use.voice !== "passive") {
-				principalParts [2] = form.text;
+				partIndex = 2;
 			}
 			
 			// Perfect Active
-			if (principalParts [3] === "-" &&
-				use.tense === "perfect" &&
+			else if (use.tense === "perfect" &&
 				use.voice === "active") {
-				principalParts [3] = form.text;
+				partIndex = 3;
 			}
 			
 			// Perfect Middle/Passive
-			if (principalParts [4] === "-" &&
-				use.tense === "perfect" &&
+			else if (use.tense === "perfect" &&
 				use.voice !== "active") {
-				principalParts [4] = form.text;
+				partIndex = 4;
 			}
 			
 			// Aorist Passive
-			if (principalParts [5] === "-" &&
-				use.tense === "aorist" &&
+			else if (use.tense === "aorist" &&
 				use.voice === "passive") {
-				principalParts [5] = form.text;
+				partIndex = 5;
 			}
+			
+			else {
+				// If this use doesn't match any parts
+				continue;
+			}
+			
+			const currentPart = principalPartsData [partIndex];
+			
+			const isPartSet = currentPart.text !== "-";
+			const isPartApproximated = currentPart.text [0] === "[";
+			
+			// Don't overwrite non-approximated parts
+			if (isPartSet && !isPartApproximated) {
+				continue;
+			}
+			
+			// If this use is 1st person singular, set the part without approximating
+			if (use.person === "1st" && use.number === "singular") {
+				principalPartsData [partIndex] = {
+					text: form.text,
+					voice: use.voice
+				};
+				
+				continue;
+			}
+			
+			// Don't overwrite the part if the current use has a lower voice
+			if ((currentPart.voice === "active" && use.voice !== "active") ||
+				(currentPart.voice === "middle" && use.voice === "passive")) {
+				continue;
+			}
+			
+			// Approximate the part
+			const approximatedPart = approximatePrincipalPart (form.text, use);
+			
+			// TODO
+			// If this is present tense, and the form is different from the lexical form
+			if (partIndex === 0 && approximatedPart !== "[" + word.lexicalForm + "]") {
+				addError ("PRESENT PART NOT EQUAL TO LEXICAL FORM: " + word.lexicalForm + " != " + approximatedPart);
+			}
+			
+			// If the approximatedPrincipalPart is the same as form.text
+			if (approximatedPart === "[" + form.text + "]") {
+				addError ("Word " + word.lexicalForm + " has approximated principal part that is the same as a non-first person singular form, part: " + approximatedPart);
+			}
+			
+			// If the principal part was already approximated
+			if (isPartSet && isPartApproximated &&
+				// , and differs from the new approximation
+				currentPart.text !== approximatedPart) {
+				addError ("Word " + word.lexicalForm + " has multiple approximations for the same principal part, index: " + partIndex + ", parts: " + currentPart.text + ", " + approximatedPart);
+			}
+			
+			principalPartsData [partIndex] = {
+				text: approximatedPart,
+				voice: use.voice
+			};
 		}
 	}
 	
-	return principalParts;
+	return hasVerbUse ? principalPartsData.map (part => part.text) : undefined;
 };
 
 // Parse Strong's Greek Dictionary
@@ -528,7 +620,6 @@ for (let i = 0; i < vocabularyNumbers.length; i++) {
 	}
 	
 	data.vocabularyMap [word.lexicalForm] = word;
-	data.vocabularyNumberMap [number] = word;
 	data.vocabulary.push (word);
 }
 
@@ -697,30 +788,20 @@ for (let i = 0; i < data.vocabulary.length; i++) {
 	// Sort forms
 	word.forms.sort ((a, b) => sortFormUses (a.uses [0], b.uses [0]));
 	
-	// Set principalParts
 	word.principalParts = getPrincipalParts (word);
 }
-
-// Output errors
-
-for (let i = 0; i < data.errors.length; i++) {
-	console.error (data.errors [i]);
-}
-
-console.log ("Error count: " + data.errors.length.toLocaleString () + "\n");
 
 // Delete redundant data
 
 delete data.vocabularyMap;
-delete data.vocabularyNumberMap;
 
 // Output data
 
 const output = JSON.stringify (data, null, "\t");
 
+console.log ("Error count: " + data.errors.length.toLocaleString ());
 console.log ("Word count: " + data.vocabulary.length.toLocaleString ());
-
-console.log ("\nData length: " + output.length.toLocaleString ());
+console.log ("Data length: " + output.length.toLocaleString ());
 console.log ("Data size: " + (new Blob ([output]).size / 1000000).toLocaleString () + "MB");
 
 const dataKeys = Object.keys (data);
