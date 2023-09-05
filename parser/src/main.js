@@ -554,22 +554,26 @@ const getPrincipalParts = word => {
 			// Approximate the part
 			const approximatedPart = approximatePrincipalPart (form.text, use);
 			
-			// TODO
 			// If this is present tense, and the form is different from the lexical form
 			if (partIndex === 0 && approximatedPart !== "[" + word.lexicalForm + "]") {
-				addError ("PRESENT PART NOT EQUAL TO LEXICAL FORM: " + word.lexicalForm + " != " + approximatedPart);
+				// If this is a contract verb, the lexicalForm is expected to be different
+				if ((!word.lexicalForm.endsWith ("άω") &&
+					!word.lexicalForm.endsWith ("έω") &&
+					!word.lexicalForm.endsWith ("όω")) || approximatedPart.endsWith ("ῶ")) {
+					addError ("Word \"" + word.lexicalForm + "\" has an approximated present principal part \"" + approximatedPart + "\" that is different from its lexical form");
+				}
 			}
 			
 			// If the approximatedPrincipalPart is the same as form.text
 			if (approximatedPart === "[" + form.text + "]") {
-				addError ("Word " + word.lexicalForm + " has approximated principal part that is the same as a non-first person singular form, part: " + approximatedPart);
+				addError ("Word \"" + word.lexicalForm + "\" has an approximated principal part that is the same as a non-first person singular form, part: \"" + approximatedPart + "\"");
 			}
 			
 			// If the principal part was already approximated
 			if (isPartSet && isPartApproximated &&
 				// , and differs from the new approximation
 				currentPart.text !== approximatedPart) {
-				addError ("Word " + word.lexicalForm + " has multiple approximations for the same principal part, index: " + partIndex + ", parts: " + currentPart.text + ", " + approximatedPart);
+				addError ("Word \"" + word.lexicalForm + "\" has multiple approximations for the same principal part, index: " + partIndex + ", parts: \"" + currentPart.text + ", " + approximatedPart + "\"");
 			}
 			
 			principalPartsData [partIndex] = {
