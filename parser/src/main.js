@@ -794,6 +794,8 @@ for (let i = 0; i < data.vocabulary.length; i++) {
 	word.principalParts = getPrincipalParts (word);
 }
 
+data.vocabulary = JSON.parse (utilities.oxiaToTonos (JSON.stringify (data.vocabulary)));
+
 // Delete redundant data
 
 delete data.vocabularyMap;
