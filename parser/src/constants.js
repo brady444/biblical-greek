@@ -448,11 +448,17 @@ export default {
 			
 			"3rd": {
 				active: [
-					// First Aorist
+					// First Aorist Singular
 					{
 						// TODO This doesn't work for liquids. But we can't use ε(ν) because it conflicts with the ending below
 						firstSingular: "σα",
-						endings: ["σε(ν)", "σαν"]
+						endings: ["σε(ν)"]
+					},
+					
+					// First Aorist Plural
+					{
+						firstSingular: "α",
+						endings: ["αν"]
 					},
 					
 					// Default
