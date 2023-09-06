@@ -172,36 +172,36 @@ export default {
 					const selectedForm = parsedWord [pageData.selectedOptions [i].form];
 					
 					return html
-					`<div class = "parser-word flex-column-top x-small-gap">
-						${ parsedWord.length > 1 ? html
-							`<p class = "xx-large-font parser-swappable-option" onclick = ${ () => pageData.swapForm (i) }>${ selectedForm.text }</p>` : html
-							`<p class = "xx-large-font">${ selectedForm.text }</p>`
-						}
-						
-						${ pageData.showDescriptions || pageData.showKjvDefinitions || pageData.showLexicalForms || pageData.showPrincipalParts ? html
-							`<div class = "flex-column small-gap">
-								${ selectedForm.uses === undefined || !pageData.showDescriptions ? null :
-									selectedForm.uses.length > 1 ? html
-										`<p class = "small-font grayA parser-swappable-option" onclick = ${ () => pageData.swapUse (i) }>${ selectedForm.uses [pageData.selectedOptions [i].use].description }</p>` : html
-										`<p class = "small-font grayA">${ selectedForm.uses [0].description }</p>`
-								}
-								
-								${ selectedForm.kjvDefinition === undefined || !pageData.showKjvDefinitions ? null : html
-									`<p class = "small-font grayA">${ selectedForm.kjvDefinition }</p>`
-								}
-								
-								${ selectedForm.lexicalForm === undefined || !pageData.showLexicalForms ? null : html
-									`<a class = "small-font grayA" href = ${ "#/word/" + selectedForm.lexicalForm.replaceAll (" ", "_") }>${ selectedForm.lexicalForm }</a>`
-								}
-								
-								${ selectedForm.principalParts === undefined || !pageData.showPrincipalParts ? null : html
-									`<p class = "small-font grayA">${ selectedForm.principalParts.map ((part, j) => html
-										`<span class = "small-font grayA" title = ${ constants.principalParts [selectedForm.principalParts.length === 6 ? j : j + 1] }>${ part }</span>${ j === selectedForm.principalParts.length - 1 ? "" : ", " }`
-									) }</p>`
-								}
-							</div>` : null
-						}
-					</div>`;
+						`<div class = "parser-word flex-column-top x-small-gap">
+							${ parsedWord.length > 1 ? html
+								`<p class = "xx-large-font parser-swappable-option" onclick = ${ () => pageData.swapForm (i) }>${ selectedForm.text }</p>` : html
+								`<p class = "xx-large-font">${ selectedForm.text }</p>`
+							}
+							
+							${ pageData.showDescriptions || pageData.showKjvDefinitions || pageData.showLexicalForms || pageData.showPrincipalParts ? html
+								`<div class = "flex-column small-gap">
+									${ selectedForm.uses === undefined || !pageData.showDescriptions ? null :
+										selectedForm.uses.length > 1 ? html
+											`<p class = "small-font grayA parser-swappable-option" onclick = ${ () => pageData.swapUse (i) }>${ selectedForm.uses [pageData.selectedOptions [i].use].description }</p>` : html
+											`<p class = "small-font grayA">${ selectedForm.uses [0].description }</p>`
+									}
+									
+									${ selectedForm.kjvDefinition === undefined || !pageData.showKjvDefinitions ? null : html
+										`<p class = "small-font grayA">${ selectedForm.kjvDefinition }</p>`
+									}
+									
+									${ selectedForm.lexicalForm === undefined || !pageData.showLexicalForms ? null : html
+										`<a class = "small-font grayA" href = ${ "#/word/" + selectedForm.lexicalForm.replaceAll (" ", "_") }>${ selectedForm.lexicalForm }</a>`
+									}
+									
+									${ selectedForm.principalParts === undefined || !pageData.showPrincipalParts ? null : html
+										`<p class = "small-font grayA">${ selectedForm.principalParts.map ((part, j) => html
+											`<span class = "small-font grayA" title = ${ constants.principalParts [selectedForm.principalParts.length === 6 ? j : j + 1] }>${ part }</span>${ j === selectedForm.principalParts.length - 1 ? "" : ", " }`
+										) }</p>`
+									}
+								</div>` : null
+							}
+						</div>`;
 				}) }
 			</div>
 		</div>`

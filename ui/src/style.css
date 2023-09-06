@@ -110,6 +110,12 @@ option {
 	align-items: flex-start;
 }
 
+.flex-left {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
 .flex-column {
 	display: flex;
 	flex-direction: column;
