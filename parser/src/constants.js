@@ -177,6 +177,14 @@ export default {
 		
 		secondary: {
 			"1st": [
+				// Aorist Passive
+				[
+					{
+						firstSingular: "θην",
+						endings: ["θημεν"]
+					}
+				],
+				
 				// First Aorist
 				[
 					{
@@ -249,6 +257,14 @@ export default {
 			],
 			
 			"2nd": [
+				// Aorist Passive
+				[
+					{
+						firstSingular: "θην",
+						endings: ["θης", "θητε"]
+					}
+				],
+				
 				// First Aorist
 				[
 					{
@@ -321,6 +337,14 @@ export default {
 			],
 			
 			"3rd": [
+				// Aorist Passive
+				[
+					{
+						firstSingular: "θην",
+						endings: ["θη", "θησαν"]
+					}
+				],
+				
 				// First Aorist
 				[
 					{

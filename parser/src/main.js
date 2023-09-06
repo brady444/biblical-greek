@@ -556,6 +556,7 @@ const getPrincipalParts = word => {
 			
 			// If this is present tense, and the form is different from the lexical form
 			if (partIndex === 0 && approximatedPart !== "[" + word.lexicalForm + "]") {
+				// TODO add other cases
 				// If this is a contract verb, the lexicalForm is expected to be different
 				if ((!word.lexicalForm.endsWith ("άω") &&
 					!word.lexicalForm.endsWith ("έω") &&
@@ -798,6 +799,7 @@ for (let i = 0; i < data.vocabulary.length; i++) {
 // Delete redundant data
 
 delete data.vocabularyMap;
+delete data.vocabularyFormsMap;
 
 // Output data
 

@@ -1,14 +1,15 @@
+import utilities from "./utilities.js";
 import data from "/res/data.json";
 
 const constants = {
 	// Import data from the parser
 	vocabulary: data.vocabulary,
-	vocabularyFormsMap: data.vocabularyFormsMap,
 	newTestament: data.newTestament,
 	errors: data.errors,
 	
 	vocabularyMap: [],
-	vocabularyNumberMap: [],
+	vocabularyNumberMap: {},
+	vocabularyFormsMap: {},
 	
 	// Used for tooltips on principal parts
 	principalParts: ["present", "future active/middle", "aorist active/middle", "perfect active", "perfect middle/passive", "aorist passive"],
@@ -1078,6 +1079,12 @@ for (let i = 0; i < vocabularyLength; i++) {
 	
 	constants.vocabularyMap [word.lexicalForm] = word;
 	constants.vocabularyNumberMap [word.number] = word;
+	
+	for (let j = 0; j < word.forms.length; j++) {
+		const form = word.forms [j];
+		
+		constants.vocabularyFormsMap [utilities.simplifyGreek (form.text)] = form;
+	}
 }
 
 export default constants;
