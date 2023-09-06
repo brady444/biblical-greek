@@ -599,7 +599,7 @@ for (let i = 0; i < vocabularyNumbers.length; i++) {
 		number: number,
 		lexicalForm: strongsGreekDictionary [number].lemma?.trim (),
 		transliteration: "/" + strongsGreekDictionary [number].translit + "/",
-		definition: (strongsGreekDictionary [number].derivation + strongsGreekDictionary [number].strongs_def).split (";").map (line => line.trim ()),
+		definition: ((strongsGreekDictionary [number].derivation ?? "") + strongsGreekDictionary [number].strongs_def).split (";").map (line => line.trim ()),
 		kjvDefinition: strongsGreekDictionary [number].kjv_def,
 		forms: []
 	};
