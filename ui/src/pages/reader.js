@@ -57,7 +57,7 @@ export default {
 							<p class = "small-font grayA">${ i + 1 }</p>
 							
 							${ verse.split (" ").map (word => html
-								`<p class = "large-font">${ word }</p>`
+								`<p class = "medium-font">${ word }</p>`
 							) }
 						</div>`
 					) }
