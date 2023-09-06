@@ -419,16 +419,14 @@ const sortFormUses = (a, b) => {
 };
 
 const approximatePrincipalPart = (formText, use) => {
-	const endingCategories = constants.personalEndings [use.tense === "present" || use.tense === "future" ? "primary" : "secondary"] [use.person];
+	const endingCategories = constants.personalEndings [use.tense === "present" || use.tense === "future" ? "primary" : "secondary"] [use.person] [use.voice];
 	
 	for (let i = 0; i < endingCategories.length; i++) {
-		for (let j = 0; j < endingCategories [i].length; j++) {
-			const endingGroup = endingCategories [i] [j];
+		const endingGroup = endingCategories [i];
 			
-			for (let k = 0; k < endingGroup.endings.length; k++) {
-				if (formText.endsWith (endingGroup.endings [k])) {
-					return "[" + formText.replace (endingGroup.endings [k], endingGroup.firstSingular) + "]";
-				}
+		for (let j = 0; j < endingGroup.endings.length; j++) {
+			if (formText.endsWith (endingGroup.endings [j])) {
+				return "[" + formText.slice (0, -endingGroup.endings [j].length) + endingGroup.firstSingular + "]";
 			}
 		}
 	}
@@ -556,7 +554,7 @@ const getPrincipalParts = word => {
 			
 			// If this is present tense, and the form is different from the lexical form
 			if (partIndex === 0 && approximatedPart !== "[" + word.lexicalForm + "]") {
-				// TODO add other cases
+				// TODO add other exceptions
 				// If this is a contract verb, the lexicalForm is expected to be different
 				if ((!word.lexicalForm.endsWith ("άω") &&
 					!word.lexicalForm.endsWith ("έω") &&

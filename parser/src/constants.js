@@ -8,413 +8,542 @@ export default {
 	// Verb personal endings, used for generating principal parts
 	personalEndings: {
 		primary: {
-			"1st": [
-				// Default
-				[
+			"1st": {
+				active: [
+					// Default
 					{
 						firstSingular: "ω",
 						endings: ["ομεν"]
 					},
 					
-					{
-						firstSingular: "ομαι",
-						endings: ["ομεθα"]
-					}
-				],
-				
-				// Alpha Contract
-				[
+					// Alpha Contract
 					{
 						firstSingular: "ῶ",
 						endings: ["ῶμεν"]
 					},
 					
-					{
-						firstSingular: "ῶμαι",
-						endings: ["ώμεθα"]
-					}
-				],
-				
-				// Epsilon Contract
-				[
+					// Epsilon Contract
 					{
 						firstSingular: "ῶ",
 						endings: ["οῦμεν"]
 					},
 					
+					// Omicron Contract
+					{
+						firstSingular: "ῶ",
+						endings: ["οῦμεν"]
+					}
+				],
+				
+				middle: [
+					// Default
+					{
+						firstSingular: "ομαι",
+						endings: ["ομεθα"]
+					},
+					
+					// Alpha Contract
+					{
+						firstSingular: "ῶμαι",
+						endings: ["ώμεθα"]
+					},
+					
+					// Epsilon Contract
+					{
+						firstSingular: "οῦμαι",
+						endings: ["ούμεθα"]
+					},
+					
+					// Omicron Contract
 					{
 						firstSingular: "οῦμαι",
 						endings: ["ούμεθα"]
 					}
 				],
 				
-				// Omicron Contract
-				[
+				passive: [
+					// Default
 					{
-						firstSingular: "ῶ",
-						endings: ["οῦμεν"]
+						firstSingular: "ομαι",
+						endings: ["ομεθα"]
 					},
 					
+					// Alpha Contract
+					{
+						firstSingular: "ῶμαι",
+						endings: ["ώμεθα"]
+					},
+					
+					// Epsilon Contract
+					{
+						firstSingular: "οῦμαι",
+						endings: ["ούμεθα"]
+					},
+					
+					// Omicron Contract
 					{
 						firstSingular: "οῦμαι",
 						endings: ["ούμεθα"]
 					}
 				]
-			],
+			},
 			
-			"2nd": [
-				// Default
-				[
+			"2nd": {
+				active: [
+					// Default
 					{
 						firstSingular: "ω",
 						endings: ["εις", "ετε"]
 					},
 					
-					{
-						firstSingular: "ομαι",
-						endings: ["ῃ", "εσθε"]
-					}
-				],
-				
-				// Alpha Contract
-				[
+					// Alpha Contract
 					{
 						firstSingular: "ῶ",
 						endings: ["ᾷς", "ᾶτε"]
 					},
 					
-					{
-						firstSingular: "ῶμαι",
-						endings: ["ᾷ", "ᾶσθε"]
-					}
-				],
-				
-				// Epsilon Contract
-				[
+					// Epsilon Contract
 					{
 						firstSingular: "ῶ",
 						endings: ["εῖς", "εῖτε"]
 					},
 					
-					{
-						firstSingular: "οῦμαι",
-						endings: ["ῇ", "εῖσθε"]
-					}
-				],
-				
-				// Omicron Contract
-				[
+					// Omicron Contract
 					{
 						firstSingular: "ῶ",
 						endings: ["οῖς", "οῦτε"]
+					}
+				],
+				
+				middle: [
+					// Default
+					{
+						firstSingular: "ομαι",
+						endings: ["ῃ", "εσθε"]
 					},
 					
+					// Alpha Contract
+					{
+						firstSingular: "ῶμαι",
+						endings: ["ᾷ", "ᾶσθε"]
+					},
+					
+					// Epsilon Contract
+					{
+						firstSingular: "οῦμαι",
+						endings: ["ῇ", "εῖσθε"]
+					},
+					
+					// Omicron Contract
+					{
+						firstSingular: "οῦμαι",
+						endings: ["οῖ", "οῦσθε"]
+					}
+				],
+				
+				passive: [
+					// Default
+					{
+						firstSingular: "ομαι",
+						endings: ["ῃ", "εσθε"]
+					},
+					
+					// Alpha Contract
+					{
+						firstSingular: "ῶμαι",
+						endings: ["ᾷ", "ᾶσθε"]
+					},
+					
+					// Epsilon Contract
+					{
+						firstSingular: "οῦμαι",
+						endings: ["ῇ", "εῖσθε"]
+					},
+					
+					// Omicron Contract
 					{
 						firstSingular: "οῦμαι",
 						endings: ["οῖ", "οῦσθε"]
 					}
 				]
-			],
+			},
 			
-			"3rd": [
-				// Default
-				[
+			"3rd": {
+				active: [
+					// Default
 					{
 						firstSingular: "ω",
 						endings: ["ει", "ουσι(ν)"]
 					},
 					
-					{
-						firstSingular: "ομαι",
-						endings: ["εται", "ονται"]
-					}
-					
-				],
-				
-				// Alpha Contract
-				[
+					// Alpha Contract
 					{
 						firstSingular: "ῶ",
 						endings: ["ᾷ", "ῶσι(ν)"]
 					},
 					
-					{
-						firstSingular: "ῶμαι",
-						endings: ["ᾶται", "ῶνται"]
-					}
-					
-				],
-				
-				// Epsilon Contract
-				[
+					// Epsilon Contract
 					{
 						firstSingular: "ῶ",
 						endings: ["εῖ", "οῦσι(ν)"]
 					},
 					
-					{
-						firstSingular: "οῦμαι",
-						endings: ["εῖται", "οῦνται"]
-					}
-					
-				],
-				
-				// Omicron Contract
-				[
+					// Omicron Contract
 					{
 						firstSingular: "ῶ",
 						endings: ["οῖ", "οῦσι(ν)"]
+					}
+				],
+				
+				middle: [
+					// Default
+					{
+						firstSingular: "ομαι",
+						endings: ["εται", "ονται"]
 					},
 					
+					// Alpha Contract
+					{
+						firstSingular: "ῶμαι",
+						endings: ["ᾶται", "ῶνται"]
+					},
+					
+					// Epsilon Contract
+					{
+						firstSingular: "οῦμαι",
+						endings: ["εῖται", "οῦνται"]
+					},
+					
+					// Omicron Contract
 					{
 						firstSingular: "οῦμαι",
 						endings: ["οῦται", "οῦνται"]
 					}
+				],
+				
+				passive: [
+					// Default
+					{
+						firstSingular: "ομαι",
+						endings: ["εται", "ονται"]
+					},
 					
+					// Alpha Contract
+					{
+						firstSingular: "ῶμαι",
+						endings: ["ᾶται", "ῶνται"]
+					},
+					
+					// Epsilon Contract
+					{
+						firstSingular: "οῦμαι",
+						endings: ["εῖται", "οῦνται"]
+					},
+					
+					// Omicron Contract
+					{
+						firstSingular: "οῦμαι",
+						endings: ["οῦται", "οῦνται"]
+					}
 				]
-			]
+			}
 		},
 		
 		secondary: {
-			"1st": [
-				// Aorist Passive
-				[
-					{
-						firstSingular: "ην",
-						endings: ["ημεν"]
-					}
-				],
-				
-				// First Aorist Active/Middle
-				[
+			"1st": {
+				active: [
+					// First Aorist
 					{
 						firstSingular: "α",
 						endings: ["αμεν"]
 					},
 					
-					{
-						firstSingular: "άμην",
-						endings: ["άμεθα"]
-					}
-					
-				],
-				
-				// Default
-				[
+					// Default
 					{
 						firstSingular: "ον",
 						endings: ["ομεν"]
 					},
 					
-					{
-						firstSingular: "ομην",
-						endings: ["ομεθα"]
-					}
-					
-				],
-				
-				// Alpha Contract
-				[
+					// Alpha Contract
 					{
 						firstSingular: "ων",
 						endings: ["ῶμεν"]
 					},
 					
+					// Epsilon Contract
+					{
+						firstSingular: "ουν",
+						endings: ["οῦμεν"]
+					},
+					
+					// Omicron Contract
+					{
+						firstSingular: "ουν",
+						endings: ["οῦμεν"]
+					}
+				],
+				
+				middle: [
+					// First Aorist
+					{
+						firstSingular: "άμην",
+						endings: ["άμεθα"]
+					},
+					
+					// Default
+					{
+						firstSingular: "ομην",
+						endings: ["ομεθα"]
+					},
+					
+					// Alpha Contract
 					{
 						firstSingular: "ώμην",
 						endings: ["ώμεθα"]
-					}
-					
-				],
-				
-				// Epsilon Contract
-				[
-					{
-						firstSingular: "ουν",
-						endings: ["οῦμεν"]
 					},
 					
+					// Epsilon Contract
+					{
+						firstSingular: "ούμην",
+						endings: ["ούμεθα"]
+					},
+					
+					// Omicron Contract
 					{
 						firstSingular: "ούμην",
 						endings: ["ούμεθα"]
 					}
-					
 				],
 				
-				// Omicron Contract
-				[
-					{
-						firstSingular: "ουν",
-						endings: ["οῦμεν"]
-					},
-					
-					{
-						firstSingular: "ούμην",
-						endings: ["ούμεθα"]
-					}
-					
-				]
-			],
-			
-			"2nd": [
-				// Aorist Passive
-				[
+				passive: [
+					// First Aorist
 					{
 						firstSingular: "ην",
-						endings: ["ης", "ητε"]
+						endings: ["ημεν"]
+					},
+					
+					// Default
+					{
+						firstSingular: "ομην",
+						endings: ["ομεθα"]
+					},
+					
+					// Alpha Contract
+					{
+						firstSingular: "ώμην",
+						endings: ["ώμεθα"]
+					},
+					
+					// Epsilon Contract
+					{
+						firstSingular: "ούμην",
+						endings: ["ούμεθα"]
+					},
+					
+					// Omicron Contract
+					{
+						firstSingular: "ούμην",
+						endings: ["ούμεθα"]
 					}
-				],
-				
-				// First Aorist Active/Middle
-				[
+				]
+			},
+			
+			"2nd": {
+				active: [
+					// First Aorist
 					{
 						firstSingular: "α",
 						endings: ["ας", "ατε"]
 					},
 					
-					{
-						firstSingular: "άμην",
-						endings: ["ω", "ασθε"]
-					}
-					
-				],
-				
-				// Default
-				[
+					// Default
 					{
 						firstSingular: "ον",
 						endings: ["ες", "ετε"]
 					},
 					
-					{
-						firstSingular: "ομην",
-						endings: ["ου", "εσθε"]
-					}
-					
-				],
-				
-				// Alpha Contract
-				[
+					// Alpha Contract
 					{
 						firstSingular: "ων",
 						endings: ["ας", "ᾶτε"]
 					},
 					
-					{
-						firstSingular: "ώμην",
-						endings: ["ῶ", "ᾶσθε"]
-					}
-					
-				],
-				
-				// Epsilon Contract
-				[
+					// Epsilon Contract
 					{
 						firstSingular: "ουν",
 						endings: ["εις", "εῖτε"]
 					},
 					
-					{
-						firstSingular: "ούμην",
-						endings: ["οῦ", "εῖσθε"]
-					}
-					
-				],
-				
-				// Omicron Contract
-				[
+					// Omicron Contract
 					{
 						firstSingular: "ουν",
 						endings: ["ους", "οῦτε"]
+					}
+				],
+				
+				middle: [
+					// First Aorist
+					{
+						firstSingular: "άμην",
+						endings: ["ω", "ασθε"]
 					},
 					
+					// Default
+					{
+						firstSingular: "ομην",
+						endings: ["ου", "εσθε"]
+					},
+					
+					// Alpha Contract
+					{
+						firstSingular: "ώμην",
+						endings: ["ῶ", "ᾶσθε"]
+					},
+					
+					// Epsilon Contract
+					{
+						firstSingular: "ούμην",
+						endings: ["οῦ", "εῖσθε"]
+					},
+					
+					// Omicron Contract
 					{
 						firstSingular: "ούμην",
 						endings: ["οῦ", "οῦσθε"]
 					}
-					
-				]
-			],
-			
-			"3rd": [
-				// First Aorist Passive
-				[
+				],
+				
+				passive: [
+					// First Aorist
 					{
 						firstSingular: "ην",
-						endings: ["η", "ησαν"]
-					}
-				],
-				
-				// First Aorist Active/Middle
-				[
-					{
-						firstSingular: "σα",
-						endings: ["σε(ν)", "σαν"]
+						endings: ["ης", "ητε"]
 					},
 					
+					// Default
 					{
-						firstSingular: "άμην",
-						endings: ["ατο", "αντο"]
-					}
+						firstSingular: "ομην",
+						endings: ["ου", "εσθε"]
+					},
 					
-				],
-				
-				// Default
-				[
+					// Alpha Contract
+					{
+						firstSingular: "ώμην",
+						endings: ["ῶ", "ᾶσθε"]
+					},
+					
+					// Epsilon Contract
+					{
+						firstSingular: "ούμην",
+						endings: ["οῦ", "εῖσθε"]
+					},
+					
+					// Omicron Contract
+					{
+						firstSingular: "ούμην",
+						endings: ["οῦ", "οῦσθε"]
+					}
+				]
+			},
+			
+			"3rd": {
+				active: [
+					// First Aorist
+					{
+						firstSingular: "α",
+						// TODO adding ε(ν) here conflicts with default ending below
+						endings: ["αν"]
+					},
+					
+					// Default
 					{
 						firstSingular: "ον",
 						endings: ["ε(ν)", "ον"]
 					},
 					
-					{
-						firstSingular: "ομην",
-						endings: ["ετο", "οντο"]
-					}
-					
-				],
-				
-				// Alpha Contract
-				[
+					// Alpha Contract
 					{
 						firstSingular: "ων",
 						endings: ["α", "ων"]
 					},
 					
-					{
-						firstSingular: "ώμην",
-						endings: ["ᾶτο", "ῶντο"]
-					}
-					
-				],
-				
-				// Epsilon Contract
-				[
+					// Epsilon Contract
 					{
 						firstSingular: "ουν",
 						endings: ["ει", "ουν"]
 					},
 					
-					{
-						firstSingular: "ούμην",
-						endings: ["εῖτο", "οῦντο"]
-					}
-					
-				],
-				
-				// Omicron Contract
-				[
+					// Omicron Contract
 					{
 						firstSingular: "ουν",
 						endings: ["ου", "ουν"]
+					}
+				],
+				
+				middle: [
+					// First Aorist
+					{
+						firstSingular: "άμην",
+						endings: ["ατο", "αντο"]
 					},
 					
+					// Default
+					{
+						firstSingular: "ομην",
+						endings: ["ετο", "οντο"]
+					},
+					
+					// Alpha Contract
+					{
+						firstSingular: "ώμην",
+						endings: ["ᾶτο", "ῶντο"]
+					},
+					
+					// Epsilon Contract
+					{
+						firstSingular: "ούμην",
+						endings: ["εῖτο", "οῦντο"]
+					},
+					
+					// Omicron Contract
 					{
 						firstSingular: "ούμην",
 						endings: ["οῦτο", "οῦντο"]
 					}
+				],
+				
+				passive: [
+					// First Aorist
+					{
+						firstSingular: "ην",
+						endings: ["η", "ησαν"]
+					},
 					
+					// Default
+					{
+						firstSingular: "ομην",
+						endings: ["ετο", "οντο"]
+					},
+					
+					// Alpha Contract
+					{
+						firstSingular: "ώμην",
+						endings: ["ᾶτο", "ῶντο"]
+					},
+					
+					// Epsilon Contract
+					{
+						firstSingular: "ούμην",
+						endings: ["εῖτο", "οῦντο"]
+					},
+					
+					// Omicron Contract
+					{
+						firstSingular: "ούμην",
+						endings: ["οῦτο", "οῦντο"]
+					}
 				]
-			]
+			}
 		}
 	},
 	
