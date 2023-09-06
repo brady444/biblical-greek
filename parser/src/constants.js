@@ -180,12 +180,12 @@ export default {
 				// Aorist Passive
 				[
 					{
-						firstSingular: "θην",
-						endings: ["θημεν"]
+						firstSingular: "ην",
+						endings: ["ημεν"]
 					}
 				],
 				
-				// First Aorist
+				// First Aorist Active/Middle
 				[
 					{
 						firstSingular: "α",
@@ -260,12 +260,12 @@ export default {
 				// Aorist Passive
 				[
 					{
-						firstSingular: "θην",
-						endings: ["θης", "θητε"]
+						firstSingular: "ην",
+						endings: ["ης", "ητε"]
 					}
 				],
 				
-				// First Aorist
+				// First Aorist Active/Middle
 				[
 					{
 						firstSingular: "α",
@@ -337,15 +337,15 @@ export default {
 			],
 			
 			"3rd": [
-				// Aorist Passive
+				// First Aorist Passive
 				[
 					{
-						firstSingular: "θην",
-						endings: ["θη", "θησαν"]
+						firstSingular: "ην",
+						endings: ["η", "ησαν"]
 					}
 				],
 				
-				// First Aorist
+				// First Aorist Active/Middle
 				[
 					{
 						firstSingular: "σα",
