@@ -450,9 +450,9 @@ export default {
 				active: [
 					// First Aorist
 					{
-						firstSingular: "α",
-						// TODO adding ε(ν) here conflicts with default ending below
-						endings: ["αν"]
+						// TODO This doesn't work for liquids. But we can't use ε(ν) because it conflicts with the ending below
+						firstSingular: "σα",
+						endings: ["σε(ν)", "σαν"]
 					},
 					
 					// Default
