@@ -13,7 +13,6 @@ export default {
 			if (paradigmName !== undefined) {
 				pageData.currentParadigmName = paradigmName;
 				
-				// Change path
 				utilities.setPath (path [0] + "/" + pageData.currentParadigmName.replaceAll (" ", "_"));
 			}
 			
@@ -120,6 +119,8 @@ export default {
 		
 		// If we didn't find a matching paradigm, use a default category and paradigm
 		pageData.updateCategory (Object.keys (constants.paradigms) [0]);
+		
+		return false;
 	},
 	
 	content: () => html
