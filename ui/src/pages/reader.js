@@ -31,7 +31,7 @@ export default {
 			update ();
 		};
 		
-		pageData.bookIndex = Math.max (0, constants.newTestamentBooks.indexOf (path [1].replaceAll ("-", " ")));
+		pageData.bookIndex = Math.max (0, constants.newTestamentBooks.indexOf (path [1]?.replaceAll ("-", " ")));
 		
 		const chapter = parseInt (path [2]);
 		
