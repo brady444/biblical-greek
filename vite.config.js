@@ -40,7 +40,7 @@ export default {
 		
 		watch ({
 			pattern: "../parser/**/*",
-			command: "npm run parser",
+			command: "bun parser",
 			timeout: 0,
 			onInit: false
 		})
