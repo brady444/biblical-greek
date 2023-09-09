@@ -714,9 +714,9 @@ for (let i = 0; i < morphGntLines.length; i++) {
 	
 	const word = data.vocabularyMap [lexicalForm];
 	
-	const use = getFormUse (normalizedFormText, partOfSpeech, parsingCode);
+	let use = getFormUse (normalizedFormText, partOfSpeech, parsingCode);
 	
-	const form = {
+	let form = {
 		text: normalizedFormText,
 		lexicalForm: lexicalForm,
 		frequency: 1,
@@ -752,6 +752,8 @@ for (let i = 0; i < morphGntLines.length; i++) {
 		
 		// If the form exists
 		if (existingForm) {
+			form = existingForm;
+			
 			let existingUse;
 			
 			for (let j = 0; j < existingForm.uses.length; j++) {
@@ -772,6 +774,8 @@ for (let i = 0; i < morphGntLines.length; i++) {
 			
 			// If the use exists
 			if (existingUse) {
+				use = existingUse;
+				
 				existingUse.frequency++;
 			}
 			
@@ -786,7 +790,7 @@ for (let i = 0; i < morphGntLines.length; i++) {
 		// If the form doesn't exist
 		else {
 			data.vocabularyFormsMap [simplifiedFormText].push (form);
-			data.vocabularyMap [lexicalForm].forms.push (form);
+			word.forms.push (form);
 		}
 	}
 	
@@ -804,7 +808,12 @@ for (let i = 0; i < morphGntLines.length; i++) {
 		data.newTestament [bookIndex] [chapterIndex] [verseIndex] = [];
 	}
 	
-	data.newTestament [bookIndex] [chapterIndex] [verseIndex].push (text);
+	data.newTestament [bookIndex] [chapterIndex] [verseIndex].push ({
+		text: text,
+		word: word,
+		form: form,
+		use: use
+	});
 }
 
 for (let i = 0; i < data.vocabulary.length; i++) {
@@ -851,11 +860,38 @@ for (let i = 0; i < data.vocabulary.length; i++) {
 	}
 }
 
+for (let i = 0; i < data.newTestament.length; i++) {
+	const book = data.newTestament [i];
+	
+	for (let j = 0; j < book.length; j++) {
+		const chapter = book [j];
+		
+		for (let k = 0; k < chapter.length; k++) {
+			const verse = chapter [k];
+			
+			if (verse === undefined) {
+				continue;
+			}
+			
+			for (let l = 0; l < verse.length; l++) {
+				const word = verse [l];
+				
+				if (word.word !== undefined) {
+					word.wordIndex = data.vocabulary.indexOf (word.word);
+					word.formIndex = word.word.forms.indexOf (word.form);
+					word.useIndex = word.form.uses.indexOf (word.use);
+				}
+			}
+		}
+	}
+}
+
 data.vocabulary = JSON.parse (utilities.oxiaToTonos (JSON.stringify (data.vocabulary)));
 
 // Delete redundant data
 
 delete data.vocabularyMap;
+delete data.vocabularyNumberMap;
 delete data.vocabularyFormsMap;
 
 for (let i = 0; i < data.vocabulary.length; i++) {
@@ -866,18 +902,42 @@ for (let i = 0; i < data.vocabulary.length; i++) {
 	}
 }
 
+for (let i = 0; i < data.newTestament.length; i++) {
+	const book = data.newTestament [i];
+	
+	for (let j = 0; j < book.length; j++) {
+		const chapter = book [j];
+		
+		for (let k = 0; k < chapter.length; k++) {
+			const verse = chapter [k];
+			
+			if (verse === undefined) {
+				continue;
+			}
+			
+			for (let l = 0; l < verse.length; l++) {
+				const word = verse [l];
+				
+				delete word.use;
+				delete word.word;
+				delete word.form;
+				delete word.use;
+			}
+		}
+	}
+}
+
 // Change data.errors to an array
 
 data.errors = [...data.errors];
 
 // Output data
 
-const output = JSON.stringify (data, null, "\t");
+const output = JSON.stringify (data, null, "\t") + "\n";
 
-console.log ("Error count: " + data.errors.length.toLocaleString ());
 console.log ("Word count: " + data.vocabulary.length.toLocaleString ());
-console.log ("Data length: " + output.length.toLocaleString ());
-console.log ("Data size: " + (new Blob ([output]).size / 1000000).toLocaleString () + "MB");
+console.log ("Error count: " + data.errors.length.toLocaleString ());
+console.log ("Data size: " + (new Blob ([JSON.stringify (data)]).size / 1000000).toLocaleString () + "MB");
 
 const dataKeys = Object.keys (data);
 

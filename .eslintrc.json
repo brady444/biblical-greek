@@ -263,7 +263,7 @@
 		"comma-style": ["error", "last"],
 		"computed-property-spacing": "error",
 		"dot-location": ["error", "property"],
-		"eol-last": ["error", "never"],
+		"eol-last": ["error", "always"],
 		"func-call-spacing": ["error", "always"],
 		"function-call-argument-newline": ["error", "never"],
 		"function-paren-newline": "off",

@@ -1151,4 +1151,32 @@ for (let i = 0; i < newTestamentBookCount; i++) {
 	constants.newTestamentChapterCounts [i] = constants.newTestament [i].length;
 }
 
+for (let i = 0; i < constants.newTestament.length; i++) {
+	const book = constants.newTestament [i];
+	
+	for (let j = 0; j < book.length; j++) {
+		const chapter = book [j];
+		
+		for (let k = 0; k < chapter.length; k++) {
+			const verse = chapter [k];
+			
+			if (verse === null) {
+				continue;
+			}
+			
+			for (let l = 0; l < verse.length; l++) {
+				const word = verse [l];
+				
+				const vocabularyWord = constants.vocabulary [word.wordIndex];
+				
+				verse [l] = {
+					text: word.text,
+					description: vocabularyWord?.forms [word.formIndex]?.uses [word.useIndex].description,
+					...vocabularyWord
+				};
+			}
+		}
+	}
+}
+
 export default constants;

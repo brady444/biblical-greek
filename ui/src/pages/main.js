@@ -8,7 +8,7 @@ export default {
 	content: () => html
 		`<div class = "page-container flex-column-top grow full-width full-height">
 			<div class = "section-group full-width flex large-padding xx-large-gap">
-				<a class = "small-font grayA" href = "#/reader">Reader</a>
+				<a class = "small-font grayA" href = "#/read">Reader</a>
 				
 				<a class = "small-font grayA" href = "#/dictionary">Dictionary</a>
 				

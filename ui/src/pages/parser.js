@@ -7,6 +7,7 @@ import { html } from "uhtml";
 
 import constants from "/src/constants.js";
 import utilities from "/src/utilities.js";
+import components from "/src/components.js";
 
 export default {
 	setup: () => {
@@ -62,13 +63,14 @@ export default {
 			update ();
 		};
 		
-		pageData.updateProperties = propertyIndices => {
+		pageData.updateProperties = event => {
+			const propertyIndices = [...event.target.selectedOptions].map (option => option.index);
+			
 			pageData.showDescriptions = propertyIndices.includes (0);
 			pageData.showGlosses = propertyIndices.includes (1);
 			pageData.showLexicalForms = propertyIndices.includes (2);
 			pageData.showPrincipalParts = propertyIndices.includes (3);
 			
-			// TODO needed?
 			for (let i = 0; i < pageData.selectedOptions.length; i++) {
 				pageData.selectedOptions [i].useIndex = 0;
 			}
@@ -113,12 +115,7 @@ export default {
 			<div id = "parser-input" class = "medium-width medium-gap">
 				<textarea class = "small-padding medium-font" placeholder = "Enter Greek..." oninput = "pageData.parse (this.value)" />
 				
-				<select multiple class = "small-padding medium-font" oninput = "pageData.updateProperties ([...this.selectedOptions].map (option => option.index))">
-					<option class = "medium-font" selected>Description</option>
-					<option class = "medium-font" selected>Gloss</option>
-					<option class = "medium-font" selected>Lexical Form</option>
-					<option class = "medium-font" selected>Principal Parts</option>
-				</select>
+				${ components.wordPropertySelector (pageData.updateProperties) }
 			</div>
 			
 			<div class = "large-width flex-top flex-wrap medium-gap">

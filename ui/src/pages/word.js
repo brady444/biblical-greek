@@ -55,11 +55,13 @@ export default {
 				
 				${ pageData.word.strongsDefinition ? html
 					`<div class = "flex-column-left x-small-gap">
-						${ pageData.word.strongsDefinition.map (line => line.trim ()).map (line => html
+						${ pageData.word.strongsDefinition.map (line => html
 							`<p class = "small-font text-left">${ line }</p>`
 						) }
 						
-						<p class = "small-font">${ pageData.word.kjvDefinition }</p>
+						${ pageData.word.kjvDefinition ? html
+							`<p class = "small-font">${ pageData.word.kjvDefinition }</p>` : null
+						}
 						
 						<p class = "small-font grayA">Strong's</p>
 					</div>` : null
