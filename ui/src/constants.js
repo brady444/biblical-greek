@@ -41,6 +41,8 @@ const constants = {
 		"Revelation"
 	],
 	
+	newTestamentChapterCounts: [],
+	
 	// Used for tooltips on principal parts
 	principalParts: ["present", "future active/middle", "aorist active/middle", "perfect active", "perfect middle/passive", "aorist passive"],
 	
@@ -1110,11 +1112,43 @@ for (let i = 0; i < vocabularyLength; i++) {
 	constants.vocabularyMap [word.lexicalForm] = word;
 	constants.vocabularyNumberMap [word.number] = word;
 	
+	word.simplifiedLexicalForm = utilities.simplifyGreek (word.lexicalForm);
+	
+	let formsMapIncludesLexicalForm = false;
+	
 	for (let j = 0; j < word.forms.length; j++) {
 		const form = word.forms [j];
 		
-		constants.vocabularyFormsMap [utilities.simplifyGreek (form.text)] = form;
+		form.word = word;
+		
+		const simplifiedFormText = utilities.simplifyGreek (form.text);
+		
+		if (constants.vocabularyFormsMap [simplifiedFormText] === undefined) {
+			constants.vocabularyFormsMap [simplifiedFormText] = [];
+		}
+		
+		constants.vocabularyFormsMap [simplifiedFormText].push (form);
+		
+		if (form.text === word.lexicalForm) {
+			formsMapIncludesLexicalForm = true;
+		}
 	}
+	
+	if (!formsMapIncludesLexicalForm) {
+		constants.vocabularyFormsMap [word.simplifiedLexicalForm] = [{
+			text: word.lexicalForm,
+			word: word
+		}];
+	}
+	
+	word.glossesString = word.glosses.join ("; ");
+	word.simplifiedGlossesString = word.glossesString.toLowerCase ();
+}
+
+const newTestamentBookCount = constants.newTestament.length;
+
+for (let i = 0; i < newTestamentBookCount; i++) {
+	constants.newTestamentChapterCounts [i] = constants.newTestament [i].length;
 }
 
 export default constants;

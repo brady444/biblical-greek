@@ -27,5 +27,8 @@ export default {
 		.replaceAll ("ί", "ί")
 		.replaceAll ("ό", "ό")
 		.replaceAll ("ύ", "ύ")
-		.replaceAll ("ώ", "ώ")
+		.replaceAll ("ώ", "ώ"),
+	
+	parseStepDefinition: definition => definition
+		.replaceAll ("<BR />", "\n")
 };

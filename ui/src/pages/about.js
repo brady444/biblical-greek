@@ -20,24 +20,18 @@ export default {
 					<p class = "small-font">JSON Version</p>
 					
 					<div class = "flex-column small-gap">
-						<p class = "small-font grayA">Copyright 2009, Open Scriptures. CC-BY-SA. Derived from XML.</p>
+						<p class = "small-font grayA">Copyright 2009, Open Scriptures. CC-BY-SA (<a class = "underlined grayA" href = "https://creativecommons.org/licenses/by-sa/3.0/legalcode">v3</a>, <a class = "underlined grayA" href = "https://creativecommons.org/licenses/by-sa/4.0/legalcode">v4</a>). Derived from XML.</p>
 						
-						<a class = "small-font grayA" href = "https://openscriptures.org">https://openscriptures.org</a>
+						<a class = "small-font underlined grayA" href = "https://openscriptures.org">https://openscriptures.org</a>
 						
-						<a class = "small-font grayA" href = "https://github.com/openscriptures/strongs/blob/master/greek/strongs-greek-dictionary.js">https://github.com/openscriptures/strongs/blob/master/greek/strongs-greek-dictionary.js</a>
-						
-						<a class = "small-font grayA" href = "https://creativecommons.org/licenses/by-sa/3.0/legalcode">https://creativecommons.org/licenses/by-sa/3.0/legalcode</a>
-						
-						<a class = "small-font grayA" href = "https://creativecommons.org/licenses/by-sa/4.0/legalcode">https://creativecommons.org/licenses/by-sa/4.0/legalcode</a>
+						<a class = "small-font underlined grayA" href = "https://github.com/openscriptures/strongs/blob/master/greek/strongs-greek-dictionary.js">https://github.com/openscriptures/strongs/blob/master/greek/strongs-greek-dictionary.js</a>
 						
 						<p class = "small-font grayA">Modified to use ES6 module format.</p>
 					</div>
 					
 					<p class = "small-font">XML e-text Version</p>
 					
-					<div class = "flex-column small-gap">
-						<p class = "small-font grayA">The XML version of this work was prepared in 2006 by Ulrik Petersen (<a class = "grayA" href = "http://ulrikp.org">http://ulrikp.org</a>)</p>
-					</div>
+					<p class = "small-font grayA">The XML version of this work was prepared in 2006 by Ulrik Petersen (<a class = "underlined grayA" href = "http://ulrikp.org">http://ulrikp.org</a>)</p>
 				</div>
 				
 				<div class = "flex-column small-gap">
@@ -45,23 +39,41 @@ export default {
 					
 					<p class = "small-font grayA">The SBLGNT, jointly published by both the Society of Biblical Literature and Logos Bible Software.</p>
 					
-					<a class = "small-font grayA" href = "https://sblgnt.com">https://sblgnt.com</a>
+					<a class = "small-font underlined grayA" href = "https://sblgnt.com">https://sblgnt.com</a>
 					
-					<p class = "small-font grayA">Licensed under the Creative Commons Attribution 4.0 International Public License: <a class = "grayA" href = "https://sblgnt.com/license">https://sblgnt.com/license</a>
+					<p class = "small-font grayA">Licensed under the Creative Commons Attribution 4.0 International Public License: <a class = "underlined grayA" href = "https://sblgnt.com/license">https://sblgnt.com/license</a>
 				</div>
 				
 				<div class = "flex-column small-gap">
 					<p class = "medium-font">MorphGNT: SBLGNT Edition</p>
 					
-					<p class = "small-font grayA">Tauber, J. K., ed. (2017) MorphGNT: SBLGNT Edition. Version 6.12 [Data set]. <a class = "grayA" href = "https://github.com/morphgnt/sblgnt">https://github.com/morphgnt/sblgnt</a> DOI: 10.5281/zenodo.376200</p>
+					<p class = "small-font grayA">Tauber, J. K., ed. (2017) MorphGNT: SBLGNT Edition. Version 6.12 [Data set]. <a class = "underlined grayA" href = "https://github.com/morphgnt/sblgnt">https://github.com/morphgnt/sblgnt</a> DOI: 10.5281/zenodo.376200</p>
 					
 					<p class = "small-font grayA">Project to merge the MorphGNT analysis with the SBLGNT text.</p>
 					
-					<p class = "small-font grayA">The SBLGNT text itself is subject to the SBLGNT EULA and the morphological parsing and lemmatization is made available under a CC-BY-SA License.</p>
+					<p class = "small-font grayA">The SBLGNT text itself is subject to the SBLGNT EULA and the morphological parsing and lemmatization is made available under a CC-BY-SA License (<a class = "underlined grayA" href = "https://creativecommons.org/licenses/by-sa/3.0/legalcode">v3</a>, <a class = "underlined grayA" href = "https://creativecommons.org/licenses/by-sa/4.0/legalcode">v4</a>).</p>
+				</div>
+				
+				<div class = "flex-column small-gap">
+					<p class = "medium-font">TBESG - Translators Brief lexicon of Extended Strongs for Greek</p>
 					
-					<a class = "small-font grayA" href = "https://creativecommons.org/licenses/by-sa/3.0/legalcode">https://creativecommons.org/licenses/by-sa/3.0/legalcode</a>
+					<p class = "small-font grayA">STEP Bible</p>
 					
-					<a class = "small-font grayA" href = "https://creativecommons.org/licenses/by-sa/4.0/legalcode">https://creativecommons.org/licenses/by-sa/4.0/legalcode</a>
+					<a class = "underlined small-font grayA" href = "https://www.stepbible.org">www.STEPBible.org</a>
+					
+					<a class = "underlined grayA" href = "https://creativecommons.org/licenses/by/4.0/legalcode">CC-BY 4.0</a>
+					
+					<a class = "small-font underlined grayA" href = "https://github.com/STEPBible/STEPBible-Data">https://github.com/STEPBible/STEPBible-Data</a>
+					
+					<p class = "small-font grayA">Lexicons for the tagged texts used by STEPBible, based on BHS for OT and LSJ for NT, backwardly compatible for any tagging based on Strong numbers. </p>
+					
+					<p class = "small-font grayA">Extended Strongs for Greek is backwardly compatible with original Strong and NASB, and extended to include all NT variants and LXX + variants.</p>
+					
+					<p class = "small-font grayA">The Brief lexicon is based on the Abbott-Smith definitions, and edited to conform with the extended Strongs. For a few words where Abbott-Smith lacks a definition, one is supplied  from MiddleLiddel (MD) or STEPBible scholars</p>
+					
+					<p class = "small-font grayA">The Full lexicon is edited from the Full LSJ by Tyndale House scholars, formatted to make it easy to read, with expansion of abbreviations and revealing examples from Greek literature on hover over dates of the earliest source (added by Tyndale House)</p>
+					
+					<p class = "small-font grayA">Data created by <a class = "underlined grayA" href = "https://www.stepbible.org">www.STEPBible.org</a> based on work at Tyndale House Cambridge (<a class = "underlined grayA" href = "https://creativecommons.org/licenses/by/4.0/legalcode">CC BY 4.0</a>)</p>
 				</div>
 			
 			${ constants.errors.length > 0 ? html

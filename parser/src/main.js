@@ -10,16 +10,18 @@ const data = {
 	vocabulary: [],
 	// Map lexicalForm -> word
 	vocabularyMap: {},
+	// Map strongsNumber -> word
+	vocabularyNumberMap: {},
 	// Map simplified form text -> array of matching forms
 	vocabularyFormsMap: {},
 	newTestament: [],
-	errors: []
+	errors: new Set ()
 };
 
 const addError = error => {
 	const formattedError = "Error! " + error;
 	
-	data.errors.push (formattedError);
+	data.errors.add (formattedError);
 };
 
 const getFormUse = (formText, partOfSpeech, parsingCode) => {
@@ -597,8 +599,8 @@ for (let i = 0; i < vocabularyNumbers.length; i++) {
 		number: number,
 		lexicalForm: strongsGreekDictionary [number].lemma?.trim (),
 		transliteration: "/" + strongsGreekDictionary [number].translit + "/",
-		definition: ((strongsGreekDictionary [number].derivation ?? "") + strongsGreekDictionary [number].strongs_def).split (";").map (line => line.trim ()),
-		kjvDefinition: strongsGreekDictionary [number].kjv_def,
+		strongsDefinition: ((strongsGreekDictionary [number].derivation ?? "") + strongsGreekDictionary [number].strongs_def).split (";").map (line => line.trim ()),
+		strongsKjvDefinition: strongsGreekDictionary [number].kjv_def,
 		forms: []
 	};
 	
@@ -607,22 +609,20 @@ for (let i = 0; i < vocabularyNumbers.length; i++) {
 		word.lexicalForm = "\"" + word.lexicalForm + "\"";
 	}
 	
-	word.simplifiedLexicalForm = utilities.simplifyGreek (word.lexicalForm);
-	word.simplifiedKjvDefinition = word.kjvDefinition?.toLowerCase ();
-	
 	if (word.transliteration === undefined) {
 		addError ("Word \"" + word.lexicalForm + "\" is missing a transliteration");
 	}
 	
-	if (word.definition === undefined) {
-		addError ("Word \"" + word.lexicalForm + "\" is missing a definition");
+	if (word.strongsDefinition === undefined) {
+		addError ("Word \"" + word.lexicalForm + "\" is missing a Strong's definition");
 	}
 	
-	if (word.kjvDefinition === undefined) {
-		addError ("Word \"" + word.lexicalForm + "\" is missing a kjvDefinition");
+	if (word.strongsKjvDefinition === undefined) {
+		addError ("Word \"" + word.lexicalForm + "\" is missing a Strong's KJV Definition");
 	}
 	
 	data.vocabularyMap [word.lexicalForm] = word;
+	data.vocabularyNumberMap [word.number] = word;
 	data.vocabulary.push (word);
 }
 
@@ -630,11 +630,56 @@ for (let i = 0; i < vocabularyNumbers.length; i++) {
 
 data.vocabulary.sort ((a, b) => a.lexicalForm.replaceAll (/[-"]/gu, "").localeCompare (b.lexicalForm.replaceAll (/[-"]/gu, "")));
 
+// Parse STEPBible lexicon
+
+const stepBibleLexicon = utilities.oxiaToTonos (fs.readFileSync (constants.stepBibleLexiconFilePath, "utf8"));
+
+// The data starts at line 90, and we exclude the last newline
+const stepBibleLines = stepBibleLexicon.split ("\n").slice (90, -1);
+
+for (let i = 0; i < stepBibleLines.length; i++) {
+	const columns = stepBibleLines [i].split ("\t");
+	
+	const extendedStrongsNumber = "G" + parseInt (columns [0].slice (1));
+	// const disambiguatedStrongsNumber = columns [1];
+	// const unifiedStrongsNumber = columns [2];
+	const lexicalForm = columns [3];
+	// const transliteration = columns [4];
+	// const morph = columns [5];
+	const gloss = columns [6];
+	// const definition = columns [7];
+	
+	// Stop at G6000
+	if (extendedStrongsNumber === "G6000") {
+		break;
+	}
+	
+	const word = data.vocabularyNumberMap [extendedStrongsNumber];
+	
+	if (word === undefined) {
+		addError ("STEPBible lexicon word \"" + lexicalForm + "\"'s number \"" + extendedStrongsNumber + "\" does not appear in Strong's dictionary");
+	}
+	
+	else {
+		// word.stepDefinition = utilities.parseStepDefinition (definition);
+		
+		if (word.glosses === undefined) {
+			word.glosses = new Set ();
+		}
+		
+		word.glosses.add (gloss);
+		
+		if (utilities.simplifyGreek (lexicalForm) !== utilities.simplifyGreek (word.lexicalForm)) {
+			addError ("STEPBible lexicon word \"" + lexicalForm + "\" does not match its lexicalForm \"" + word.lexicalForm + "\" in Strong's dictionary");
+		}
+	}
+}
+
 // Parse MorphGNT data
 
 const morphGntFiles = fs.readdirSync (constants.morphGntFolderPath);
 
-let lines = [];
+let morphGntLines = [];
 
 for (let i = 0; i < morphGntFiles.length; i++) {
 	if (morphGntFiles [i] === "README.md") {
@@ -642,11 +687,11 @@ for (let i = 0; i < morphGntFiles.length; i++) {
 	}
 	
 	// Exclude the last line since it's empty
-	lines = lines.concat (fs.readFileSync (path.normalize (constants.morphGntFolderPath + "/" + morphGntFiles [i]), "utf8").split ("\n").slice (0, -1));
+	morphGntLines = morphGntLines.concat (fs.readFileSync (path.normalize (constants.morphGntFolderPath + "/" + morphGntFiles [i]), "utf8").split ("\n").slice (0, -1));
 }
 
-for (let i = 0; i < lines.length; i++) {
-	const columns = lines [i].split (" ");
+for (let i = 0; i < morphGntLines.length; i++) {
+	const columns = morphGntLines [i].split (" ");
 	
 	const location = columns [0];
 	const partOfSpeech = columns [1];
@@ -756,12 +801,10 @@ for (let i = 0; i < lines.length; i++) {
 	}
 	
 	if (data.newTestament [bookIndex] [chapterIndex] [verseIndex] === undefined) {
-		data.newTestament [bookIndex] [chapterIndex] [verseIndex] = text;
+		data.newTestament [bookIndex] [chapterIndex] [verseIndex] = [];
 	}
 	
-	else {
-		data.newTestament [bookIndex] [chapterIndex] [verseIndex] += " " + text;
-	}
+	data.newTestament [bookIndex] [chapterIndex] [verseIndex].push (text);
 }
 
 for (let i = 0; i < data.vocabulary.length; i++) {
@@ -791,7 +834,21 @@ for (let i = 0; i < data.vocabulary.length; i++) {
 	// Sort forms
 	word.forms.sort ((a, b) => sortFormUses (a.uses [0], b.uses [0]));
 	
+	word.glosses = [...word.glosses];
+	
 	word.principalParts = getPrincipalParts (word);
+	
+	if (word.glosses.length === undefined) {
+		addError ("Word \"" + word.lexicalForm + "\" is missing glosses");
+	}
+	
+	// if (word.stepDefinition === undefined) {
+	// 	addError ("Word \"" + word.lexicalForm + "\" is missing a STEPBible definition");
+	// }
+	
+	if (word.glosses.length > 1) {
+		addError ("Word \"" + word.lexicalForm + "\" has multiple glosses: " + word.glosses.map (gloss => "\"" + gloss + "\"").join (", "));
+	}
 }
 
 data.vocabulary = JSON.parse (utilities.oxiaToTonos (JSON.stringify (data.vocabulary)));
@@ -800,6 +857,18 @@ data.vocabulary = JSON.parse (utilities.oxiaToTonos (JSON.stringify (data.vocabu
 
 delete data.vocabularyMap;
 delete data.vocabularyFormsMap;
+
+for (let i = 0; i < data.vocabulary.length; i++) {
+	const word = data.vocabulary [i];
+	
+	for (let j = 0; j < word.forms.length; j++) {
+		delete word.forms [j].lexicalForm;
+	}
+}
+
+// Change data.errors to an array
+
+data.errors = [...data.errors];
 
 // Output data
 

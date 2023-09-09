@@ -27,11 +27,9 @@ export default {
 	},
 	
 	content: () => {
-		const chapterCount = constants.newTestament [pageData.currentBookIndex].length;
-		
 		const chapterOptions = [];
 		
-		for (let i = 0; i < chapterCount; i++) {
+		for (let i = 0; i < constants.newTestamentChapterCounts [pageData.currentBookIndex]; i++) {
 			chapterOptions.push (html
 				`<option class = "medium-font" ?selected = ${ pageData.currentChapterIndex === i }>${ i + 1 }</option>`
 			);
@@ -39,7 +37,7 @@ export default {
 		
 		return html
 			`<div class = "page-container flex-column-top grow full-width full-height medium-gap medium-padding">
-				<div class = "small-width flex-top medium-gap">
+				<div class = "medium-width flex-top medium-gap">
 					<select class = "full-width small-padding medium-font" oninput = "pageData.updateBook (this.selectedIndex)">
 						${ constants.newTestamentBooks.map (book => html
 							`<option class = "medium-font">${ book }</option>`
@@ -53,11 +51,11 @@ export default {
 				
 				<div class = "large-width flex-top flex-wrap medium-gap">
 					${ constants.newTestament [pageData.currentBookIndex] [pageData.currentChapterIndex].map ((verse, i) => html
-						`<div class = "full-width flex-left flex-wrap small-gap">
-							<p class = "small-font grayA">${ i + 1 }</p>
+						`<div class = "full-width flex-top-left flex-wrap small-gap">
+							<p class = "xx-large-font grayA">${ i + 1 }</p>
 							
-							${ verse.split (" ").map (word => html
-								`<p class = "medium-font">${ word }</p>`
+							${ verse.map (word => html
+								`<p class = "xx-large-font">${ word }</p>`
 							) }
 						</div>`
 					) }

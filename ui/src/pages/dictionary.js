@@ -56,13 +56,15 @@ export default {
 			const isNumber = utilities.isNumber (trimmedQuery);
 			
 			for (let i = 0; i < constants.vocabulary.length; i++) {
+				const word = constants.vocabulary [i];
+				
 				const dictionaryWord = {
-					lexicalForm: constants.vocabulary [i].lexicalForm
+					lexicalForm: word.lexicalForm
 				};
 				
 				if (isNumber) {
-					if (constants.vocabulary [i].number.startsWith (trimmedQuery)) {
-						dictionaryWord.subtitle = constants.vocabulary [i].number;
+					if (word.number.startsWith (trimmedQuery)) {
+						dictionaryWord.subtitle = word.number;
 						
 						vocabulary.push (dictionaryWord);
 					}
@@ -70,12 +72,12 @@ export default {
 					continue;
 				}
 				
-				if (constants.vocabulary [i].simplifiedLexicalForm.includes (parsedQuery)) {
+				if (word.simplifiedLexicalForm.includes (parsedQuery)) {
 					vocabulary.push (dictionaryWord);
 				}
-				
-				else if (constants.vocabulary [i].simplifiedKjvDefinition?.includes (formattedQuery)) {
-					dictionaryWord.subtitle = constants.vocabulary [i].kjvDefinition;
+					
+				if (word.simplifiedGlossesString.includes (formattedQuery)) {
+					dictionaryWord.subtitle = word.glossesString;
 					
 					vocabulary.push (dictionaryWord);
 				}

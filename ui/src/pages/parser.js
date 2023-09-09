@@ -11,7 +11,7 @@ import utilities from "/src/utilities.js";
 export default {
 	setup: () => {
 		pageData.parse = input => {
-			pageData.parsedWords = [];
+			pageData.formGroups = [];
 			pageData.selectedOptions = [];
 			
 			if (input.length > 0) {
@@ -21,22 +21,23 @@ export default {
 					.map (inputWord => utilities.englishToGreek (inputWord));
 				
 				for (let i = 0; i < inputWords.length; i++) {
-					const simplifiedInputWord = utilities.simplifyGreek (inputWords [i]);
+					const inputWord = inputWords [i];
+					const simplifiedInputWord = utilities.simplifyGreek (inputWord);
 					
-					let matchedForms = forms [simplifiedInputWord];
+					let matchedForms = constants.vocabularyFormsMap [simplifiedInputWord];
 					
 					if (matchedForms === undefined) {
 						matchedForms = [{
-							text: inputWords [i]
+							text: inputWord
 						}];
 					}
 					
-					// Try to find exact matches
+					// If multiple forms were matched, try to find exact matches
 					// Don't try to find an exact match for inputWords that are simplified
-					else if (matchedForms.length > 1 && inputWords [i] !== simplifiedInputWord) {
+					else if (matchedForms.length > 1 && inputWord !== simplifiedInputWord) {
 						const exactlyMatchedForms = [];
 						
-						const formattedInputWord = utilities.isolateGreek (utilities.oxiaToTonos (inputWords [i]));
+						const formattedInputWord = utilities.isolateGreek (utilities.oxiaToTonos (inputWord));
 						
 						for (let j = 0; j < matchedForms.length; j++) {
 							if (formattedInputWord === matchedForms [j].text) {
@@ -49,11 +50,11 @@ export default {
 						}
 					}
 					
-					pageData.parsedWords.push (matchedForms);
+					pageData.formGroups.push (matchedForms);
 					
 					pageData.selectedOptions.push ({
-						form: 0,
-						use: 0
+						formIndex: 0,
+						useIndex: 0
 					});
 				}
 			}
@@ -63,95 +64,48 @@ export default {
 		
 		pageData.updateProperties = propertyIndices => {
 			pageData.showDescriptions = propertyIndices.includes (0);
-			pageData.showKjvDefinitions = propertyIndices.includes (1);
+			pageData.showGlosses = propertyIndices.includes (1);
 			pageData.showLexicalForms = propertyIndices.includes (2);
 			pageData.showPrincipalParts = propertyIndices.includes (3);
 			
+			// TODO needed?
 			for (let i = 0; i < pageData.selectedOptions.length; i++) {
-				pageData.selectedOptions [i].use = 0;
+				pageData.selectedOptions [i].useIndex = 0;
 			}
 			
 			update ();
 		};
 		
-		pageData.swapForm = i => {
-			pageData.selectedOptions [i].form += 1;
+		pageData.swapForm = formGroupIndex => {
+			pageData.selectedOptions [formGroupIndex].formIndex += 1;
 			
-			if (pageData.selectedOptions [i].form > pageData.parsedWords [i].length - 1) {
-				pageData.selectedOptions [i].form = 0;
+			if (pageData.selectedOptions [formGroupIndex].formIndex > pageData.formGroups [formGroupIndex].length - 1) {
+				pageData.selectedOptions [formGroupIndex].formIndex = 0;
 			}
 			
-			pageData.selectedOptions [i].use = 0;
+			pageData.selectedOptions [formGroupIndex].useIndex = 0;
 			
 			update ();
 		};
 		
-		pageData.swapUse = i => {
-			pageData.selectedOptions [i].use += 1;
+		pageData.swapUse = formGroupIndex => {
+			pageData.selectedOptions [formGroupIndex].useIndex += 1;
 			
-			if (pageData.selectedOptions [i].use > pageData.parsedWords [i] [pageData.selectedOptions [i].form].uses.length - 1) {
-				pageData.selectedOptions [i].use = 0;
+			if (pageData.selectedOptions [formGroupIndex].useIndex > pageData.formGroups [formGroupIndex] [pageData.selectedOptions [formGroupIndex].form].uses.length - 1) {
+				pageData.selectedOptions [formGroupIndex].useIndex = 0;
 			}
 			
 			update ();
 		};
 		
-		pageData.parsedWords = [];
+		pageData.formGroups = [];
 		
 		pageData.showDescriptions = true;
-		pageData.showKjvDefinitions = true;
+		pageData.showGlosses = true;
 		pageData.showLexicalForms = true;
 		pageData.showPrincipalParts = true;
 		
 		pageData.selectedOptions = [];
-		
-		const forms = {};
-		
-		for (let i = 0; i < constants.vocabulary.length; i++) {
-			let lexicalFormIncluded = false;
-			
-			for (let j = 0; j < constants.vocabulary [i].forms.length; j++) {
-				const simplifiedText = utilities.simplifyGreek (constants.vocabulary [i].forms [j].text);
-				
-				const form = {
-					text: constants.vocabulary [i].forms [j].text,
-					uses: constants.vocabulary [i].forms [j].uses,
-					kjvDefinition: constants.vocabulary [i].kjvDefinition,
-					lexicalForm: constants.vocabulary [i].lexicalForm,
-					principalParts: constants.vocabulary [i].principalParts
-				};
-				
-				if (forms [simplifiedText]) {
-					forms [simplifiedText].push (form);
-				}
-				
-				else {
-					forms [simplifiedText] = [form];
-				}
-				
-				if (form.text === constants.vocabulary [i].lexicalForm) {
-					lexicalFormIncluded = true;
-				}
-			}
-			
-			if (!lexicalFormIncluded) {
-				const simplifiedText = utilities.simplifyGreek (constants.vocabulary [i].lexicalForm);
-				
-				const form = {
-					text: constants.vocabulary [i].lexicalForm,
-					lexicalForm: constants.vocabulary [i].lexicalForm,
-					kjvDefinition: constants.vocabulary [i].kjvDefinition
-				};
-				
-				if (forms [simplifiedText]) {
-					forms [simplifiedText].push (form);
-				}
-				
-				else {
-					forms [simplifiedText] = [form];
-				}
-			}
-		}
 	},
 	
 	content: () => html
@@ -161,42 +115,42 @@ export default {
 				
 				<select multiple class = "small-padding medium-font" oninput = "pageData.updateProperties ([...this.selectedOptions].map (option => option.index))">
 					<option class = "medium-font" selected>Description</option>
-					<option class = "medium-font" selected>KJV Definition</option>
+					<option class = "medium-font" selected>Gloss</option>
 					<option class = "medium-font" selected>Lexical Form</option>
 					<option class = "medium-font" selected>Principal Parts</option>
 				</select>
 			</div>
 			
 			<div class = "large-width flex-top flex-wrap medium-gap">
-				${ pageData.parsedWords.map ((parsedWord, i) => {
-					const selectedForm = parsedWord [pageData.selectedOptions [i].form];
+				${ pageData.formGroups.map ((formGroup, formGroupIndex) => {
+					const form = formGroup [pageData.selectedOptions [formGroupIndex].formIndex];
 					
 					return html
 						`<div class = "parser-word flex-column-top x-small-gap">
-							${ parsedWord.length > 1 ? html
-								`<p class = "xx-large-font parser-swappable-option" onclick = ${ () => pageData.swapForm (i) }>${ selectedForm.text }</p>` : html
-								`<p class = "xx-large-font">${ selectedForm.text }</p>`
+							${ formGroup.length > 1 ? html
+								`<p class = "xx-large-font parser-swappable-option" onclick = ${ () => pageData.swapForm (formGroupIndex) }>${ form.text }</p>` : html
+								`<p class = "xx-large-font">${ form.text }</p>`
 							}
 							
-							${ pageData.showDescriptions || pageData.showKjvDefinitions || pageData.showLexicalForms || pageData.showPrincipalParts ? html
+							${ pageData.showDescriptions || pageData.showGlosses || pageData.showLexicalForms || pageData.showPrincipalParts ? html
 								`<div class = "flex-column small-gap">
-									${ selectedForm.uses === undefined || !pageData.showDescriptions ? null :
-										selectedForm.uses.length > 1 ? html
-											`<p class = "small-font grayA parser-swappable-option" onclick = ${ () => pageData.swapUse (i) }>${ selectedForm.uses [pageData.selectedOptions [i].use].description }</p>` : html
-											`<p class = "small-font grayA">${ selectedForm.uses [0].description }</p>`
+									${ form.uses === undefined || !pageData.showDescriptions ? null :
+										form.uses.length > 1 ? html
+											`<p class = "small-font grayA parser-swappable-option" onclick = ${ () => pageData.swapUse (formGroupIndex) }>${ form.uses [pageData.selectedOptions [formGroupIndex].useIndex].description }</p>` : html
+											`<p class = "small-font grayA">${ form.uses [0].description }</p>`
 									}
 									
-									${ selectedForm.kjvDefinition === undefined || !pageData.showKjvDefinitions ? null : html
-										`<p class = "small-font grayA">${ selectedForm.kjvDefinition }</p>`
+									${ form.word === undefined || !pageData.showGlosses ? null : html
+										`<p class = "small-font grayA">${ form.word.glossesString }</p>`
 									}
 									
-									${ selectedForm.lexicalForm === undefined || !pageData.showLexicalForms ? null : html
-										`<a class = "small-font grayA" href = ${ "#/word/" + selectedForm.lexicalForm.replaceAll (" ", "_") }>${ selectedForm.lexicalForm }</a>`
+									${ form.word?.lexicalForm === undefined || !pageData.showLexicalForms ? null : html
+										`<a class = "small-font grayA" href = ${ "#/word/" + form.word.lexicalForm.replaceAll (" ", "_") }>${ form.word.lexicalForm }</a>`
 									}
 									
-									${ selectedForm.principalParts === undefined || !pageData.showPrincipalParts ? null : html
-										`<p class = "small-font grayA">${ selectedForm.principalParts.map ((part, j) => html
-											`<span class = "small-font grayA" title = ${ constants.principalParts [selectedForm.principalParts.length === 6 ? j : j + 1] }>${ part }</span>${ j === selectedForm.principalParts.length - 1 ? "" : ", " }`
+									${ form.word?.principalParts === undefined || !pageData.showPrincipalParts ? null : html
+										`<p class = "small-font grayA">${ form.word.principalParts.map ((part, j) => html
+											`<span class = "small-font grayA" title = ${ constants.principalParts [j] }>${ part }</span>${ j === 5 ? "" : ", " }`
 										) }</p>`
 									}
 								</div>` : null

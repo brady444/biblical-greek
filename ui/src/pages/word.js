@@ -47,9 +47,15 @@ export default {
 					) }</p>` : null
 				}
 				
-				${ pageData.word.definition ? html
+				<div class = "flex-column-left x-small-gap">
+					${ pageData.word.glosses.map (gloss => html
+						`<p class = "small-font text-left">${ gloss }</p>`
+					) }
+				</div>
+				
+				${ pageData.word.strongsDefinition ? html
 					`<div class = "flex-column-left x-small-gap">
-						${ pageData.word.definition.map (line => line.trim ()).map (line => html
+						${ pageData.word.strongsDefinition.map (line => line.trim ()).map (line => html
 							`<p class = "small-font text-left">${ line }</p>`
 						) }
 						
