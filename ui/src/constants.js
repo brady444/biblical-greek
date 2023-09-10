@@ -1114,6 +1114,8 @@ for (let i = 0; i < vocabularyLength; i++) {
 	
 	word.simplifiedLexicalForm = utilities.simplifyGreek (word.lexicalForm);
 	
+	word.frequency = 0;
+	
 	let formsMapIncludesLexicalForm = false;
 	
 	for (let j = 0; j < word.forms.length; j++) {
@@ -1132,6 +1134,24 @@ for (let i = 0; i < vocabularyLength; i++) {
 		if (form.text === word.lexicalForm) {
 			formsMapIncludesLexicalForm = true;
 		}
+		
+		for (let k = 0; k < form.uses.length; k++) {
+			const use = form.uses [k];
+			
+			use.description = [
+				use.person ? use.person + " person" : undefined,
+				use.mood === "participle" ? use.tense : use.case,
+				use.mood === "participle" ? use.voice : use.number,
+				use.mood === "participle" ? use.mood : use.gender,
+				use.mood === "participle" ? use.case : use.tense,
+				use.mood === "participle" ? use.number : use.voice,
+				use.mood === "participle" ? use.gender : use.mood,
+				use.degree,
+				use.partOfSpeech
+			].filter (property => property !== undefined).join (" ") + " (x" + use.frequency + ")";
+			
+			word.frequency += use.frequency;
+		}
 	}
 	
 	if (!formsMapIncludesLexicalForm) {
@@ -1143,6 +1163,8 @@ for (let i = 0; i < vocabularyLength; i++) {
 	
 	word.glossesString = word.glosses.join ("; ");
 	word.simplifiedGlossesString = word.glossesString.toLowerCase ();
+	
+	word.frequency = word.frequency.toLocaleString ();
 }
 
 const newTestamentBookCount = constants.newTestament.length;

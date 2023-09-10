@@ -373,22 +373,6 @@ const getFormUse = (formText, partOfSpeech, parsingCode) => {
 		}
 	}
 	
-	use.description = [
-		use.person ? use.person + " person" : undefined,
-		use.mood === "participle" ? use.tense : use.case,
-		use.mood === "participle" ? use.voice : use.number,
-		use.mood === "participle" ? use.mood : use.gender,
-		use.mood === "participle" ? use.case : use.tense,
-		use.mood === "participle" ? use.number : use.voice,
-		use.mood === "participle" ? use.gender : use.mood,
-		use.degree,
-		use.partOfSpeech
-	].filter (property => property !== undefined).join (" ");
-	
-	if (use.description === "") {
-		addError ("Form \"" + formText + "\" has a use with an empty description: " + JSON.stringify (use));
-	}
-	
 	return use;
 };
 
@@ -604,6 +588,10 @@ for (let i = 0; i < vocabularyNumbers.length; i++) {
 		forms: []
 	};
 	
+	if (word.strongsKjvDefinition?.startsWith ("--")) {
+		word.strongsKjvDefinition = word.strongsKjvDefinition.slice (2);
+	}
+	
 	// Add quotes around phrases/idioms
 	if (word.lexicalForm.includes (" ")) {
 		word.lexicalForm = "\"" + word.lexicalForm + "\"";
@@ -719,7 +707,6 @@ for (let i = 0; i < morphGntLines.length; i++) {
 	let form = {
 		text: normalizedFormText,
 		lexicalForm: lexicalForm,
-		frequency: 1,
 		uses: [use]
 	};
 	
@@ -783,8 +770,6 @@ for (let i = 0; i < morphGntLines.length; i++) {
 			else {
 				existingForm.uses.push (use);
 			}
-			
-			existingForm.frequency++;
 		}
 		
 		// If the form doesn't exist
@@ -819,26 +804,9 @@ for (let i = 0; i < morphGntLines.length; i++) {
 for (let i = 0; i < data.vocabulary.length; i++) {
 	const word = data.vocabulary [i];
 	
-	word.frequency = 0;
-	
 	for (let j = 0; j < word.forms.length; j++) {
-		const form = word.forms [j];
-		
-		// Update word frequency
-		word.frequency += form.frequency;
-		
-		for (let k = 0; k < form.uses.length; k++) {
-			const use = form.uses [k];
-			
-			// Update use description
-			use.description += " (x" + use.frequency.toLocaleString () + ")";
-		}
-		
-		// Sort uses
-		form.uses.sort (sortFormUses);
+		word.forms [j].uses.sort (sortFormUses);
 	}
-	
-	word.frequency = word.frequency.toLocaleString ();
 	
 	// Sort forms
 	word.forms.sort ((a, b) => sortFormUses (a.uses [0], b.uses [0]));
@@ -854,10 +822,6 @@ for (let i = 0; i < data.vocabulary.length; i++) {
 	// if (word.stepDefinition === undefined) {
 	// 	addError ("Word \"" + word.lexicalForm + "\" is missing a STEPBible definition");
 	// }
-	
-	if (word.glosses.length > 1) {
-		addError ("Word \"" + word.lexicalForm + "\" has multiple glosses: " + word.glosses.map (gloss => "\"" + gloss + "\"").join (", "));
-	}
 }
 
 for (let i = 0; i < data.newTestament.length; i++) {
