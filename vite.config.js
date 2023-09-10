@@ -109,6 +109,7 @@ export default {
 						"target",
 						"test",
 						"textContent",
+						"toLocaleString",
 						"toLowerCase",
 						"toLowerCase",
 						"toUpperCase",
