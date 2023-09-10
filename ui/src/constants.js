@@ -1148,7 +1148,7 @@ for (let i = 0; i < vocabularyLength; i++) {
 				use.mood === "participle" ? use.gender : use.mood,
 				use.degree,
 				use.partOfSpeech
-			].filter (property => property !== undefined).join (" ") + " (x" + use.frequency + ")";
+			].filter (property => property !== undefined).join (" ") + " (x" + use.frequency.toLocaleString () + ")";
 			
 			word.frequency += use.frequency;
 		}
