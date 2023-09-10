@@ -18,15 +18,13 @@ export default {
 		terserOptions: {
 			compress: {
 				arguments: true,
-				drop_console: true,
 				ecma: "latest",
 				passes: 2,
 				toplevel: true
 			},
 			
 			mangle: {
-				toplevel: true,
-				properties: true
+				toplevel: true
 			}
 		}
 	},
