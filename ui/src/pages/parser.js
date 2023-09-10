@@ -115,7 +115,7 @@ export default {
 			<div id = "parser-input" class = "medium-width medium-gap">
 				<textarea class = "small-padding medium-font" placeholder = "Enter Greek..." oninput = "pageData.parse (this.value)" />
 				
-				${ components.wordPropertySelector (pageData.updateProperties) }
+				${ components.wordPropertySelector (pageData.updateProperties, pageData.showDescriptions, pageData.showGlosses, pageData.showLexicalForms, pageData.showPrincipalParts) }
 			</div>
 			
 			<div class = "large-width flex-top flex-wrap medium-gap">
@@ -125,8 +125,8 @@ export default {
 					return html
 						`<div class = "parser-word flex-column-top x-small-gap">
 							${ formGroup.length > 1 ? html
-								`<p class = "xx-large-font parser-swappable-option" onclick = ${ () => pageData.swapForm (formGroupIndex) }>${ form.text }</p>` : html
-								`<p class = "xx-large-font">${ form.text }</p>`
+								`<p class = "x-large-font parser-swappable-option" onclick = ${ () => pageData.swapForm (formGroupIndex) }>${ form.text }</p>` : html
+								`<p class = "x-large-font">${ form.text }</p>`
 							}
 							
 							${ pageData.showDescriptions || pageData.showGlosses || pageData.showLexicalForms || pageData.showPrincipalParts ? html

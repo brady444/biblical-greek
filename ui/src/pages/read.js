@@ -61,8 +61,8 @@ export default {
 		
 		pageData.showDescriptions = true;
 		pageData.showGlosses = true;
-		pageData.showLexicalForms = true;
-		pageData.showPrincipalParts = true;
+		pageData.showLexicalForms = false;
+		pageData.showPrincipalParts = false;
 	},
 	
 	content: () => {
@@ -85,11 +85,11 @@ export default {
 			
 			verses.push (html
 				`<div class = "full-width flex-top-left flex-wrap small-gap">
-					<p class = "xx-large-font">${ i + 1 }</p>
+					<p class = "small-font grayA">${ i + 1 }</p>
 					
 					${ verse.map (word => html
 						`<div class = "parser-word flex-column-top x-small-gap">
-							<p class = "xx-large-font">${ word.text }</p>
+							<p class = "x-large-font">${ word.text }</p>
 							
 							${ pageData.showDescriptions || pageData.showGlosses || pageData.showLexicalForms || pageData.showPrincipalParts ? html
 								`${ pageData.showDescriptions ? html
@@ -128,7 +128,7 @@ export default {
 						${ chapterOptions }
 					</select>
 					
-					${ components.wordPropertySelector (pageData.updateProperties) }
+					${ components.wordPropertySelector (pageData.updateProperties, pageData.showDescriptions, pageData.showGlosses, pageData.showLexicalForms, pageData.showPrincipalParts) }
 				</div>
 				
 				<div class = "large-width flex-top flex-wrap medium-gap">

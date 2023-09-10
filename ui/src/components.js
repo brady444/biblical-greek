@@ -5,11 +5,11 @@
 import { html } from "uhtml";
 
 export default {
-	wordPropertySelector: oninput => html
+	wordPropertySelector: (oninput, showDescriptions, showGlosses, showLexicalForms, showPrincipalParts) => html
 		`<select multiple class = "small-padding medium-font" oninput = ${ oninput }>
-			<option class = "medium-font" selected>Description</option>
-			<option class = "medium-font" selected>Gloss</option>
-			<option class = "medium-font" selected>Lexical Form</option>
-			<option class = "medium-font" selected>Principal Parts</option>
+			<option class = "medium-font" ?selected = ${ showDescriptions }>Description</option>
+			<option class = "medium-font" ?selected = ${ showGlosses }>Gloss</option>
+			<option class = "medium-font" ?selected = ${ showLexicalForms }>Lexical Form</option>
+			<option class = "medium-font" ?selected = ${ showPrincipalParts }>Principal Parts</option>
 		</select>`
 };
