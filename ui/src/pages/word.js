@@ -59,8 +59,8 @@ export default {
 							`<p class = "small-font text-left">${ line }</p>`
 						) }
 						
-						${ pageData.word.kjvDefinition ? html
-							`<p class = "small-font">${ pageData.word.kjvDefinition }</p>` : null
+						${ pageData.word.strongsKjvDefinition ? html
+							`<p class = "small-font">${ pageData.word.strongsKjvDefinition }</p>` : null
 						}
 						
 						<p class = "small-font grayA">Strong's</p>
