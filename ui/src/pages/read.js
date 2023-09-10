@@ -88,7 +88,7 @@ export default {
 					<p class = "small-font grayA">${ i + 1 }</p>
 					
 					${ verse.map (word => html
-						`<div class = "parser-word flex-column-top x-small-gap">
+						`<div class = "parsed-word flex-column-top x-small-gap">
 							<p class = "x-large-font">${ word.text }</p>
 							
 							${ pageData.showDescriptions || pageData.showGlosses || pageData.showLexicalForms || pageData.showPrincipalParts ? html

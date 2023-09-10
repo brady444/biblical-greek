@@ -123,7 +123,7 @@ export default {
 					const form = formGroup [pageData.selectedOptions [formGroupIndex].formIndex];
 					
 					return html
-						`<div class = "parser-word flex-column-top x-small-gap">
+						`<div class = "parsed-word flex-column-top x-small-gap">
 							${ formGroup.length > 1 ? html
 								`<p class = "x-large-font parser-swappable-option" onclick = ${ () => pageData.swapForm (formGroupIndex) }>${ form.text }</p>` : html
 								`<p class = "x-large-font">${ form.text }</p>`

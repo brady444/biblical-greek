@@ -336,6 +336,16 @@ option {
 	pointer-events: none;
 }
 
+/* Reader/Parser */
+
+.parsed-word {
+	width: min-content;
+}
+
+.parsed-word p {
+	word-break: keep-all;
+}
+
 /* Reader */
 
 #reader-input {
@@ -344,14 +354,6 @@ option {
 }
 
 /* Parser */
-
-.parser-word {
-	width: min-content;
-}
-
-.parser-word p {
-	word-break: keep-all;
-}
 
 .parser-swappable-option {
 	text-decoration: underline dotted from-font;
