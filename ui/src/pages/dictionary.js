@@ -76,7 +76,7 @@ export default {
 					vocabulary.push (dictionaryWord);
 				}
 					
-				if (word.simplifiedGlossesString.includes (formattedQuery)) {
+				else if (word.simplifiedGlossesString.includes (formattedQuery)) {
 					dictionaryWord.subtitle = word.glossesString;
 					
 					vocabulary.push (dictionaryWord);
