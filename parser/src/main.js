@@ -933,7 +933,7 @@ data.errors = [...data.errors];
 
 // Output data
 
-const output = JSON.stringify (data, null, "\t") + "\n";
+const output = "export default " + JSON.stringify (data, null, "\t") + ";\n";
 
 console.log ("Word count: " + data.vocabulary.length.toLocaleString ());
 console.log ("Error count: " + data.errors.length.toLocaleString ());

@@ -1,5 +1,5 @@
 import utilities from "./utilities.js";
-import data from "/res/data.json";
+import data from "/res/data.js";
 
 const constants = {
 	// Import data from the parser

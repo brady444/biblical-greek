@@ -1,23 +1,24 @@
 {
-	"name": "biblical-greek",
-	"private": true,
-	"version": "1.0.0",
-	"type": "module",
-	"scripts": {
-		"prepare": "husky install",
-		"parser": "eslint_d parser/src/**/*.js && bun parser/src/main.js",
-		"start": "bun parser && vite",
-		"build": "bun parser && vite build --emptyOutDir"
-	},
-	"devDependencies": {
-		"eslint": "^8.48.0",
-		"husky": "^8.0.3",
-		"stylelint": "^15.10.3",
-		"uhtml": "^3.2.1",
-		"vite": "^4.4.9",
-		"vite-plugin-eslint": "^1.8.1",
-		"vite-plugin-filter-replace": "^0.1.12",
-		"vite-plugin-stylelint": "^5.1.1",
-		"vite-plugin-watch": "^0.2.0"
-	}
+  "name": "biblical-greek",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "prepare": "husky install",
+    "parser": "eslint_d parser/src/**/*.js && bun parser/src/main.js",
+    "start": "bun parser && vite",
+    "build": "bun parser && vite build"
+  },
+  "devDependencies": {
+    "eslint": "^8.48.0",
+    "husky": "^8.0.3",
+    "stylelint": "^15.10.3",
+    "terser": "^5.19.4",
+    "uhtml": "^3.2.1",
+    "vite": "^4.4.9",
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-filter-replace": "^0.1.12",
+    "vite-plugin-stylelint": "^5.1.1",
+    "vite-plugin-watch": "^0.2.0"
+  }
 }

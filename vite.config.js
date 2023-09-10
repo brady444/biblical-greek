@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+
 import { splitVendorChunkPlugin } from "vite";
 import eslint from "vite-plugin-eslint";
 import stylelint from "vite-plugin-stylelint";
@@ -8,7 +10,25 @@ export default {
 	root: "ui",
 	
 	build: {
-		outDir: "../docs"
+		target: "esnext",
+		outDir: "../docs",
+		emptyOutDir: true,
+		minify: "terser",
+		
+		terserOptions: {
+			compress: {
+				arguments: true,
+				drop_console: true,
+				ecma: "latest",
+				passes: 2,
+				toplevel: true
+			},
+			
+			mangle: {
+				toplevel: true,
+				properties: true
+			}
+		}
 	},
 	
 	server: {

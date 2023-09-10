@@ -1,4 +1,8 @@
 {
+	"ignorePatterns": [
+		"/ui/res/**"
+	],
+	
 	"plugins": [
 	],
 	
