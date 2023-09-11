@@ -44,7 +44,7 @@ const constants = {
 	newTestamentChapterCounts: [],
 	
 	// Used for tooltips on principal parts
-	principalParts: ["present", "future active/middle", "aorist active/middle", "perfect active", "perfect middle/passive", "aorist passive"],
+	principalParts: ["Present", "Future Active/Middle", "Aorist Active/Middle", "Perfect Active", "Perfect Middle/Passive", "Aorist Passive"],
 	
 	practiceVocabularyChoiceCount: 8,
 	
@@ -1109,12 +1109,12 @@ const vocabularyLength = constants.vocabulary.length;
 for (let i = 0; i < vocabularyLength; i++) {
 	const word = constants.vocabulary [i];
 	
+	word.frequency = 0;
+	
 	constants.vocabularyMap [word.lexicalForm] = word;
 	constants.vocabularyNumberMap [word.number] = word;
 	
 	word.simplifiedLexicalForm = utilities.simplifyGreek (word.lexicalForm);
-	
-	word.frequency = 0;
 	
 	let formsMapIncludesLexicalForm = false;
 	
@@ -1122,6 +1122,7 @@ for (let i = 0; i < vocabularyLength; i++) {
 		const form = word.forms [j];
 		
 		form.word = word;
+		form.frequency = 0;
 		
 		const simplifiedFormText = utilities.simplifyGreek (form.text);
 		
@@ -1138,7 +1139,7 @@ for (let i = 0; i < vocabularyLength; i++) {
 		for (let k = 0; k < form.uses.length; k++) {
 			const use = form.uses [k];
 			
-			use.description = [
+			use.shortDescription = [
 				use.person ? use.person + " person" : undefined,
 				use.mood === "participle" ? use.tense : use.case,
 				use.mood === "participle" ? use.voice : use.number,
@@ -1148,9 +1149,12 @@ for (let i = 0; i < vocabularyLength; i++) {
 				use.mood === "participle" ? use.gender : use.mood,
 				use.degree,
 				use.partOfSpeech
-			].filter (property => property !== undefined).join (" ") + " (x" + use.frequency.toLocaleString () + ")";
+			].filter (property => property !== undefined).join (" ");
+			
+			use.description = use.shortDescription + " (x" + use.frequency.toLocaleString () + ")";
 			
 			word.frequency += use.frequency;
+			form.frequency += use.frequency;
 		}
 	}
 	
@@ -1193,8 +1197,9 @@ for (let i = 0; i < constants.newTestament.length; i++) {
 				
 				verse [l] = {
 					text: word.text,
-					description: vocabularyWord?.forms [word.formIndex]?.uses [word.useIndex].description,
-					...vocabularyWord
+					word: vocabularyWord,
+					form: vocabularyWord?.forms [word.formIndex],
+					use: vocabularyWord?.forms [word.formIndex]?.uses [word.useIndex]
 				};
 			}
 		}

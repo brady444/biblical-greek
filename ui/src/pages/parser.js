@@ -70,6 +70,7 @@ export default {
 			pageData.showGlosses = propertyIndices.includes (1);
 			pageData.showLexicalForms = propertyIndices.includes (2);
 			pageData.showPrincipalParts = propertyIndices.includes (3);
+			pageData.showFrequencies = propertyIndices.includes (4);
 			
 			for (let i = 0; i < pageData.selectedOptions.length; i++) {
 				pageData.selectedOptions [i].useIndex = 0;
@@ -106,6 +107,7 @@ export default {
 		pageData.showGlosses = true;
 		pageData.showLexicalForms = true;
 		pageData.showPrincipalParts = true;
+		pageData.showFrequencies = true;
 		
 		pageData.selectedOptions = [];
 	},
@@ -115,7 +117,7 @@ export default {
 			<div id = "parser-input" class = "medium-width medium-gap">
 				<textarea class = "small-padding medium-font" placeholder = "Enter Greek..." oninput = "pageData.parse (this.value)" />
 				
-				${ components.wordPropertySelector (pageData.updateProperties, pageData.showDescriptions, pageData.showGlosses, pageData.showLexicalForms, pageData.showPrincipalParts) }
+				${ components.wordPropertySelector (pageData.updateProperties, pageData.showDescriptions, pageData.showGlosses, pageData.showLexicalForms, pageData.showPrincipalParts, pageData.showFrequencies) }
 			</div>
 			
 			<div class = "large-width flex-top flex-wrap medium-gap">
@@ -129,26 +131,34 @@ export default {
 								`<p class = "x-large-font">${ form.text }</p>`
 							}
 							
-							${ pageData.showDescriptions || pageData.showGlosses || pageData.showLexicalForms || pageData.showPrincipalParts ? html
+							${ form.word !== undefined && (pageData.showDescriptions || pageData.showGlosses || pageData.showLexicalForms || pageData.showPrincipalParts || pageData.showFrequencies) ? html
 								`<div class = "flex-column small-gap">
 									${ form.uses === undefined || !pageData.showDescriptions ? null :
 										form.uses.length > 1 ? html
-											`<p class = "small-font grayA parser-swappable-option" onclick = ${ () => pageData.swapUse (formGroupIndex) }>${ form.uses [pageData.selectedOptions [formGroupIndex].useIndex].description }</p>` : html
-											`<p class = "small-font grayA">${ form.uses [0].description }</p>`
+											`<p class = "small-font grayA parser-swappable-option" onclick = ${ () => pageData.swapUse (formGroupIndex) }>${ form.uses [pageData.selectedOptions [formGroupIndex].useIndex].shortDescription }</p>` : html
+											`<p class = "small-font grayA">${ form.uses [0].shortDescription }</p>`
 									}
 									
-									${ form.word === undefined || !pageData.showGlosses ? null : html
-										`<p class = "small-font grayA">${ form.word.glossesString }</p>`
+									${ pageData.showGlosses ? html
+										`<p class = "small-font grayA">${ form.word.glossesString }</p>` : null
 									}
 									
-									${ form.word?.lexicalForm === undefined || !pageData.showLexicalForms ? null : html
-										`<a class = "small-font grayA" href = ${ "#/word/" + form.word.lexicalForm.replaceAll (" ", "_") }>${ form.word.lexicalForm }</a>`
+									${ pageData.showLexicalForms ? html
+										`<a class = "small-font grayA" href = ${ "#/word/" + form.word.lexicalForm.replaceAll (" ", "_") }>${ form.word.lexicalForm }</a>` : null
 									}
 									
-									${ form.word?.principalParts === undefined || !pageData.showPrincipalParts ? null : html
+									${ pageData.showPrincipalParts && form.word.principalParts !== undefined ? html
 										`<p class = "small-font grayA">${ form.word.principalParts.map ((part, j) => html
 											`<span class = "small-font grayA" title = ${ constants.principalParts [j] }>${ part }</span>${ j === 5 ? "" : ", " }`
-										) }</p>`
+										) }</p>` : null
+									}
+									
+									${ pageData.showFrequencies && form.frequency !== undefined ? html
+										`<div class = "flex-column">
+											<p class = "small-font grayA" title = "Word">x${ form.word.frequency.toLocaleString () }</p>
+											<p class = "small-font grayA" title = "Form">x${ form.frequency.toLocaleString () }</p>
+											<p class = "small-font grayA" title = "Use">x${ form.uses [pageData.selectedOptions [formGroupIndex].useIndex].frequency.toLocaleString () }</p>
+										</div>` : null
 									}
 								</div>` : null
 							}

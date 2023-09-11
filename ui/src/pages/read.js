@@ -55,6 +55,7 @@ export default {
 			pageData.showGlosses = propertyIndices.includes (1);
 			pageData.showLexicalForms = propertyIndices.includes (2);
 			pageData.showPrincipalParts = propertyIndices.includes (3);
+			pageData.showFrequencies = propertyIndices.includes (4);
 			
 			update ();
 		};
@@ -63,6 +64,7 @@ export default {
 		pageData.showGlosses = true;
 		pageData.showLexicalForms = false;
 		pageData.showPrincipalParts = false;
+		pageData.showFrequencies = false;
 	},
 	
 	content: () => {
@@ -91,23 +93,31 @@ export default {
 						`<div class = "parsed-word flex-column-top x-small-gap">
 							<p class = "x-large-font">${ word.text }</p>
 							
-							${ pageData.showDescriptions || pageData.showGlosses || pageData.showLexicalForms || pageData.showPrincipalParts ? html
+							${ word.word !== undefined && (pageData.showDescriptions || pageData.showGlosses || pageData.showLexicalForms || pageData.showPrincipalParts || pageData.showFrequencies) ? html
 								`${ pageData.showDescriptions ? html
-									`<p class = "small-font grayA">${ word.description }</p>` : null
+									`<p class = "small-font grayA">${ word.use.shortDescription }</p>` : null
 								}
 								
 								${ pageData.showGlosses ? html
-									`<p class = "small-font grayA">${ word.glossesString }</p>` : null
+									`<p class = "small-font grayA">${ word.word.glossesString }</p>` : null
 								}
 								
-								${ word.lexicalForm === undefined || !pageData.showLexicalForms ? null : html
-									`<a class = "small-font grayA" href = ${ "#/word/" + word.lexicalForm.replaceAll (" ", "_") }>${ word.lexicalForm }</a>`
+								${ pageData.showLexicalForms ? html
+									`<a class = "small-font grayA" href = ${ "#/word/" + word.word.lexicalForm.replaceAll (" ", "_") }>${ word.word.lexicalForm }</a>` : null
 								}
 								
-								${ word.principalParts === undefined || !pageData.showPrincipalParts ? null : html
-									`<p class = "small-font grayA">${ word.principalParts.map ((part, j) => html
+								${ pageData.showPrincipalParts && word.word.principalParts !== undefined ? html
+									`<p class = "small-font grayA">${ word.word.principalParts.map ((part, j) => html
 										`<span class = "small-font grayA" title = ${ constants.principalParts [j] }>${ part }</span>${ j === 5 ? "" : ", " }`
-									) }</p>`
+									) }</p>` : null
+								}
+								
+								${ pageData.showFrequencies ? html
+									`<div class = "flex-column">
+										<p class = "small-font grayA" title = "Word">x${ word.word.frequency.toLocaleString () }</p>
+										<p class = "small-font grayA" title = "Form">x${ word.form.frequency.toLocaleString () }</p>
+										<p class = "small-font grayA" title = "Use">x${ word.use.frequency.toLocaleString () }</p>
+									</div>` : null
 								}
 							</div>` : null
 						}`
@@ -128,7 +138,7 @@ export default {
 						${ chapterOptions }
 					</select>
 					
-					${ components.wordPropertySelector (pageData.updateProperties, pageData.showDescriptions, pageData.showGlosses, pageData.showLexicalForms, pageData.showPrincipalParts) }
+					${ components.wordPropertySelector (pageData.updateProperties, pageData.showDescriptions, pageData.showGlosses, pageData.showLexicalForms, pageData.showPrincipalParts, pageData.showFrequencies) }
 				</div>
 				
 				<div class = "large-width flex-top flex-wrap medium-gap">
