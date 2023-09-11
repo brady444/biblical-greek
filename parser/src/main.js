@@ -895,6 +895,8 @@ for (let i = 0; i < data.newTestament.length; i++) {
 
 data.errors = [...data.errors];
 
+data.errors.sort ();
+
 // Output data
 
 const output = "export default " + JSON.stringify (data, null, "\t") + ";\n";
