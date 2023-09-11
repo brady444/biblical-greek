@@ -140,7 +140,11 @@ export default {
 									}
 									
 									${ pageData.showGlosses ? html
-										`<p class = "small-font grayA">${ form.word.glossesString }</p>` : null
+										`<div class = "flex-column">
+											${ form.word.glosses.map (gloss => html
+												`<p class = "small-font grayA">${ gloss }</p>`
+											) }
+										</div>` : null
 									}
 									
 									${ pageData.showLexicalForms ? html

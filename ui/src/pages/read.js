@@ -99,7 +99,11 @@ export default {
 								}
 								
 								${ pageData.showGlosses ? html
-									`<p class = "small-font grayA">${ word.word.glossesString }</p>` : null
+									`<div class = "flex-column">
+										${ word.word.glosses.map (gloss => html
+											`<p class = "small-font grayA">${ gloss }</p>`
+										) }
+									</div>` : null
 								}
 								
 								${ pageData.showLexicalForms ? html
@@ -122,7 +126,8 @@ export default {
 							</div>` : null
 						}`
 					) }
-				</div>`);
+				</div>`
+			);
 		}
 		
 		return html
