@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 
-import { splitVendorChunkPlugin } from "vite";
 import eslint from "vite-plugin-eslint";
 import stylelint from "vite-plugin-stylelint";
 import replace from "vite-plugin-filter-replace";
@@ -141,7 +140,6 @@ export default {
 	envDir: "../parser",
 	
 	plugins: [
-		splitVendorChunkPlugin (),
 		eslint (),
 		stylelint (),
 		
