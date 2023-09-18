@@ -59,6 +59,7 @@ export default {
 				const word = constants.vocabulary [i];
 				
 				const dictionaryWord = {
+					number: word.number,
 					lexicalForm: word.lexicalForm
 				};
 				
@@ -104,7 +105,7 @@ export default {
 						
 						<div class = "flex flex-wrap x-large-gap">
 							${ vocabularySection.vocabulary.map (word => html
-								`<a class = "small-font grayA" href = ${ "#/word/" + word.lexicalForm.replaceAll (" ", "_") }>${ word.lexicalForm + (word.subtitle === undefined ? "" : ": " + word.subtitle) }</a>`
+								`<a class = "small-font grayA" href = ${ "#/word/" + word.number }>${ word.lexicalForm + (word.subtitle === undefined ? "" : ": " + word.subtitle) }</a>`
 							) }
 						</div>
 					</div>`

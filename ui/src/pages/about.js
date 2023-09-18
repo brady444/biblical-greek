@@ -35,26 +35,6 @@ export default {
 				</div>
 				
 				<div class = "flex-column small-gap">
-					<p class = "medium-font">The SBLGNT</p>
-					
-					<p class = "small-font grayA">The SBLGNT, jointly published by both the Society of Biblical Literature and Logos Bible Software.</p>
-					
-					<a class = "small-font underlined grayA" href = "https://sblgnt.com">https://sblgnt.com</a>
-					
-					<p class = "small-font grayA">Licensed under the Creative Commons Attribution 4.0 International Public License: <a class = "underlined grayA" href = "https://sblgnt.com/license">https://sblgnt.com/license</a>
-				</div>
-				
-				<div class = "flex-column small-gap">
-					<p class = "medium-font">MorphGNT: SBLGNT Edition</p>
-					
-					<p class = "small-font grayA">Tauber, J. K., ed. (2017) MorphGNT: SBLGNT Edition. Version 6.12 [Data set]. <a class = "underlined grayA" href = "https://github.com/morphgnt/sblgnt">https://github.com/morphgnt/sblgnt</a> DOI: 10.5281/zenodo.376200</p>
-					
-					<p class = "small-font grayA">Project to merge the MorphGNT analysis with the SBLGNT text.</p>
-					
-					<p class = "small-font grayA">The SBLGNT text itself is subject to the SBLGNT EULA and the morphological parsing and lemmatization is made available under a CC-BY-SA License (<a class = "underlined grayA" href = "https://creativecommons.org/licenses/by-sa/3.0/legalcode">v3</a>, <a class = "underlined grayA" href = "https://creativecommons.org/licenses/by-sa/4.0/legalcode">v4</a>).</p>
-				</div>
-				
-				<div class = "flex-column small-gap">
 					<p class = "medium-font">TBESG - Translators Brief lexicon of Extended Strongs for Greek</p>
 					
 					<p class = "small-font grayA">STEP Bible</p>
@@ -75,19 +55,55 @@ export default {
 					
 					<p class = "small-font grayA">Data created by <a class = "underlined grayA" href = "https://www.stepbible.org">www.STEPBible.org</a> based on work at Tyndale House Cambridge (<a class = "underlined grayA" href = "https://creativecommons.org/licenses/by/4.0/legalcode">CC BY 4.0</a>)</p>
 				</div>
-			
-			${ constants.errors.length > 0 ? html
-				`<div class = "medium-width flex-column-top large-gap">
-					<p class = "small-font">This website uses an automated parser to generate its data. The data may contain inaccuracies or errors. Some errors are caught during the parsing process. These errors are listed below. There may be more errors that are not listed. These errors may also be outdated or inaccurate.</p>
+				
+				<div class = "flex-column small-gap">
+					<p class = "medium-font">The SBLGNT</p>
 					
-					<div class = "flex-column medium-width x-large-gap">
-						<div class = "flex-column-left full-width small-gap">
-							${ constants.errors.map (error => html
-								`<pre class = "text-left small-font grayA">${ error }</pre>`
-							) }
+					<p class = "small-font grayA">The SBLGNT, jointly published by both the Society of Biblical Literature and Logos Bible Software.</p>
+					
+					<a class = "small-font underlined grayA" href = "https://sblgnt.com">https://sblgnt.com</a>
+					
+					<p class = "small-font grayA">Licensed under the Creative Commons Attribution 4.0 International Public License: <a class = "underlined grayA" href = "https://sblgnt.com/license">https://sblgnt.com/license</a>
+				</div>
+				
+				<div class = "flex-column small-gap">
+					<p class = "medium-font">MorphGNT: SBLGNT Edition</p>
+					
+					<p class = "small-font grayA">Tauber, J. K., ed. (2017) MorphGNT: SBLGNT Edition. Version 6.12 [Data set]. <a class = "underlined grayA" href = "https://github.com/morphgnt/sblgnt">https://github.com/morphgnt/sblgnt</a> DOI: 10.5281/zenodo.376200</p>
+					
+					<a class = "underlined small-font grayA" href = "https://jktauber.com">https://jktauber.com</a>
+					
+					<p class = "small-font grayA">Project to merge the MorphGNT analysis with the SBLGNT text.</p>
+					
+					<p class = "small-font grayA">The SBLGNT text itself is subject to the SBLGNT EULA and the morphological parsing and lemmatization is made available under a CC-BY-SA License (<a class = "underlined grayA" href = "https://creativecommons.org/licenses/by-sa/3.0/legalcode">v3</a>, <a class = "underlined grayA" href = "https://creativecommons.org/licenses/by-sa/4.0/legalcode">v4</a>).</p>
+				</div>
+				
+				<div class = "flex-column small-gap">
+					<p class = "medium-font">greek-lemma-mappings</p>
+					
+					<p class = "small-font grayA">J. K. Tauber</p>
+					
+					<a class = "underlined small-font grayA" href = "https://jktauber.com">https://jktauber.com</a>
+					
+					<a class = "underlined grayA" href = "https://creativecommons.org/licenses/by-sa/4.0/legalcode">CC-BY-SA 4.0</a>
+					
+					<a class = "underlined small-font grayA" href = "https://github.com/jtauber/greek-lemma-mappings">https://github.com/jtauber/greek-lemma-mappings</a>
+					
+					<p class = "small-font grayA">Mappings between the headwords of various NT Greek lexicons, the lemmas of MorphGNT and Nestle 1904, and Strongs and GK numbers</p>
+				</div>
+				
+				${ constants.errors.length > 0 ? html
+					`<div class = "medium-width flex-column-top large-gap">
+						<p class = "small-font">This website uses an automated parser to generate its data. The data may contain inaccuracies or errors. Some errors are caught during the parsing process. These errors are listed below. There may be more errors that are not listed. These errors may also be outdated or inaccurate.</p>
+						
+						<div class = "flex-column medium-width x-large-gap">
+							<div class = "flex-column-left full-width small-gap">
+								${ constants.errors.map (error => html
+									`<pre class = "text-left small-font grayA">${ error }</pre>`
+								) }
+							</div>
 						</div>
-					</div>
-				</div>` : null
-			}
+					</div>` : null
+				}
 		</div>`
 };

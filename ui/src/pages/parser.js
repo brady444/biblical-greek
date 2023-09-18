@@ -148,7 +148,7 @@ export default {
 									}
 									
 									${ pageData.showLexicalForms ? html
-										`<a class = "small-font grayA" href = ${ "#/word/" + form.word.lexicalForm.replaceAll (" ", "_") }>${ form.word.lexicalForm }</a>` : null
+										`<a class = "small-font grayA" href = ${ "#/word/" + form.word.number }>${ form.word.lexicalForm }</a>` : null
 									}
 									
 									${ pageData.showPrincipalParts && form.word.principalParts !== undefined ? html

@@ -12,6 +12,7 @@
   "devDependencies": {
     "eslint": "^8.48.0",
     "husky": "^8.0.3",
+    "js-yaml": "^4.1.0",
     "stylelint": "^15.10.3",
     "terser": "^5.19.4",
     "uhtml": "^3.2.1",

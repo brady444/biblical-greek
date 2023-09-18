@@ -3,6 +3,8 @@ export default {
 	
 	stepBibleLexiconFilePath: "parser/data/TBESG - Translators Brief lexicon of Extended Strongs for Greek - STEPBible.org CC BY.txt",
 	
+	strongsMappingFilePath: "parser/data/strongs_mapping.yaml",
+	
 	outputFilePath: "ui/res/data.js",
 	
 	invalidCharacterRegex: /.*[\w[\]\\{}|;:,<.>/?@$%^_=+"'~`*()-].*/giu,

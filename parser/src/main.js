@@ -1,831 +1,115 @@
 import fs from "fs";
-import path from "path";
 
 import constants from "./constants.js";
 import utilities from "./utilities.js";
+import strongs from "./strongs.js";
+import step from "./step.js";
+import morphGnt from "./morphgnt.js";
+import lemmaMappings from "./lemma-mappings.js";
 
-import strongsGreekDictionary from "../data/strongs-greek-dictionary.js";
-
-const data = {
-	vocabulary: [],
-	// Map lexicalForm -> word
-	vocabularyMap: {},
-	// Map strongsNumber -> word
-	vocabularyNumberMap: {},
-	// Map simplified form text -> array of matching forms
-	vocabularyFormsMap: {},
-	newTestament: [],
+let outputData = {
 	errors: new Set ()
 };
 
 const addError = error => {
-	const formattedError = "Error! " + error;
-	
-	data.errors.add (formattedError);
+	outputData.errors.add (error);
 };
 
-const getFormUse = (formText, partOfSpeech, parsingCode) => {
-	const use = {
-		frequency: 1
+const data = {
+	strongs: strongs.getData (addError),
+	step: step.getData (addError),
+	morphGnt: morphGnt.getData (addError),
+	lemmaMappings: lemmaMappings.getData (addError)
+};
+
+// Merge data
+
+outputData.vocabulary = data.strongs.vocabulary;
+
+// Add step data to vocabulary
+for (let i = 0; i < outputData.vocabulary.length; i++) {
+	const word = outputData.vocabulary [i];
+	
+	outputData.vocabulary [i] = {
+		...word,
+		// Add the data from STEPBible's vocabulary (for any duplicate fields, this overwrites Strong's data with STEPBible's)
+		...data.step.vocabulary [word.number]
 	};
-	
-	switch (partOfSpeech) {
-		case "A-": {
-			use.partOfSpeech = "adjective";
-			
-			break;
-		}
-		
-		case "C-": {
-			use.partOfSpeech = "conjunction";
-			
-			break;
-		}
-		
-		case "D-": {
-			use.partOfSpeech = "adverb";
-			
-			break;
-		}
-		
-		case "I-": {
-			use.partOfSpeech = "interjection";
-			
-			break;
-		}
-		
-		case "N-": {
-			use.partOfSpeech = "noun";
-			
-			break;
-		}
-		
-		case "P-": {
-			use.partOfSpeech = "preposition";
-			
-			break;
-		}
-		
-		case "RA": {
-			use.partOfSpeech = "definite article";
-			
-			break;
-		}
-		
-		case "RD": {
-			use.partOfSpeech = "demonstrative pronoun";
-			
-			break;
-		}
-		
-		case "RI": {
-			use.partOfSpeech = "interrogative/indefinite pronoun";
-			
-			break;
-		}
-		
-		case "RP": {
-			use.partOfSpeech = "personal pronoun";
-			
-			break;
-		}
-		
-		case "RR": {
-			use.partOfSpeech = "relative pronoun";
-			
-			break;
-		}
-		
-		case "V-": {
-			use.partOfSpeech = "verb";
-			
-			break;
-		}
-		
-		case "X-": {
-			use.partOfSpeech = "particle";
-			
-			break;
-		}
-		
-		default: {
-			addError ("Invalid partOfSpeech \"" + partOfSpeech + "\" in form \"" + formText + "\"");
-		}
-	}
-	
-	switch (parsingCode [0]) {
-		case "-": {
-			break;
-		}
-		
-		case "1": {
-			use.person = "1st";
-			
-			break;
-		}
-		
-		case "2": {
-			use.person = "2nd";
-			
-			break;
-		}
-		
-		case "3": {
-			use.person = "3rd";
-			
-			break;
-		}
-		
-		default: {
-			addError ("Invalid person \"" + parsingCode [0] + "\" in form \"" + formText + "\"");
-		}
-	}
-	
-	switch (parsingCode [1]) {
-		case "-": {
-			break;
-		}
-		
-		case "P": {
-			use.tense = "present";
-			
-			break;
-		}
-		
-		case "I": {
-			use.tense = "imperfect";
-			
-			break;
-		}
-		
-		case "F": {
-			use.tense = "future";
-			
-			break;
-		}
-		
-		case "A": {
-			use.tense = "aorist";
-			
-			break;
-		}
-		
-		case "X": {
-			use.tense = "perfect";
-			
-			break;
-		}
-		
-		case "Y": {
-			use.tense = "pluperfect";
-			
-			break;
-		}
-		
-		default: {
-			addError ("Invalid tense \"" + parsingCode [1] + "\" in form \"" + formText + "\"");
-		}
-	}
-	
-	switch (parsingCode [2]) {
-		case "-": {
-			break;
-		}
-		
-		case "A": {
-			use.voice = "active";
-			
-			break;
-		}
-		
-		case "M": {
-			use.voice = "middle";
-			
-			break;
-		}
-		
-		case "P": {
-			use.voice = "passive";
-			
-			break;
-		}
-		
-		default: {
-			addError ("Invalid voice \"" + parsingCode [2] + "\" in form \"" + formText + "\"");
-		}
-	}
-	
-	switch (parsingCode [3]) {
-		case "-": {
-			break;
-		}
-		
-		case "I": {
-			use.mood = "indicative";
-			
-			break;
-		}
-		
-		case "D": {
-			use.mood = "imperative";
-			
-			break;
-		}
-		
-		case "S": {
-			use.mood = "subjunctive";
-			
-			break;
-		}
-		
-		case "O": {
-			use.mood = "optative";
-			
-			break;
-		}
-		
-		case "N": {
-			use.mood = "infinitive";
-			
-			break;
-		}
-		
-		case "P": {
-			use.mood = "participle";
-			
-			break;
-		}
-		
-		default: {
-			addError ("Invalid mood \"" + parsingCode [3] + "\" in form \"" + formText + "\"");
-		}
-	}
-	
-	switch (parsingCode [4]) {
-		case "-": {
-			break;
-		}
-		
-		case "N": {
-			use.case = "nominative";
-			
-			break;
-		}
-		
-		case "G": {
-			use.case = "genitive";
-			
-			break;
-		}
-		
-		case "D": {
-			use.case = "dative";
-			
-			break;
-		}
-		
-		case "A": {
-			use.case = "accusative";
-			
-			break;
-		}
-		
-		case "V": {
-			use.case = "vocative";
-			
-			break;
-		}
-		
-		default: {
-			addError ("Invalid case \"" + parsingCode [4] + "\" in form \"" + formText + "\"");
-		}
-	}
-	
-	switch (parsingCode [5]) {
-		case "-": {
-			break;
-		}
-		
-		case "S": {
-			use.number = "singular";
-			
-			break;
-		}
-		
-		case "P": {
-			use.number = "plural";
-			
-			break;
-		}
-		
-		default: {
-			addError ("Invalid number \"" + parsingCode [5] + "\" in form \"" + formText + "\"");
-		}
-	}
-	
-	switch (parsingCode [6]) {
-		case "-": {
-			break;
-		}
-		
-		case "M": {
-			use.gender = "masculine";
-			
-			break;
-		}
-		
-		case "F": {
-			use.gender = "feminine";
-			
-			break;
-		}
-		
-		case "N": {
-			use.gender = "neuter";
-			
-			break;
-		}
-		
-		default: {
-			addError ("Invalid gender \"" + parsingCode [6] + "\" in form \"" + formText + "\"");
-		}
-	}
-	
-	switch (parsingCode [7]) {
-		case "-": {
-			break;
-		}
-		
-		case "C": {
-			use.degree = "comparative";
-			
-			break;
-		}
-		
-		case "S": {
-			use.degree = "superlative";
-			
-			break;
-		}
-		
-		default: {
-			addError ("Invalid degree \"" + parsingCode [7] + "\" in form \"" + formText + "\"");
-		}
-	}
-	
-	return use;
-};
-
-const sortFormUses = (a, b) => {
-	const propertyKeys = Object.keys (constants.formUseProperties);
-	const propertyValues = Object.values (constants.formUseProperties);
-	
-	for (let j = 0; j < propertyKeys.length; j++) {
-		const aIndex = propertyValues [j].indexOf (a [propertyKeys [j]]);
-		const bIndex = propertyValues [j].indexOf (b [propertyKeys [j]]);
-		
-		if (aIndex !== -1 && bIndex === -1) {
-			return -1;
-		}
-		
-		if (aIndex === -1 && bIndex !== -1) {
-			return 1;
-		}
-		
-		if (aIndex < bIndex) {
-			return -1;
-		}
-		
-		if (aIndex > bIndex) {
-			return 1;
-		}
-	}
-	
-	return 0;
-};
-
-const approximatePrincipalPart = (formText, use) => {
-	const endingCategories = constants.personalEndings [use.tense === "present" || use.tense === "future" ? "primary" : "secondary"] [use.person] [use.voice];
-	
-	for (let i = 0; i < endingCategories.length; i++) {
-		const endingGroup = endingCategories [i];
-			
-		for (let j = 0; j < endingGroup.endings.length; j++) {
-			if (formText.endsWith (endingGroup.endings [j])) {
-				return "[" + formText.slice (0, -endingGroup.endings [j].length) + endingGroup.firstSingular + "]";
-			}
-		}
-	}
-	
-	return "[" + formText + "]";
-};
-
-const getPrincipalParts = word => {
-	let hasVerbUse = false;
-	
-	const principalPartsData = [
-		{
-			text: "-"
-		},
-		
-		{
-			text: "-"
-		},
-		
-		{
-			text: "-"
-		},
-		
-		{
-			text: "-"
-		},
-		
-		{
-			text: "-"
-		},
-		
-		{
-			text: "-"
-		}
-	];
-	
-	for (let j = 0; j < word.forms.length; j++) {
-		const form = word.forms [j];
-		
-		for (let k = 0; k < form.uses.length; k++) {
-			const use = form.uses [k];
-			
-			if (use.partOfSpeech !== "verb") {
-				continue;
-			}
-			
-			hasVerbUse = true;
-			
-			if (use.mood !== "indicative") {
-				continue;
-			}
-			
-			// Assign partIndex based on tense and voice of the current use
-			
-			let partIndex;
-			
-			// Present
-			if (use.tense === "present") {
-				partIndex = 0;
-			}
-			
-			// Future Active/Middle
-			else if (use.tense === "future" &&
-				use.voice !== "passive") {
-				partIndex = 1;
-			}
-			
-			// Aorist Active/Middle
-			else if (use.tense === "aorist" &&
-				use.voice !== "passive") {
-				partIndex = 2;
-			}
-			
-			// Perfect Active
-			else if (use.tense === "perfect" &&
-				use.voice === "active") {
-				partIndex = 3;
-			}
-			
-			// Perfect Middle/Passive
-			else if (use.tense === "perfect" &&
-				use.voice !== "active") {
-				partIndex = 4;
-			}
-			
-			// Aorist Passive
-			else if (use.tense === "aorist" &&
-				use.voice === "passive") {
-				partIndex = 5;
-			}
-			
-			else {
-				// If this use doesn't match any parts
-				continue;
-			}
-			
-			const currentPart = principalPartsData [partIndex];
-			
-			const isPartSet = currentPart.text !== "-";
-			const isPartApproximated = currentPart.text [0] === "[";
-			
-			// Don't overwrite non-approximated parts
-			if (isPartSet && !isPartApproximated) {
-				continue;
-			}
-			
-			// If this use is 1st person singular, set the part without approximating
-			if (use.person === "1st" && use.number === "singular") {
-				principalPartsData [partIndex] = {
-					text: form.text,
-					voice: use.voice
-				};
-				
-				continue;
-			}
-			
-			// Don't overwrite the part if the current use has a lower voice
-			if ((currentPart.voice === "active" && use.voice !== "active") ||
-				(currentPart.voice === "middle" && use.voice === "passive")) {
-				continue;
-			}
-			
-			// Approximate the part
-			const approximatedPart = approximatePrincipalPart (form.text, use);
-			
-			// If this is present tense, and the form is different from the lexical form
-			if (partIndex === 0 && approximatedPart !== "[" + word.lexicalForm + "]") {
-				// TODO add other exceptions
-				// If this is a contract verb, the lexicalForm is expected to be different
-				if ((!word.lexicalForm.endsWith ("άω") &&
-					!word.lexicalForm.endsWith ("έω") &&
-					!word.lexicalForm.endsWith ("όω")) || approximatedPart.endsWith ("ῶ")) {
-					addError ("Word \"" + word.lexicalForm + "\" has an approximated present principal part \"" + approximatedPart + "\" that is different from its lexical form");
-				}
-			}
-			
-			// If the approximatedPrincipalPart is the same as form.text
-			if (approximatedPart === "[" + form.text + "]") {
-				addError ("Word \"" + word.lexicalForm + "\" has an approximated principal part that is the same as a non-first person singular form, part: \"" + approximatedPart + "\"");
-			}
-			
-			// If the principal part was already approximated
-			if (isPartSet && isPartApproximated &&
-				// , and differs from the new approximation
-				currentPart.text !== approximatedPart) {
-				addError ("Word \"" + word.lexicalForm + "\" has multiple approximations for the same principal part, index: " + partIndex + ", parts: \"" + currentPart.text + ", " + approximatedPart + "\"");
-			}
-			
-			principalPartsData [partIndex] = {
-				text: approximatedPart,
-				voice: use.voice
-			};
-		}
-	}
-	
-	return hasVerbUse ? principalPartsData.map (part => part.text) : undefined;
-};
-
-// Parse Strong's Greek Dictionary
-
-const vocabularyNumbers = Object.keys (strongsGreekDictionary)
-	.sort ((a, b) => parseInt (a.slice (1)) - parseInt (b.slice (1)));
-
-for (let i = 0; i < vocabularyNumbers.length; i++) {
-	const number = vocabularyNumbers [i];
-	
-	const word = {
-		number: number,
-		lexicalForm: strongsGreekDictionary [number].lemma?.trim (),
-		transliteration: "/" + strongsGreekDictionary [number].translit + "/",
-		strongsDefinition: ((strongsGreekDictionary [number].derivation ?? "") + strongsGreekDictionary [number].strongs_def).split (";").map (line => line.trim ()),
-		strongsKjvDefinition: strongsGreekDictionary [number].kjv_def,
-		forms: []
-	};
-	
-	if (word.strongsKjvDefinition?.startsWith ("--")) {
-		word.strongsKjvDefinition = word.strongsKjvDefinition.slice (2);
-	}
-	
-	// Add quotes around phrases/idioms
-	if (word.lexicalForm.includes (" ")) {
-		word.lexicalForm = "\"" + word.lexicalForm + "\"";
-	}
-	
-	if (word.transliteration === undefined) {
-		addError ("Word \"" + word.lexicalForm + "\" is missing a transliteration");
-	}
-	
-	if (word.strongsDefinition === undefined) {
-		addError ("Word \"" + word.lexicalForm + "\" is missing a Strong's definition");
-	}
-	
-	if (word.strongsKjvDefinition === undefined) {
-		addError ("Word \"" + word.lexicalForm + "\" is missing a Strong's KJV Definition");
-	}
-	
-	data.vocabularyMap [word.lexicalForm] = word;
-	data.vocabularyNumberMap [word.number] = word;
-	data.vocabulary.push (word);
 }
 
-// Sort vocabulary
+// Map of Strong's number -> word
+const vocabularyNumberMap = {};
 
-data.vocabulary.sort ((a, b) => a.lexicalForm.replaceAll (/[-"]/gu, "").localeCompare (b.lexicalForm.replaceAll (/[-"]/gu, "")));
-
-// Parse STEPBible lexicon
-
-const stepBibleLexicon = utilities.oxiaToTonos (fs.readFileSync (constants.stepBibleLexiconFilePath, "utf8"));
-
-// The data starts at line 90, and we exclude the last newline
-const stepBibleLines = stepBibleLexicon.split ("\n").slice (90, -1);
-
-for (let i = 0; i < stepBibleLines.length; i++) {
-	const columns = stepBibleLines [i].split ("\t");
+// Populate vocabularyNumberMap
+for (let i = 0; i < outputData.vocabulary.length; i++) {
+	const word = outputData.vocabulary [i];
 	
-	const extendedStrongsNumber = "G" + parseInt (columns [0].slice (1));
-	// const disambiguatedStrongsNumber = columns [1];
-	// const unifiedStrongsNumber = columns [2];
-	const lexicalForm = columns [3];
-	// const transliteration = columns [4];
-	// const morph = columns [5];
-	const gloss = columns [6];
-	// const definition = columns [7];
-	
-	// Stop at G6000
-	if (extendedStrongsNumber === "G6000") {
-		break;
-	}
-	
-	const word = data.vocabularyNumberMap [extendedStrongsNumber];
-	
-	if (word === undefined) {
-		addError ("STEPBible lexicon word \"" + lexicalForm + "\"'s number \"" + extendedStrongsNumber + "\" does not appear in Strong's dictionary");
-	}
-	
-	else {
-		// word.stepDefinition = utilities.parseStepDefinition (definition);
-		
-		if (word.glosses === undefined) {
-			word.glosses = new Set ();
-		}
-		
-		word.glosses.add (gloss);
-		
-		if (utilities.simplifyGreek (lexicalForm) !== utilities.simplifyGreek (word.lexicalForm)) {
-			addError ("STEPBible lexicon word \"" + lexicalForm + "\" does not match its lexicalForm \"" + word.lexicalForm + "\" in Strong's dictionary");
-		}
-	}
+	vocabularyNumberMap [word.number] = word;
 }
 
-// Parse MorphGNT data
+// Assign the forms and principal parts of words based on matching Strong's numbers
+const morphGntLexicalForms = Object.keys (data.morphGnt.vocabulary);
 
-const morphGntFiles = fs.readdirSync (constants.morphGntFolderPath);
-
-let morphGntLines = [];
-
-for (let i = 0; i < morphGntFiles.length; i++) {
-	if (morphGntFiles [i] === "README.md") {
+for (let i = 0; i < morphGntLexicalForms.length; i++) {
+	const word = data.morphGnt.vocabulary [morphGntLexicalForms [i]];
+	
+	const lemmaMapping = data.lemmaMappings.vocabulary [word.lexicalForm];
+	
+	if (lemmaMapping === undefined) {
+		addError ("Word \"" + morphGntLexicalForms [i] + "\" doesn't have a Strong's number");
+		
 		continue;
 	}
 	
-	// Exclude the last line since it's empty
-	morphGntLines = morphGntLines.concat (fs.readFileSync (path.normalize (constants.morphGntFolderPath + "/" + morphGntFiles [i]), "utf8").split ("\n").slice (0, -1));
+	for (let j = 0; j < lemmaMapping.numbers.length; j++) {
+		const number = lemmaMapping.numbers [j];
+		
+		// If there are multiple Strong's numbers for this lexical form
+		if (j === 1) {
+			addError ("Lexical form \"" + morphGntLexicalForms [i] + "\" has multiple Strong's numbers: " + lemmaMapping.numbers.join (", "));
+		}
+		
+		// If there are multiple lexical forms for this Strong's number
+		if (vocabularyNumberMap [number].forms.length > 0) {
+			addError ("Word " + number + " has multiple lexical forms");
+		}
+		
+		vocabularyNumberMap [number].forms = vocabularyNumberMap [number].forms.concat (word.forms);
+		vocabularyNumberMap [number].principalParts = word.principalParts;
+		
+		// TODO Set multiple indices when there are two numbers for a lexical form
+		// Set vocabularyIndex so that forms can be mapped to words in the main vocabulary array (used below for the New Testament words)
+		word.vocabularyIndex = outputData.vocabulary.indexOf (vocabularyNumberMap [number]);
+	}
 }
 
-for (let i = 0; i < morphGntLines.length; i++) {
-	const columns = morphGntLines [i].split (" ");
+for (let i = 0; i < outputData.vocabulary.length; i++) {
+	const word = outputData.vocabulary [i];
 	
-	const location = columns [0];
-	const partOfSpeech = columns [1];
-	const parsingCode = columns [2];
-	const text = columns [3];
-	// Const formText = columns [4];
-	const normalizedFormText = columns [5];
-	const simplifiedFormText = utilities.simplifyGreek (normalizedFormText);
-	const lexicalForm = columns [6];
-	
-	const book = parseInt (location.slice (0, 2));
-	const chapter = parseInt (location.slice (2, 4));
-	const verse = parseInt (location.slice (4, 6));
-	
-	const bookIndex = book - 1;
-	const chapterIndex = chapter - 1;
-	const verseIndex = verse - 1;
-	
-	// Update forms
-	
-	const word = data.vocabularyMap [lexicalForm];
-	
-	let use = getFormUse (normalizedFormText, partOfSpeech, parsingCode);
-	
-	let form = {
-		text: normalizedFormText,
-		lexicalForm: lexicalForm,
-		uses: [use]
-	};
-	
-	// If the form's lexicalForm is valid
-	if (word === undefined) {
-		addError ("Form \"" + normalizedFormText + "\" has an invalid lexicalForm \"" + lexicalForm + "\"");
+	if (word.forms.length === 0) {
+		addError ("Word " + word.number + " has no forms");
 	}
-	
-	else {
-		// List of existing forms that match the simplifiedFormText
-		const existingFormList = data.vocabularyFormsMap [simplifiedFormText];
-		
-		let existingForm;
-		
-		// If simplifiedFormText is already a key of vocabularyFormsMap
-		if (existingFormList) {
-			for (let j = 0; j < existingFormList.length; j++) {
-				// If existingFormList [j] matches the current form
-				if (existingFormList [j].text === form.text && existingFormList [j].lexicalForm === form.lexicalForm) {
-					existingForm = existingFormList [j];
-					
-					break;
-				}
-			}
-		}
-		
-		else {
-			data.vocabularyFormsMap [simplifiedFormText] = [];
-		}
-		
-		// If the form exists
-		if (existingForm) {
-			form = existingForm;
-			
-			let existingUse;
-			
-			for (let j = 0; j < existingForm.uses.length; j++) {
-				if (existingForm.uses [j].person === use.person &&
-					existingForm.uses [j].tense === use.tense &&
-					existingForm.uses [j].voice === use.voice &&
-					existingForm.uses [j].mood === use.mood &&
-					existingForm.uses [j].case === use.case &&
-					existingForm.uses [j].number === use.number &&
-					existingForm.uses [j].gender === use.gender &&
-					existingForm.uses [j].degree === use.degree &&
-					existingForm.uses [j].partOfSpeech === use.partOfSpeech) {
-					existingUse = existingForm.uses [j];
-					
-					break;
-				}
-			}
-			
-			// If the use exists
-			if (existingUse) {
-				use = existingUse;
-				
-				existingUse.frequency++;
-			}
-			
-			// If the use doesn't exist
-			else {
-				existingForm.uses.push (use);
-			}
-		}
-		
-		// If the form doesn't exist
-		else {
-			data.vocabularyFormsMap [simplifiedFormText].push (form);
-			word.forms.push (form);
-		}
-	}
-	
-	// Update data.newTestament
-	
-	if (data.newTestament [bookIndex] === undefined) {
-		data.newTestament [bookIndex] = [];
-	}
-	
-	if (data.newTestament [bookIndex] [chapterIndex] === undefined) {
-		data.newTestament [bookIndex] [chapterIndex] = [];
-	}
-	
-	if (data.newTestament [bookIndex] [chapterIndex] [verseIndex] === undefined) {
-		data.newTestament [bookIndex] [chapterIndex] [verseIndex] = [];
-	}
-	
-	data.newTestament [bookIndex] [chapterIndex] [verseIndex].push ({
-		text: text,
-		word: word,
-		form: form,
-		use: use
-	});
-}
-
-for (let i = 0; i < data.vocabulary.length; i++) {
-	const word = data.vocabulary [i];
 	
 	for (let j = 0; j < word.forms.length; j++) {
-		word.forms [j].uses.sort (sortFormUses);
+		// Delete redundant data
+		delete word.forms [j].lexicalForm;
 	}
-	
-	// Sort forms
-	word.forms.sort ((a, b) => sortFormUses (a.uses [0], b.uses [0]));
-	
-	word.glosses = [...word.glosses];
-	
-	word.principalParts = getPrincipalParts (word);
-	
-	if (word.glosses.length === undefined) {
-		addError ("Word \"" + word.lexicalForm + "\" is missing glosses");
-	}
-	
-	// if (word.stepDefinition === undefined) {
-	// 	addError ("Word \"" + word.lexicalForm + "\" is missing a STEPBible definition");
-	// }
 }
 
-for (let i = 0; i < data.newTestament.length; i++) {
-	const book = data.newTestament [i];
+// Change errors to an array
+outputData.errors = [...outputData.errors];
+
+// Sort errors
+outputData.errors.sort ();
+
+// Run oxiaToTonos on outputData (excluding newTestament)
+outputData = JSON.parse (utilities.oxiaToTonos (JSON.stringify (outputData)));
+
+outputData.newTestament = data.morphGnt.newTestament;
+
+// Set word, form, and use indices for newTestament
+for (let i = 0; i < outputData.newTestament.length; i++) {
+	const book = outputData.newTestament [i];
 	
 	for (let j = 0; j < book.length; j++) {
 		const chapter = book [j];
@@ -841,7 +125,7 @@ for (let i = 0; i < data.newTestament.length; i++) {
 				const word = verse [l];
 				
 				if (word.word !== undefined) {
-					word.wordIndex = data.vocabulary.indexOf (word.word);
+					word.wordIndex = word.word.vocabularyIndex;
 					word.formIndex = word.word.forms.indexOf (word.form);
 					word.useIndex = word.form.uses.indexOf (word.use);
 				}
@@ -850,24 +134,9 @@ for (let i = 0; i < data.newTestament.length; i++) {
 	}
 }
 
-data.vocabulary = JSON.parse (utilities.oxiaToTonos (JSON.stringify (data.vocabulary)));
-
-// Delete redundant data
-
-delete data.vocabularyMap;
-delete data.vocabularyNumberMap;
-delete data.vocabularyFormsMap;
-
-for (let i = 0; i < data.vocabulary.length; i++) {
-	const word = data.vocabulary [i];
-	
-	for (let j = 0; j < word.forms.length; j++) {
-		delete word.forms [j].lexicalForm;
-	}
-}
-
-for (let i = 0; i < data.newTestament.length; i++) {
-	const book = data.newTestament [i];
+// Remove redundant data
+for (let i = 0; i < outputData.newTestament.length; i++) {
+	const book = outputData.newTestament [i];
 	
 	for (let j = 0; j < book.length; j++) {
 		const chapter = book [j];
@@ -891,24 +160,17 @@ for (let i = 0; i < data.newTestament.length; i++) {
 	}
 }
 
-// Change data.errors to an array
-
-data.errors = [...data.errors];
-
-data.errors.sort ();
-
 // Output data
 
-const output = "export default " + JSON.stringify (data, null, "\t") + ";\n";
+const output = "export default " + JSON.stringify (outputData, null, "\t") + ";\n";
 
-console.log ("Word count: " + data.vocabulary.length.toLocaleString ());
-console.log ("Error count: " + data.errors.length.toLocaleString ());
-console.log ("Data size: " + (new Blob ([JSON.stringify (data)]).size / 1000000).toLocaleString () + "MB");
+console.log ("Error count: " + outputData.errors.length.toLocaleString ());
+console.log ("Data size: " + (new Blob ([JSON.stringify (outputData)]).size / 1000000).toLocaleString () + "MB");
 
-const dataKeys = Object.keys (data);
+const outputDataKeys = Object.keys (outputData);
 
-for (let i = 0; i < dataKeys.length; i++) {
-	console.log ("- " + dataKeys [i] + ": " + (new Blob ([JSON.stringify (data [dataKeys [i]])]).size / 1000000).toLocaleString () + "MB");
+for (let i = 0; i < outputDataKeys.length; i++) {
+	console.log ("- " + outputDataKeys [i] + ": " + (new Blob ([JSON.stringify (outputData [outputDataKeys [i]])]).size / 1000000).toLocaleString () + "MB");
 }
 
 fs.writeFileSync (constants.outputFilePath, output);
