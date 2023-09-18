@@ -89,7 +89,10 @@ export default {
 			update ();
 		};
 		
-		pageData.updateCurrentVocabulary (constants.vocabulary.map (word => ({ lexicalForm: word.lexicalForm })));
+		pageData.updateCurrentVocabulary (constants.vocabulary.map (word => ({
+			number: word.number,
+			lexicalForm: word.lexicalForm
+		})));
 	},
 	
 	content: () => html
