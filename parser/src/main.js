@@ -56,7 +56,7 @@ for (let i = 0; i < morphGntLexicalForms.length; i++) {
 	const lemmaMapping = data.lemmaMappings.vocabulary [word.lexicalForm];
 	
 	if (lemmaMapping === undefined) {
-		addError ("Word \"" + morphGntLexicalForms [i] + "\" doesn't have a Strong's number");
+		addError ("Lexical form \"" + morphGntLexicalForms [i] + "\" doesn't have a Strong's number");
 		
 		continue;
 	}

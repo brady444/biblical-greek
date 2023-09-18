@@ -1132,7 +1132,7 @@ for (let i = 0; i < vocabularyLength; i++) {
 		
 		constants.vocabularyFormsMap [simplifiedFormText].push (form);
 		
-		if (form.text === word.lexicalForm) {
+		if (simplifiedFormText === word.simplifiedLexicalForm) {
 			formsMapIncludesLexicalForm = true;
 		}
 		

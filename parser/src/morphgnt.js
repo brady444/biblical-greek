@@ -89,7 +89,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode, addError) => {
 		}
 		
 		default: {
-			addError ("Invalid partOfSpeech \"" + partOfSpeech + "\" in form \"" + formText + "\"");
+			addError ("Form \"" + formText + "\" has an invalid partOfSpeech \"" + partOfSpeech);
 		}
 	}
 	
@@ -117,7 +117,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode, addError) => {
 		}
 		
 		default: {
-			addError ("Invalid person \"" + parsingCode [0] + "\" in form \"" + formText + "\"");
+			addError ("Form \"" + formText + "\" has an invalid person \"" + parsingCode [0]);
 		}
 	}
 	
@@ -163,7 +163,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode, addError) => {
 		}
 		
 		default: {
-			addError ("Invalid tense \"" + parsingCode [1] + "\" in form \"" + formText + "\"");
+			addError ("Form \"" + formText + "\" has an invalid tense \"" + parsingCode [1]);
 		}
 	}
 	
@@ -191,7 +191,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode, addError) => {
 		}
 		
 		default: {
-			addError ("Invalid voice \"" + parsingCode [2] + "\" in form \"" + formText + "\"");
+			addError ("Form \"" + formText + "\" has an invalid voice \"" + parsingCode [2]);
 		}
 	}
 	
@@ -237,7 +237,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode, addError) => {
 		}
 		
 		default: {
-			addError ("Invalid mood \"" + parsingCode [3] + "\" in form \"" + formText + "\"");
+			addError ("Form \"" + formText + "\" has an invalid mood \"" + parsingCode [3]);
 		}
 	}
 	
@@ -277,7 +277,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode, addError) => {
 		}
 		
 		default: {
-			addError ("Invalid case \"" + parsingCode [4] + "\" in form \"" + formText + "\"");
+			addError ("Form \"" + formText + "\" has an invalid case \"" + parsingCode [4]);
 		}
 	}
 	
@@ -299,7 +299,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode, addError) => {
 		}
 		
 		default: {
-			addError ("Invalid number \"" + parsingCode [5] + "\" in form \"" + formText + "\"");
+			addError ("Form \"" + formText + "\" has an invalid number \"" + parsingCode [5]);
 		}
 	}
 	
@@ -327,7 +327,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode, addError) => {
 		}
 		
 		default: {
-			addError ("Invalid gender \"" + parsingCode [6] + "\" in form \"" + formText + "\"");
+			addError ("Form \"" + formText + "\" has an invalid gender \"" + parsingCode [6]);
 		}
 	}
 	
@@ -349,7 +349,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode, addError) => {
 		}
 		
 		default: {
-			addError ("Invalid degree \"" + parsingCode [7] + "\" in form \"" + formText + "\"");
+			addError ("Form \"" + formText + "\" has an invalid degree \"" + parsingCode [7]);
 		}
 	}
 	
@@ -525,20 +525,20 @@ const getPrincipalParts = (word, addError) => {
 				if ((!word.lexicalForm.endsWith ("άω") &&
 					!word.lexicalForm.endsWith ("έω") &&
 					!word.lexicalForm.endsWith ("όω")) || approximatedPart.endsWith ("ῶ")) {
-					addError ("Word \"" + word.lexicalForm + "\" has an approximated present principal part \"" + approximatedPart + "\" that is different from its lexical form");
+					addError ("Lexical form \"" + word.lexicalForm + "\" has an approximated present principal part \"" + approximatedPart + "\" that is different from its lexical form");
 				}
 			}
 			
 			// If the approximatedPrincipalPart is the same as form.text
 			if (approximatedPart === "[" + form.text + "]") {
-				addError ("Word \"" + word.lexicalForm + "\" has an approximated principal part that is the same as a non-first person singular form, part: \"" + approximatedPart + "\"");
+				addError ("Lexical form \"" + word.lexicalForm + "\" has an approximated principal part that is the same as a non-first person singular form, part: \"" + approximatedPart + "\"");
 			}
 			
 			// If the principal part was already approximated
 			if (isPartSet && isPartApproximated &&
 				// , and differs from the new approximation
 				currentPart.text !== approximatedPart) {
-				addError ("Word \"" + word.lexicalForm + "\" has multiple approximations for the same principal part, index: " + partIndex + ", parts: \"" + currentPart.text + ", " + approximatedPart + "\"");
+				addError ("Lexical form \"" + word.lexicalForm + "\" has multiple approximations for the same principal part, index: " + partIndex + ", parts: \"" + currentPart.text + ", " + approximatedPart + "\"");
 			}
 			
 			principalPartsData [partIndex] = {
