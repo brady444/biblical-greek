@@ -94,7 +94,7 @@ export default {
 		pageData.swapUse = formGroupIndex => {
 			pageData.selectedOptions [formGroupIndex].useIndex += 1;
 			
-			if (pageData.selectedOptions [formGroupIndex].useIndex > pageData.formGroups [formGroupIndex] [pageData.selectedOptions [formGroupIndex].form].uses.length - 1) {
+			if (pageData.selectedOptions [formGroupIndex].useIndex > pageData.formGroups [formGroupIndex] [pageData.selectedOptions [formGroupIndex].formIndex].uses.length - 1) {
 				pageData.selectedOptions [formGroupIndex].useIndex = 0;
 			}
 			
