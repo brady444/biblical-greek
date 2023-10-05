@@ -37,13 +37,20 @@ for (let i = 0; i < outputData.vocabulary.length; i++) {
 	};
 }
 
+// Map of lexical form -> array of matching words
+const vocabularyMap = {};
 // Map of Strong's number -> word
 const vocabularyNumberMap = {};
 
-// Populate vocabularyNumberMap
+// Populate vocabularyMap and vocabularyNumberMap
 for (let i = 0; i < outputData.vocabulary.length; i++) {
 	const word = outputData.vocabulary [i];
 	
+	if (vocabularyMap [word.lexicalForm] === undefined) {
+		vocabularyMap [word.lexicalForm] = [];
+	}
+	
+	vocabularyMap [word.lexicalForm].push (word);
 	vocabularyNumberMap [word.number] = word;
 }
 
@@ -51,9 +58,9 @@ for (let i = 0; i < outputData.vocabulary.length; i++) {
 const morphGntLexicalForms = Object.keys (data.morphGnt.vocabulary);
 
 for (let i = 0; i < morphGntLexicalForms.length; i++) {
-	const word = data.morphGnt.vocabulary [morphGntLexicalForms [i]];
+	const morphGntWord = data.morphGnt.vocabulary [morphGntLexicalForms [i]];
 	
-	const lemmaMapping = data.lemmaMappings.vocabulary [word.lexicalForm];
+	const lemmaMapping = data.lemmaMappings.vocabulary [morphGntWord.lexicalForm];
 	
 	if (lemmaMapping === undefined) {
 		addError ("Lexical form \"" + morphGntLexicalForms [i] + "\" doesn't have a Strong's number");
@@ -74,12 +81,23 @@ for (let i = 0; i < morphGntLexicalForms.length; i++) {
 			addError ("Word " + number + " has multiple lexical forms");
 		}
 		
-		vocabularyNumberMap [number].forms = vocabularyNumberMap [number].forms.concat (word.forms);
-		vocabularyNumberMap [number].principalParts = word.principalParts;
+		// If this word's lexical form appears in outputData.vocabulary with a different Strong's number
+		const existingWords = vocabularyMap [morphGntWord.lexicalForm];
+		
+		if (existingWords !== undefined) {
+			for (let k = 0; k < existingWords.length; k++) {
+				if (existingWords [k].number !== number) {
+					addError ("Word \"" + morphGntWord.lexicalForm + "\"'s Strong's numbers are " + existingWords.map (existingWord => existingWord.number + " (\"" + existingWord.lexicalForm + "\")").join (", ") + ", but MorphGNT says they're " + lemmaMapping.numbers.map (lemmaMappingNumber => lemmaMappingNumber + " (Strong's: \"" + vocabularyNumberMap [lemmaMappingNumber].lexicalForm + "\")").join (", "));
+				}
+			}
+		}
+		
+		vocabularyNumberMap [number].forms = vocabularyNumberMap [number].forms.concat (morphGntWord.forms);
+		vocabularyNumberMap [number].principalParts = morphGntWord.principalParts;
 		
 		// TODO Set multiple indices when there are two numbers for a lexical form
 		// Set vocabularyIndex so that forms can be mapped to words in the main vocabulary array (used below for the New Testament words)
-		word.vocabularyIndex = outputData.vocabulary.indexOf (vocabularyNumberMap [number]);
+		morphGntWord.vocabularyIndex = outputData.vocabulary.indexOf (vocabularyNumberMap [number]);
 	}
 }
 

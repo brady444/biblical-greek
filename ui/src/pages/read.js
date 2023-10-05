@@ -94,7 +94,7 @@ export default {
 							<p class = "x-large-font">${ word.text }</p>
 							
 							${ word.word !== undefined && (pageData.showDescriptions || pageData.showGlosses || pageData.showLexicalForms || pageData.showPrincipalParts || pageData.showFrequencies) ? html
-								`${ pageData.showDescriptions ? html
+								`${ pageData.showDescriptions && word.use !== undefined ? html
 									`<p class = "small-font grayA">${ word.use.shortDescription }</p>` : null
 								}
 								
