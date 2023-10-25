@@ -403,14 +403,7 @@ const constants = {
 					{ answered: true },
 					{ text: "Secondary Active" },
 					
-					{ text: "1st Aorist Middle" },
-					{ text: "ε" },
-					{ text: "Aorist Active" },
-					{ text: "σα" },
-					{ answered: true },
-					{ text: "Secondary Middle/Passive" },
-					
-					{ text: "Liquid 1st Aorist" },
+					{ text: "Liquid Aorist Active" },
 					{ text: "ε" },
 					{ text: "Aorist Active" },
 					{ text: "α" },
@@ -423,6 +416,13 @@ const constants = {
 					{ answered: true },
 					{ text: "ο/ε" },
 					{ text: "Secondary Active" },
+					
+					{ text: "1st Aorist Middle" },
+					{ text: "ε" },
+					{ text: "Aorist Active" },
+					{ text: "σα" },
+					{ answered: true },
+					{ text: "Secondary Middle/Passive" },
 					
 					{ text: "2nd Aorist Middle" },
 					{ text: "ε" },
@@ -443,7 +443,28 @@ const constants = {
 					{ text: "Aorist Passive" },
 					{ text: "η" },
 					{ answered: true },
-					{ text: "Secondary Active" }
+					{ text: "Secondary Active" },
+					
+					{ text: "1st Perfect Active" },
+					{ text: "λε" },
+					{ text: "Perfect Active" },
+					{ text: "κα" },
+					{ answered: true },
+					{ text: "Primary Active" },
+					
+					{ text: "2nd Perfect Active" },
+					{ text: "λε" },
+					{ text: "Perfect Active" },
+					{ text: "α" },
+					{ answered: true },
+					{ text: "Primary Active" },
+					
+					{ text: "Perfect Middle/Passive" },
+					{ text: "λε" },
+					{ text: "Perfect Passive" },
+					{ answered: true },
+					{ answered: true },
+					{ text: "Primary Middle/Passive" }
 				]
 			}
 		},
