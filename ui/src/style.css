@@ -209,23 +209,23 @@ option {
 }
 
 .small-font {
-	font-size: calc(0.4rem + 1.207vmin);
+	font-size: calc(0.75rem + 0.6243vmin); /* 18px */
 }
 
 .medium-font {
-	font-size: calc(0.4rem + 1.5192vmin);
+	font-size: calc(0.75rem + 0.9365vmin); /* 21px */
 }
 
 .large-font {
-	font-size: calc(0.4rem + 1.8314vmin);
+	font-size: calc(0.75rem + 1.2486vmin); /* 24px */
 }
 
 .x-large-font {
-	font-size: calc(0.4rem + 2.1436vmin);
+	font-size: calc(0.75rem + 1.5608vmin); /* 27px */
 }
 
 .xx-large-font {
-	font-size: calc(0.4rem + 2.4557vmin);
+	font-size: calc(0.75rem + 1.8730vmin); /* 30px */
 }
 
 .xxx-large-font {
