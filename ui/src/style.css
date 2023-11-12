@@ -271,8 +271,14 @@ option {
 	align-items: start;
 }
 
-.small-width {
+.x-small-width {
 	width: 300px;
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+.small-width {
+	width: 500px;
 	max-width: 100%;
 	box-sizing: border-box;
 }

@@ -15,14 +15,7 @@ export default {
 			pageData.currentVocabulary = [];
 			
 			for (let i = 0; i < pageData.currentSet.vocabulary.length; i++) {
-				if (pageData.currentChapters.has (pageData.currentSet.vocabulary [i].chapter)) {
-					// TODO
-					if (pageData.currentModeName === "Roots" && pageData.currentSet.vocabulary [i].roots === undefined) {
-						continue;
-					}
-					
-					pageData.currentVocabulary.push (pageData.currentSet.vocabulary [i]);
-				}
+				pageData.currentVocabulary.push (pageData.currentSet.vocabulary [i]);
 			}
 			
 			if (pageData.currentVocabulary.length === 0) {
@@ -46,12 +39,6 @@ export default {
 			pageData.updateCurrentVocabulary ();
 		};
 		
-		pageData.updateChapters = chapters => {
-			pageData.currentChapters = new Set (chapters);
-			
-			pageData.updateCurrentVocabulary ();
-		};
-		
 		pageData.updateSet = setIndex => {
 			pageData.currentSet = pageData.sets [setIndex];
 			
@@ -68,7 +55,7 @@ export default {
 							
 							<div class = "flex flex-wrap small-gap">
 								${ pageData.modes.Vocabulary.currentChoices.map (choice => html
-									`<button class = ${ "small-padding medium-font text-left" } ?disabled = ${ choice.incorrect } onclick = ${ () => pageData.modes.Vocabulary.selectChoice (choice) }>${ choice.word.shortGloss }</button>`
+									`<button class = ${ "small-padding medium-font text-left" } ?disabled = ${ choice.incorrect } onclick = ${ () => pageData.modes.Vocabulary.selectChoice (choice) }>${ choice.word.glossesString }</button>`
 								) }
 							</div>
 						</div>
@@ -125,7 +112,7 @@ export default {
 				},
 				
 				selectChoice: choice => {
-					if (choice.word.shortGloss === pageData.modes.Vocabulary.currentWord.shortGloss) {
+					if (choice.word.glossesString === pageData.modes.Vocabulary.currentWord.glossesString) {
 						pageData.modes.Vocabulary.updateCurrentWord ();
 					}
 					
@@ -137,95 +124,22 @@ export default {
 				}
 			},
 			
-			Roots: {
-				body: () => pageData.noTerms ? null : html
-					`<div class = "small-width flex-column medium-gap">
-						<p class = "xxx-large-font">${ pageData.modes.Roots.currentWord.lexicalForm }</p>
-						
-						<input id = "roots-input" class = ${ "full-width small-padding medium-font" + (pageData.modes.Roots.inputIncorrect ? " red-bg" : "") } placeholder = "Roots..." onkeydown = ${ event => {
-							if (event.key === "Enter") {
-								pageData.modes.Roots.submit ();
-							}
-							
-							pageData.modes.Roots.input = event.target.value;
-						} } />
-						
-						<div class = "flex medium-gap">
-							<button class = "small-padding medium-font" onclick = ${ pageData.modes.Roots.showCorrectAnswers }>Show</button>
-							
-							<button class = "small-padding medium-font" onclick = ${ pageData.modes.Roots.submit }>Submit</button>
-						</div>
-					</div>`,
-				
-				updateCurrentWord: () => {
-					if (pageData.noTerms) {
-						return;
-					}
-					
-					if (pageData.remainingTerms.length === 0) {
-						pageData.modes.Roots.updateRemainingTerms ();
-						
-						return;
-					}
-					
-					// Reset input
-					pageData.modes.Roots.inputIncorrect = false;
-					
-					const rootsInput = document.getElementById ("roots-input");
-					
-					if (rootsInput !== null) {
-						rootsInput.value = "";
-					}
-					
-					// Get new word
-					const termIndex = utilities.randomInteger (0, pageData.remainingTerms.length - 1);
-					
-					pageData.modes.Roots.currentWord = pageData.remainingTerms [termIndex];
-					
-					pageData.remainingTerms.splice (termIndex, 1);
-					
-					update ();
-				},
-				
-				updateRemainingTerms: () => {
-					pageData.remainingTerms = pageData.currentVocabulary.slice (0);
-					
-					pageData.modes.Roots.updateCurrentWord ();
-				},
-				
-				showCorrectAnswers: () => {
-					document.getElementById ("roots-input").value = pageData.modes.Roots.currentWord.roots;
-				},
-				
-				submit: () => {
-					if (utilities.simplifyGreek (utilities.englishToGreek (document.getElementById ("roots-input").value)) === utilities.simplifyGreek (pageData.modes.Roots.currentWord.roots)) {
-						pageData.modes.Roots.updateCurrentWord ();
-					}
-					
-					else {
-						pageData.modes.Roots.inputIncorrect = true;
-						
-						update ();
-					}
-				},
-				
-				input: ""
-			},
-			
 			Parsing: {
 				body: () => pageData.noTerms ? null : html
-					`<div class = "small-width flex-column medium-gap">
+					`<div class = "medium-width flex-column medium-gap">
 						<p class = "xxx-large-font">${ pageData.modes.Parsing.currentForm.text }</p>
 						
-						${ pageData.modes.Parsing.choiceSelectors.map (choiceSelector => html
-							`<select class = ${ "choice-selector full-width small-padding medium-font" + (choiceSelector.chosen ? "" : " gray7") + (choiceSelector.incorrect ? " red-bg" : "") } oninput = ${ event => pageData.modes.Parsing.updateChoiceSelector (choiceSelector, event.target) }>
-								<option class = "medium-font gray7" value = "">${ choiceSelector.useProperty.formattedName }</option>
-								
-								${ choiceSelector.useProperty.values.map (value => html
-									`<option class = "medium-font" value = ${ choiceSelector.useProperty.name === "lexicalForm" ? value : value.toLowerCase () }>${ value }</option>`
-								) }
-							</select>`
-						) }
+						<div class = "x-small-width flex-column medium-gap">
+							${ pageData.modes.Parsing.choiceSelectors.map (choiceSelector => html
+								`<select class = ${ "choice-selector full-width small-padding medium-font" + (choiceSelector.chosen ? "" : " gray7") + (choiceSelector.incorrect ? " red-bg" : "") } oninput = ${ event => pageData.modes.Parsing.updateChoiceSelector (choiceSelector, event.target) }>
+									<option class = "medium-font gray7" value = "">${ choiceSelector.useProperty.formattedName }</option>
+									
+									${ choiceSelector.useProperty.values.map (value => html
+										`<option class = "medium-font" value = ${ choiceSelector.useProperty.name === "lexicalForm" ? value : value.toLowerCase () }>${ value }</option>`
+									) }
+								</select>`
+							) }
+						</div>
 						
 						<div class = "flex medium-gap">
 							<button class = "small-padding medium-font" onclick = ${ pageData.modes.Parsing.nextForm }>Skip</button>
@@ -363,23 +277,31 @@ export default {
 			},
 			
 			{
-				name: "Multi-Root Words",
-				vocabulary: constants.vocabulary.slice (0).filter (word => word.roots?.includes ("/"))
+				name: "Frequency ≥ 50",
+				vocabulary: constants.vocabulary.slice (0).filter (word => word.frequency >= 50)
 			},
 			
 			{
 				name: "Prepositions",
-				vocabulary: []
+				vocabulary: constants.vocabulary.slice (0).filter (word =>
+					word.forms.find (form =>
+						form.uses.find (use =>
+							use.partOfSpeech === "preposition"
+						) !== undefined
+					) !== undefined)
 			},
 			
 			{
 				name: "Adverbs, Conjunctions, Particles, and Interjections",
-				vocabulary: constants.vocabulary.slice (0).filter (word => word.forms.find (form => form.uses.find (use =>
-					use.partOfSpeech === "adverb" ||
-					use.partOfSpeech === "conjunction" ||
-					use.partOfSpeech === "particle" ||
-					use.partOfSpeech === "interjection"
-				) !== undefined) !== undefined)
+				vocabulary: constants.vocabulary.slice (0).filter (word =>
+					word.forms.find (form =>
+						form.uses.find (use =>
+							use.partOfSpeech === "adverb" ||
+							use.partOfSpeech === "conjunction" ||
+							use.partOfSpeech === "particle" ||
+							use.partOfSpeech === "interjection"
+						) !== undefined
+					) !== undefined)
 			},
 			
 			{
@@ -396,7 +318,6 @@ export default {
 		// Setup for modes
 		
 		pageData.modes.Vocabulary.setup = pageData.modes.Vocabulary.updateRemainingTerms;
-		pageData.modes.Roots.setup = pageData.modes.Roots.updateRemainingTerms;
 		pageData.modes.Parsing.setup = pageData.modes.Parsing.updateRemainingTerms;
 		
 		pageData.modeNames = Object.keys (pageData.modes);
@@ -433,41 +354,18 @@ export default {
 			pageData.modes.Parsing.forms [constants.vocabulary [i].lexicalForm] = formTexts;
 		}
 		
-		// Setup for chapters
-		
-		pageData.currentChapters = new Set (constants.chapters);
-		
 		// Setup for sets
 		
 		pageData.currentSet = pageData.sets [0];
 		
 		// Populate sets
 		for (let i = 0; i < constants.vocabulary.length; i++) {
-			// Prepositions set
-			if (constants.vocabulary [i].forms.find (form => form.uses.find (use => use.partOfSpeech?.includes ("prep")) !== undefined) !== undefined) {
-				const caseGlosses = constants.vocabulary [i].shortGloss.split ("\n").filter (glossLine => !glossLine.includes (": ") || glossLine.includes ("nominative") || glossLine.includes ("genitive") || glossLine.includes ("dative") || glossLine.includes ("accusative")).map (glossLine => glossLine.includes (": ") ? glossLine.replaceAll (/preposition \((nominative|genitive|dative|accusative)\)/gu, "$1").split (": ") : [constants.vocabulary [i].forms [0]?.uses?.[0]?.case, glossLine]);
-				
-				for (let j = 0; j < caseGlosses.length; j++) {
-					const word = {
-						lexicalForm: constants.vocabulary [i].lexicalForm + " (" + caseGlosses [j] [0] + ")",
-						roots: constants.vocabulary [i].roots,
-						shortGloss: caseGlosses [j] [1],
-						forms: constants.vocabulary [i].forms,
-						chapter: constants.vocabulary [i].chapter
-					};
-					
-					pageData.sets [2].vocabulary.push (word);
-				}
-			}
-			
 			// Present Indicative Verbs set
 			if (constants.vocabulary [i].forms.find (form => form.uses.find (use => use.tense === "present" && use.mood === "indicative") !== undefined) !== undefined) {
 				const word = {
 					lexicalForm: constants.vocabulary [i].lexicalForm,
-					roots: constants.vocabulary [i].roots,
-					shortGloss: constants.vocabulary [i].shortGloss,
-					forms: constants.vocabulary [i].forms.filter (form => form.uses.find (use => use.tense === "present" && use.mood === "indicative") !== undefined),
-					chapter: constants.vocabulary [i].chapter
+					glossesString: constants.vocabulary [i].glossesString,
+					forms: constants.vocabulary [i].forms.filter (form => form.uses.find (use => use.tense === "present" && use.mood === "indicative") !== undefined)
 				};
 				
 				for (let j = 0; j < word.forms.length; j++) {
@@ -478,17 +376,15 @@ export default {
 					};
 				}
 				
-				pageData.sets [4].vocabulary.push (word);
+				pageData.sets [3].vocabulary.push (word);
 			}
 			
 			// Future Indicative Verbs set
 			if (constants.vocabulary [i].forms.find (form => form.uses.find (use => use.tense === "future" && use.mood === "indicative") !== undefined) !== undefined) {
 				const word = {
 					lexicalForm: constants.vocabulary [i].lexicalForm,
-					roots: constants.vocabulary [i].roots,
-					shortGloss: constants.vocabulary [i].shortGloss,
-					forms: constants.vocabulary [i].forms.filter (form => form.uses.find (use => use.tense === "future" && use.mood === "indicative") !== undefined),
-					chapter: constants.vocabulary [i].chapter
+					glossesString: constants.vocabulary [i].glossesString,
+					forms: constants.vocabulary [i].forms.filter (form => form.uses.find (use => use.tense === "future" && use.mood === "indicative") !== undefined)
 				};
 				
 				for (let j = 0; j < word.forms.length; j++) {
@@ -499,7 +395,7 @@ export default {
 					};
 				}
 				
-				pageData.sets [5].vocabulary.push (word);
+				pageData.sets [4].vocabulary.push (word);
 			}
 		}
 		
@@ -512,7 +408,7 @@ export default {
 	
 	content: () => html
 		`<div class = "page-container center-container grid-top full-width full-height medium-padding medium-gap xx-large-gap">
-			<div class = "medium-width flex-column medium-gap" }>
+			<div class = "small-width flex-column medium-gap" }>
 				<div class = "full-width flex-top medium-gap">
 					<div class = "full-height flex-column-top grow small-gap">
 						<p class = "medium-font">Practice</p>
@@ -520,16 +416,6 @@ export default {
 						<select class = "full-width small-padding medium-font" oninput = "pageData.updateMode (this.value)">
 							${ pageData.modeNames.map (modeName => html
 								`<option class = "medium-font">${ modeName }</option>`
-							) }
-						</select>
-					</div>
-					
-					<div class = "full-height flex-column-top grow small-gap">
-						<p class = "medium-font">Chapters</p>
-						
-						<select multiple class = "full-width small-padding medium-font" oninput = "pageData.updateChapters ([...this.selectedOptions].map (option => parseInt (option.value)))">
-							${ constants.chapters.map (chapter => html
-								`<option class = "medium-font" selected>${ chapter }</option>`
 							) }
 						</select>
 					</div>
@@ -547,7 +433,7 @@ export default {
 				
 				${ pageData.noTerms ? html
 					`<p class = "small-font">No terms match the current filters</p>` : html
-					`<p class = "small-font">Remaining terms: ${ pageData.remainingTerms.length + 1 }</p>`
+					`<p class = "small-font">Remaining terms: ${ (pageData.remainingTerms.length + 1).toLocaleString () }</p>`
 				}
 			</div>
 			
