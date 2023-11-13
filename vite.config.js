@@ -24,6 +24,7 @@ export default {
 			
 			mangle: {
 				properties: {
+					debug: true,
 					builtins: true,
 					
 					// Don't mangle any properties that start with "/src/pages" (used for pages object), a capital letter (paradigm names), or a greek letter (paradigm names)
@@ -54,6 +55,7 @@ export default {
 						"deleteContents",
 						"endsWith",
 						"filter",
+						"find",
 						"firstChild",
 						"for",
 						"get",
@@ -101,6 +103,7 @@ export default {
 						"setEndAfter",
 						"setStartAfter",
 						"slice",
+						"sort",
 						"splice",
 						"split",
 						"stack",
