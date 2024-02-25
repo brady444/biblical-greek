@@ -469,6 +469,32 @@ const constants = {
 			}
 		},
 		
+		Participles: {
+			Morphemes: {
+				columnLabels: [
+					"",
+					"Masculine",
+					"Feminine",
+					"Neuter"
+				],
+				
+				rowLabels: [
+					"Active",
+					"Middle/\nPassive"
+				],
+				
+				elements: [
+					{ text: "ντ" },
+					{ text: "ουσα" },
+					{ text: "ντ" },
+					
+					{ text: "μενο" },
+					{ text: "μενη" },
+					{ text: "μενο" }
+				]
+			}
+		},
+		
 		Article: {
 			ὁ: {
 				columnLabels: [
