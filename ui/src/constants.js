@@ -313,7 +313,7 @@ const constants = {
 				]
 			},
 			
-			"Indicative Verb Forms": {
+			"Master Indicative Verb Chart": {
 				elementFontClass: "medium-font",
 				
 				columnLabels: [
@@ -491,6 +491,160 @@ const constants = {
 					{ text: "μενο" },
 					{ text: "μενη" },
 					{ text: "μενο" }
+				]
+			},
+			
+			"Imperfective Active Endings (Inflected)": {
+				columnLabels: [
+					"",
+					"Masculine\n(3rd)",
+					"Feminine\n(1st)",
+					"Neuter\n(3rd)"
+				],
+				
+				rowLabels: [
+					"Nominative\nSingular",
+					"Genitive\nSingular",
+					"Dative\nSingular",
+					"Accusative\nSingular",
+					"Nominative\nPlural",
+					"Genitive\nPlural",
+					"Dative\nPlural",
+					"Accusative\nPlural"
+				],
+				
+				elements: [
+					{ text: "ων" },
+					{ text: "ουσα" },
+					{ text: "ον" },
+					
+					{ text: "οντος" },
+					{ text: "ούσης" },
+					{ text: "οντος" },
+					
+					{ text: "οντι" },
+					{ text: "ούσῃ" },
+					{ text: "οντι" },
+					
+					{ text: "οντα" },
+					{ text: "ουσαν" },
+					{ text: "ον" },
+					
+					{ text: "οντες" },
+					{ text: "ουσαι" },
+					{ text: "οντα" },
+					
+					{ text: "όντων" },
+					{ text: "ουσῶν" },
+					{ text: "όντων" },
+					
+					{ text: "ουσι(ν)" },
+					{ text: "ούσαις" },
+					{ text: "ουσι(ν)" },
+					
+					{ text: "οντας" },
+					{ text: "ούσας" },
+					{ text: "οντα" }
+				]
+			},
+			
+			"Imperfective Middle/Passive Endings (Inflected)": {
+				columnLabels: [
+					"",
+					"Masculine\n(3rd)",
+					"Feminine\n(1st)",
+					"Neuter\n(3rd)"
+				],
+				
+				rowLabels: [
+					"Nominative\nSingular",
+					"Genitive\nSingular",
+					"Dative\nSingular",
+					"Accusative\nSingular",
+					"Nominative\nPlural",
+					"Genitive\nPlural",
+					"Dative\nPlural",
+					"Accusative\nPlural"
+				],
+				
+				elements: [
+					{ text: "όμενος" },
+					{ text: "ομένη" },
+					{ text: "όμενον" },
+					
+					{ text: "ομένου" },
+					{ text: "ομένης" },
+					{ text: "ομένου" },
+					
+					{ text: "ομένῳ" },
+					{ text: "ομένῃ" },
+					{ text: "ομένῳ" },
+					
+					{ text: "όμενον" },
+					{ text: "ομένην" },
+					{ text: "όμενον" },
+					
+					{ text: "όμενοι" },
+					{ text: "όμεναι" },
+					{ text: "όμενα" },
+					
+					{ text: "ομένων" },
+					{ text: "ομένων" },
+					{ text: "ομένων" },
+					
+					{ text: "ομένοις" },
+					{ text: "ομέναις" },
+					{ text: "ομένοις" },
+					
+					{ text: "ομένους" },
+					{ text: "ομένας" },
+					{ text: "όμενα" }
+				]
+			},
+			
+			"Master Participle Chart": {
+				columnLabels: [
+					"Tense/Voice",
+					"Reduplication",
+					"Tense Stem",
+					"Tense Formative/\nConnecting Vowel",
+					"Morpheme"
+				],
+				
+				rowLabels: [],
+				
+				elements: [
+					{ text: "Present Active" },
+					{ answered: true },
+					{ text: "Present" },
+					{ text: "ο" },
+					{ text: "ντ/ουσα" },
+					
+					{ text: "Present Middle/Passive" },
+					{ answered: true },
+					{ text: "Present" },
+					{ text: "ο" },
+					{ text: "μενο/η" }
+				]
+			},
+			
+			"Master Morpheme Chart": {
+				columnLabels: [
+					"Morpheme",
+					"Tense/Voice",
+					"Case Endings"
+				],
+				
+				rowLabels: [],
+				
+				elements: [
+					{ text: "ντ" },
+					{ text: "Active\nAorist Passive" },
+					{ text: "3-1-3" },
+					
+					{ text: "μενο/η" },
+					{ text: "Middle\nMiddle/Passive" },
+					{ text: "2-1-2" }
 				]
 			}
 		},
