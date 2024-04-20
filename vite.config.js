@@ -24,7 +24,6 @@ export default {
 			
 			mangle: {
 				properties: {
-					debug: true,
 					builtins: true,
 					
 					// Don't mangle any properties that start with "/src/pages" (used for pages object) or an uppercase letter/number/greek letter (paradigm names)
