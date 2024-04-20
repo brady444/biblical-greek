@@ -120,6 +120,8 @@ export default {
 		// If we didn't find a matching paradigm, use a default category and paradigm
 		pageData.updateCategory (Object.keys (constants.paradigms) [0]);
 		
+		console.log (constants.paradigms);
+		
 		return false;
 	},
 	
