@@ -256,7 +256,7 @@ export default {
 		secondary: {
 			"1st": {
 				active: [
-					// First Aorist
+					// 1st Aorist
 					{
 						firstSingular: "α",
 						endings: ["αμεν"]
@@ -288,7 +288,7 @@ export default {
 				],
 				
 				middle: [
-					// First Aorist
+					// 1st Aorist
 					{
 						firstSingular: "άμην",
 						endings: ["άμεθα"]
@@ -320,7 +320,7 @@ export default {
 				],
 				
 				passive: [
-					// First Aorist
+					// 1st Aorist
 					{
 						firstSingular: "ην",
 						endings: ["ημεν"]
@@ -354,7 +354,7 @@ export default {
 			
 			"2nd": {
 				active: [
-					// First Aorist
+					// 1st Aorist
 					{
 						firstSingular: "α",
 						endings: ["ας", "ατε"]
@@ -386,7 +386,7 @@ export default {
 				],
 				
 				middle: [
-					// First Aorist
+					// 1st Aorist
 					{
 						firstSingular: "άμην",
 						endings: ["ω", "ασθε"]
@@ -418,7 +418,7 @@ export default {
 				],
 				
 				passive: [
-					// First Aorist
+					// 1st Aorist
 					{
 						firstSingular: "ην",
 						endings: ["ης", "ητε"]
@@ -452,14 +452,14 @@ export default {
 			
 			"3rd": {
 				active: [
-					// First Aorist Singular
+					// 1st Aorist Singular
 					{
 						// TODO This doesn't work for liquids. But we can't do ε(ν) -> α because it conflicts with the Default endings below
 						firstSingular: "σα",
 						endings: ["σε(ν)"]
 					},
 					
-					// First Aorist Plural
+					// 1st Aorist Plural
 					{
 						firstSingular: "α",
 						endings: ["αν"]
@@ -491,7 +491,7 @@ export default {
 				],
 				
 				middle: [
-					// First Aorist
+					// 1st Aorist
 					{
 						firstSingular: "άμην",
 						endings: ["ατο", "αντο"]
@@ -523,7 +523,7 @@ export default {
 				],
 				
 				passive: [
-					// First Aorist
+					// 1st Aorist
 					{
 						firstSingular: "ην",
 						endings: ["η", "ησαν"]

@@ -494,7 +494,89 @@ const constants = {
 				]
 			},
 			
-			"Imperfective Active Endings (Inflected)": {
+			"Master Participle Chart": {
+				columnLabels: [
+					"Tense/Voice",
+					"Reduplication",
+					"Tense Stem",
+					"Tense Formative/\nConnecting Vowel",
+					"Morpheme"
+				],
+				
+				rowLabels: [],
+				
+				elements: [
+					{ text: "Present Active" },
+					{ answered: true },
+					{ text: "Present" },
+					{ text: "ο" },
+					{ text: "ντ/ουσα" },
+					
+					{ text: "Present Middle/Passive" },
+					{ answered: true },
+					{ text: "Present" },
+					{ text: "ο" },
+					{ text: "μενο/η" },
+					
+					{ text: "1st Aorist Active" },
+					{ answered: true },
+					{ text: "Aorist Active" },
+					{ text: "σα" },
+					{ text: "ντ/σα" },
+					
+					{ text: "1st Aorist Middle" },
+					{ answered: true },
+					{ text: "Aorist Active" },
+					{ text: "σα" },
+					{ text: "μενο/η" },
+					
+					{ text: "1st Aorist Passive" },
+					{ answered: true },
+					{ text: "Aorist Passive" },
+					{ text: "θε" },
+					{ text: "ντ" },
+					
+					{ text: "2nd Aorist Active" },
+					{ answered: true },
+					{ text: "Aorist Active" },
+					{ text: "ο" },
+					{ text: "ντ" },
+					
+					{ text: "2nd Aorist Middle" },
+					{ answered: true },
+					{ text: "Aorist Active" },
+					{ text: "ο" },
+					{ text: "μενο/η" },
+					
+					{ text: "2nd Aorist Passive" },
+					{ answered: true },
+					{ text: "Aorist Passive" },
+					{ text: "ε" },
+					{ text: "ντ" }
+				]
+			},
+			
+			"Master Morpheme Chart": {
+				columnLabels: [
+					"Morpheme",
+					"Tense/Voice",
+					"Case Endings"
+				],
+				
+				rowLabels: [],
+				
+				elements: [
+					{ text: "ντ" },
+					{ text: "Active,\nAorist Passive" },
+					{ text: "3-1-3" },
+					
+					{ text: "μενο/η" },
+					{ text: "Middle/Passive" },
+					{ text: "2-1-2" }
+				]
+			},
+			
+			"Present Active Endings (Inflected)": {
 				columnLabels: [
 					"",
 					"Masculine\n(3rd)",
@@ -548,7 +630,7 @@ const constants = {
 				]
 			},
 			
-			"Imperfective Middle/Passive Endings (Inflected)": {
+			"Present Middle/Passive Endings (Inflected)": {
 				columnLabels: [
 					"",
 					"Masculine\n(3rd)",
@@ -602,49 +684,327 @@ const constants = {
 				]
 			},
 			
-			"Master Participle Chart": {
+			"1st Aorist Active Endings (Inflected)": {
 				columnLabels: [
-					"Tense/Voice",
-					"Reduplication",
-					"Tense Stem",
-					"Tense Formative/\nConnecting Vowel",
-					"Morpheme"
+					"",
+					"Masculine\n(3rd)",
+					"Feminine\n(1st)",
+					"Neuter\n(3rd)"
 				],
 				
-				rowLabels: [],
+				rowLabels: [
+					"Nominative\nSingular",
+					"Genitive\nSingular",
+					"Dative\nSingular",
+					"Accusative\nSingular",
+					"Nominative\nPlural",
+					"Genitive\nPlural",
+					"Dative\nPlural",
+					"Accusative\nPlural"
+				],
 				
 				elements: [
-					{ text: "Present Active" },
-					{ answered: true },
-					{ text: "Present" },
-					{ text: "ο" },
-					{ text: "ντ/ουσα" },
+					{ text: "σας" },
+					{ text: "σασα" },
+					{ text: "σαν" },
 					
-					{ text: "Present Middle/Passive" },
-					{ answered: true },
-					{ text: "Present" },
-					{ text: "ο" },
-					{ text: "μενο/η" }
+					{ text: "σαντος" },
+					{ text: "σάσης" },
+					{ text: "σαντος" },
+					
+					{ text: "σαντι" },
+					{ text: "σάσῃ" },
+					{ text: "σαντι" },
+					
+					{ text: "σαντα" },
+					{ text: "σασαν" },
+					{ text: "σαν" },
+					
+					{ text: "σαντες" },
+					{ text: "σασαι" },
+					{ text: "σαντα" },
+					
+					{ text: "σάντων" },
+					{ text: "σασῶν" },
+					{ text: "σάντων" },
+					
+					{ text: "σασι(ν)" },
+					{ text: "σάσαις" },
+					{ text: "σασι(ν)" },
+					
+					{ text: "σαντας" },
+					{ text: "σάσας" },
+					{ text: "σαντα" }
 				]
 			},
 			
-			"Master Morpheme Chart": {
+			"1st Aorist Middle Endings (Inflected)": {
 				columnLabels: [
-					"Morpheme",
-					"Tense/Voice",
-					"Case Endings"
+					"",
+					"Masculine\n(3rd)",
+					"Feminine\n(1st)",
+					"Neuter\n(3rd)"
 				],
 				
-				rowLabels: [],
+				rowLabels: [
+					"Nominative\nSingular",
+					"Genitive\nSingular",
+					"Dative\nSingular",
+					"Accusative\nSingular",
+					"Nominative\nPlural",
+					"Genitive\nPlural",
+					"Dative\nPlural",
+					"Accusative\nPlural"
+				],
 				
 				elements: [
-					{ text: "ντ" },
-					{ text: "Active\nAorist Passive" },
-					{ text: "3-1-3" },
+					{ text: "σάμενος" },
+					{ text: "σαμένη" },
+					{ text: "σάμενον" },
 					
-					{ text: "μενο/η" },
-					{ text: "Middle\nMiddle/Passive" },
-					{ text: "2-1-2" }
+					{ text: "σαμένου" },
+					{ text: "σαμένης" },
+					{ text: "σαμένου" },
+					
+					{ text: "σαμένῳ" },
+					{ text: "σαμένῃ" },
+					{ text: "σαμένῳ" },
+					
+					{ text: "σάμενον" },
+					{ text: "σαμένην" },
+					{ text: "σάμενον" },
+					
+					{ text: "σάμενοι" },
+					{ text: "σάμεναι" },
+					{ text: "σάμενα" },
+					
+					{ text: "σαμένων" },
+					{ text: "σαμένων" },
+					{ text: "σαμένων" },
+					
+					{ text: "σαμένοις" },
+					{ text: "σαμέναις" },
+					{ text: "σαμένοις" },
+					
+					{ text: "σαμένους" },
+					{ text: "σαμένας" },
+					{ text: "σάμενα" }
+				]
+			},
+			
+			"1st Aorist Passive Endings (Inflected)": {
+				columnLabels: [
+					"",
+					"Masculine\n(3rd)",
+					"Feminine\n(1st)",
+					"Neuter\n(3rd)"
+				],
+				
+				rowLabels: [
+					"Nominative\nSingular",
+					"Genitive\nSingular",
+					"Dative\nSingular",
+					"Accusative\nSingular",
+					"Nominative\nPlural",
+					"Genitive\nPlural",
+					"Dative\nPlural",
+					"Accusative\nPlural"
+				],
+				
+				elements: [
+					{ text: "θείς" },
+					{ text: "θεῖσα" },
+					{ text: "θέν" },
+					
+					{ text: "θέντος" },
+					{ text: "θείσης" },
+					{ text: "θέντος" },
+					
+					{ text: "θέντι" },
+					{ text: "θείσῃ" },
+					{ text: "θέντι" },
+					
+					{ text: "θέντα" },
+					{ text: "θεῖσαν" },
+					{ text: "θέν" },
+					
+					{ text: "θέντες" },
+					{ text: "θεῖσαι" },
+					{ text: "θέντα" },
+					
+					{ text: "θέντων" },
+					{ text: "θεισῶν" },
+					{ text: "θέντων" },
+					
+					{ text: "θεῖσι(ν)" },
+					{ text: "θείσαις" },
+					{ text: "θεῖσι(ν)" },
+					
+					{ text: "θέντας" },
+					{ text: "θείσας" },
+					{ text: "θέντα" }
+				]
+			},
+			
+			"2nd Aorist Active Endings (Inflected)": {
+				columnLabels: [
+					"",
+					"Masculine\n(3rd)",
+					"Feminine\n(1st)",
+					"Neuter\n(3rd)"
+				],
+				
+				rowLabels: [
+					"Nominative\nSingular",
+					"Genitive\nSingular",
+					"Dative\nSingular",
+					"Accusative\nSingular",
+					"Nominative\nPlural",
+					"Genitive\nPlural",
+					"Dative\nPlural",
+					"Accusative\nPlural"
+				],
+				
+				elements: [
+					{ text: "ών" },
+					{ text: "οῦσα" },
+					{ text: "όν" },
+					
+					{ text: "όντος" },
+					{ text: "ούσης" },
+					{ text: "όντος" },
+					
+					{ text: "όντι" },
+					{ text: "ούσῃ" },
+					{ text: "όντι" },
+					
+					{ text: "όντα" },
+					{ text: "οῦσαν" },
+					{ text: "όν" },
+					
+					{ text: "όντες" },
+					{ text: "οῦσαι" },
+					{ text: "όντα" },
+					
+					{ text: "όντων" },
+					{ text: "ουσῶν" },
+					{ text: "όντων" },
+					
+					{ text: "οῦσι(ν)" },
+					{ text: "ούσαις" },
+					{ text: "οῦσι(ν)" },
+					
+					{ text: "όντας" },
+					{ text: "ούσας" },
+					{ text: "όντα" }
+				]
+			},
+			
+			"2nd Aorist Middle Endings (Inflected)": {
+				columnLabels: [
+					"",
+					"Masculine\n(3rd)",
+					"Feminine\n(1st)",
+					"Neuter\n(3rd)"
+				],
+				
+				rowLabels: [
+					"Nominative\nSingular",
+					"Genitive\nSingular",
+					"Dative\nSingular",
+					"Accusative\nSingular",
+					"Nominative\nPlural",
+					"Genitive\nPlural",
+					"Dative\nPlural",
+					"Accusative\nPlural"
+				],
+				
+				elements: [
+					{ text: "όμενος" },
+					{ text: "ομένη" },
+					{ text: "όμενον" },
+					
+					{ text: "ομένου" },
+					{ text: "ομένης" },
+					{ text: "ομένου" },
+					
+					{ text: "ομένῳ" },
+					{ text: "ομένῃ" },
+					{ text: "ομένῳ" },
+					
+					{ text: "όμενον" },
+					{ text: "ομένην" },
+					{ text: "όμενον" },
+					
+					{ text: "όμενοι" },
+					{ text: "όμεναι" },
+					{ text: "όμενα" },
+					
+					{ text: "ομένων" },
+					{ text: "ομένων" },
+					{ text: "ομένων" },
+					
+					{ text: "ομένοις" },
+					{ text: "ομέναις" },
+					{ text: "ομένοις" },
+					
+					{ text: "ομένους" },
+					{ text: "ομένας" },
+					{ text: "όμενα" }
+				]
+			},
+			
+			"2nd Aorist Passive Endings (Inflected)": {
+				columnLabels: [
+					"",
+					"Masculine\n(3rd)",
+					"Feminine\n(1st)",
+					"Neuter\n(3rd)"
+				],
+				
+				rowLabels: [
+					"Nominative\nSingular",
+					"Genitive\nSingular",
+					"Dative\nSingular",
+					"Accusative\nSingular",
+					"Nominative\nPlural",
+					"Genitive\nPlural",
+					"Dative\nPlural",
+					"Accusative\nPlural"
+				],
+				
+				elements: [
+					{ text: "είς" },
+					{ text: "εῖσα" },
+					{ text: "έν" },
+					
+					{ text: "έντος" },
+					{ text: "είσης" },
+					{ text: "έντος" },
+					
+					{ text: "έντι" },
+					{ text: "είσῃ" },
+					{ text: "έντι" },
+					
+					{ text: "έντα" },
+					{ text: "εῖσαν" },
+					{ text: "έν" },
+					
+					{ text: "έντες" },
+					{ text: "εῖσαι" },
+					{ text: "έντα" },
+					
+					{ text: "έντων" },
+					{ text: "εισῶν" },
+					{ text: "έντων" },
+					
+					{ text: "εῖσι(ν)" },
+					{ text: "είσαις" },
+					{ text: "εῖσι(ν)" },
+					
+					{ text: "έντας" },
+					{ text: "είσας" },
+					{ text: "έντα" }
 				]
 			}
 		},
