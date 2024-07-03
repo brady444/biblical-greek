@@ -305,6 +305,16 @@ export default {
 			},
 			
 			{
+				name: "Verbs",
+				vocabulary: constants.vocabulary.slice (0).filter (word =>
+					word.forms.find (form =>
+						form.uses.find (use =>
+							use.partOfSpeech === "verb"
+						) !== undefined
+					) !== undefined)
+			},
+			
+			{
 				name: "Present Indicative Verbs",
 				vocabulary: []
 			},
