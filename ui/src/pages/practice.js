@@ -386,7 +386,7 @@ export default {
 					};
 				}
 				
-				pageData.sets [3].vocabulary.push (word);
+				pageData.sets [4].vocabulary.push (word);
 			}
 			
 			// Future Indicative Verbs set
@@ -405,7 +405,7 @@ export default {
 					};
 				}
 				
-				pageData.sets [4].vocabulary.push (word);
+				pageData.sets [5].vocabulary.push (word);
 			}
 		}
 		
