@@ -39,8 +39,8 @@ export default {
 			pageData.updateCurrentVocabulary ();
 		};
 		
-		pageData.updateSet = setIndex => {
-			pageData.currentSet = pageData.sets [setIndex];
+		pageData.updateSet = setName => {
+			pageData.currentSet = pageData.sets [setName];
 			
 			pageData.updateCurrentVocabulary ();
 		};
@@ -270,19 +270,26 @@ export default {
 		};
 		
 		// Sets
-		pageData.sets = [
-			{
-				name: "All",
+		pageData.sets = {
+			All: {
 				vocabulary: constants.vocabulary.slice (0)
 			},
 			
-			{
-				name: "Frequency ≥ 50",
+			"Frequency ≥ 50": {
 				vocabulary: constants.vocabulary.slice (0).filter (word => word.frequency >= 50)
 			},
 			
-			{
-				name: "Prepositions",
+			"Verbs with frequency ≥ 50": {
+				vocabulary: constants.vocabulary.slice (0).filter (word =>
+					word.frequency >= 50 &&
+					word.forms.find (form =>
+						form.uses.find (use =>
+							use.partOfSpeech === "verb"
+						) !== undefined
+					) !== undefined)
+			},
+			
+			Prepositions: {
 				vocabulary: constants.vocabulary.slice (0).filter (word =>
 					word.forms.find (form =>
 						form.uses.find (use =>
@@ -291,8 +298,7 @@ export default {
 					) !== undefined)
 			},
 			
-			{
-				name: "Adverbs, Conjunctions, Particles, and Interjections",
+			"Adverbs, Conjunctions, Particles, and Interjections": {
 				vocabulary: constants.vocabulary.slice (0).filter (word =>
 					word.forms.find (form =>
 						form.uses.find (use =>
@@ -304,8 +310,7 @@ export default {
 					) !== undefined)
 			},
 			
-			{
-				name: "Verbs",
+			Verbs: {
 				vocabulary: constants.vocabulary.slice (0).filter (word =>
 					word.forms.find (form =>
 						form.uses.find (use =>
@@ -314,16 +319,16 @@ export default {
 					) !== undefined)
 			},
 			
-			{
-				name: "Present Indicative Verbs",
+			"Present Indicative Verbs": {
 				vocabulary: []
 			},
 			
-			{
-				name: "Future Indicative Verbs",
+			"Future Indicative Verbs": {
 				vocabulary: []
 			}
-		];
+		};
+		
+		pageData.setNames = Object.keys (pageData.sets);
 		
 		// Setup for modes
 		
@@ -366,7 +371,7 @@ export default {
 		
 		// Setup for sets
 		
-		pageData.currentSet = pageData.sets [0];
+		pageData.currentSet = pageData.sets.All;
 		
 		// Populate sets
 		for (let i = 0; i < constants.vocabulary.length; i++) {
@@ -386,7 +391,7 @@ export default {
 					};
 				}
 				
-				pageData.sets [4].vocabulary.push (word);
+				pageData.sets ["Present Indicative Verbs"].vocabulary.push (word);
 			}
 			
 			// Future Indicative Verbs set
@@ -405,7 +410,7 @@ export default {
 					};
 				}
 				
-				pageData.sets [5].vocabulary.push (word);
+				pageData.sets ["Future Indicative Verbs"].vocabulary.push (word);
 			}
 		}
 		
@@ -433,9 +438,9 @@ export default {
 					<div class = "full-height flex-column-top grow small-gap">
 						<p class = "medium-font">Set</p>
 						
-						<select class = "full-width small-padding medium-font" oninput = "pageData.updateSet (this.selectedIndex)">
-							${ pageData.sets.map (set => html
-								`<option class = "medium-font">${ set.name }</option>`
+						<select class = "full-width small-padding medium-font" oninput = "pageData.updateSet (this.value)">
+							${ pageData.setNames.map (name => html
+								`<option class = "medium-font">${ name }</option>`
 							) }
 						</select>
 					</div>
