@@ -27,6 +27,8 @@ export default {
 					
 					let matchedForms = constants.vocabularyFormsMap [simplifiedInputWord];
 					
+					console.log (matchedForms);
+					
 					if (matchedForms === undefined) {
 						matchedForms = [{
 							text: inputWord

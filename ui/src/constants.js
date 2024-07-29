@@ -1665,9 +1665,7 @@ const constants = {
 	}
 };
 
-const vocabularyLength = constants.vocabulary.length;
-
-for (let i = 0; i < vocabularyLength; i++) {
+for (let i = 0; i < constants.vocabulary.length; i++) {
 	const word = constants.vocabulary [i];
 	
 	word.frequency = 0;
@@ -1720,10 +1718,14 @@ for (let i = 0; i < vocabularyLength; i++) {
 	}
 	
 	if (!formsMapIncludesLexicalForm) {
-		constants.vocabularyFormsMap [word.simplifiedLexicalForm] = [{
+		if (constants.vocabularyFormsMap [word.simplifiedLexicalForm] === undefined) {
+			constants.vocabularyFormsMap [word.simplifiedLexicalForm] = [];
+		}
+		
+		constants.vocabularyFormsMap [word.simplifiedLexicalForm].push ({
 			text: word.lexicalForm,
 			word: word
-		}];
+		});
 	}
 	
 	word.glossesString = word.glosses.join ("; ");
