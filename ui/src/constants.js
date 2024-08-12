@@ -470,30 +470,6 @@ const constants = {
 		},
 		
 		Participles: {
-			Morphemes: {
-				columnLabels: [
-					"",
-					"Masculine",
-					"Feminine",
-					"Neuter"
-				],
-				
-				rowLabels: [
-					"Active",
-					"Middle/\nPassive"
-				],
-				
-				elements: [
-					{ text: "ντ" },
-					{ text: "ουσα" },
-					{ text: "ντ" },
-					
-					{ text: "μενο" },
-					{ text: "μενη" },
-					{ text: "μενο" }
-				]
-			},
-			
 			"Master Participle Chart": {
 				columnLabels: [
 					"Tense/Voice",
@@ -516,47 +492,59 @@ const constants = {
 					{ answered: true },
 					{ text: "Present" },
 					{ text: "ο" },
-					{ text: "μενο/η" },
+					{ text: "μενο/μενη" },
 					
 					{ text: "1st Aorist Active" },
 					{ answered: true },
 					{ text: "Aorist Active" },
 					{ text: "σα" },
-					{ text: "ντ/σα" },
+					{ text: "ντ/ουσα" },
 					
 					{ text: "1st Aorist Middle" },
 					{ answered: true },
 					{ text: "Aorist Active" },
 					{ text: "σα" },
-					{ text: "μενο/η" },
+					{ text: "μενο/μενη" },
 					
 					{ text: "1st Aorist Passive" },
 					{ answered: true },
 					{ text: "Aorist Passive" },
 					{ text: "θε" },
-					{ text: "ντ" },
+					{ text: "ντ/ουσα" },
 					
 					{ text: "2nd Aorist Active" },
 					{ answered: true },
 					{ text: "Aorist Active" },
 					{ text: "ο" },
-					{ text: "ντ" },
+					{ text: "ντ/ουσα" },
 					
 					{ text: "2nd Aorist Middle" },
 					{ answered: true },
 					{ text: "Aorist Active" },
 					{ text: "ο" },
-					{ text: "μενο/η" },
+					{ text: "μενο/μενη" },
 					
 					{ text: "2nd Aorist Passive" },
 					{ answered: true },
 					{ text: "Aorist Passive" },
 					{ text: "ε" },
-					{ text: "ντ" }
+					{ text: "ντ/ουσα" },
+					
+					{ text: "Perfect Active" },
+					{ text: "λε" },
+					{ text: "Perfect Active" },
+					{ text: "κ" },
+					{ text: "οτ/υια" },
+					
+					{ text: "Perfect Middle/Passive" },
+					{ text: "λε" },
+					{ text: "Perfect Middle/Passive" },
+					{ answered: true },
+					{ text: "μενο/μενη" }
 				]
 			},
 			
-			"Master Morpheme Chart": {
+			Morphemes: {
 				columnLabels: [
 					"Morpheme",
 					"Tense/Voice",
@@ -566,12 +554,16 @@ const constants = {
 				rowLabels: [],
 				
 				elements: [
-					{ text: "ντ" },
+					{ text: "ντ/ουσα" },
 					{ text: "Active,\nAorist Passive" },
 					{ text: "3-1-3" },
 					
-					{ text: "μενο/η" },
-					{ text: "Middle/Passive" },
+					{ text: "οτ/υια" },
+					{ text: "Perfect Active" },
+					{ text: "3-1-3" },
+					
+					{ text: "μενο/μενη" },
+					{ text: "Middle/\nPassive" },
 					{ text: "2-1-2" }
 				]
 			},
@@ -709,11 +701,11 @@ const constants = {
 					{ text: "σαν" },
 					
 					{ text: "σαντος" },
-					{ text: "σάσης" },
+					{ text: "σάσης" },
 					{ text: "σαντος" },
 					
 					{ text: "σαντι" },
-					{ text: "σάσῃ" },
+					{ text: "σάσῃ" },
 					{ text: "σαντι" },
 					
 					{ text: "σαντα" },
@@ -724,16 +716,16 @@ const constants = {
 					{ text: "σασαι" },
 					{ text: "σαντα" },
 					
-					{ text: "σάντων" },
+					{ text: "σάντων" },
 					{ text: "σασῶν" },
-					{ text: "σάντων" },
+					{ text: "σάντων" },
 					
 					{ text: "σασι(ν)" },
-					{ text: "σάσαις" },
+					{ text: "σάσαις" },
 					{ text: "σασι(ν)" },
 					
 					{ text: "σαντας" },
-					{ text: "σάσας" },
+					{ text: "σάσας" },
 					{ text: "σαντα" }
 				]
 			},
@@ -758,37 +750,37 @@ const constants = {
 				],
 				
 				elements: [
-					{ text: "σάμενος" },
-					{ text: "σαμένη" },
-					{ text: "σάμενον" },
+					{ text: "σάμενος" },
+					{ text: "σαμένη" },
+					{ text: "σάμενον" },
 					
-					{ text: "σαμένου" },
-					{ text: "σαμένης" },
-					{ text: "σαμένου" },
+					{ text: "σαμένου" },
+					{ text: "σαμένης" },
+					{ text: "σαμένου" },
 					
-					{ text: "σαμένῳ" },
-					{ text: "σαμένῃ" },
-					{ text: "σαμένῳ" },
+					{ text: "σαμένῳ" },
+					{ text: "σαμένῃ" },
+					{ text: "σαμένῳ" },
 					
-					{ text: "σάμενον" },
-					{ text: "σαμένην" },
-					{ text: "σάμενον" },
+					{ text: "σάμενον" },
+					{ text: "σαμένην" },
+					{ text: "σάμενον" },
 					
-					{ text: "σάμενοι" },
-					{ text: "σάμεναι" },
-					{ text: "σάμενα" },
+					{ text: "σάμενοι" },
+					{ text: "σάμεναι" },
+					{ text: "σάμενα" },
 					
-					{ text: "σαμένων" },
-					{ text: "σαμένων" },
-					{ text: "σαμένων" },
+					{ text: "σαμένων" },
+					{ text: "σαμένων" },
+					{ text: "σαμένων" },
 					
-					{ text: "σαμένοις" },
-					{ text: "σαμέναις" },
-					{ text: "σαμένοις" },
+					{ text: "σαμένοις" },
+					{ text: "σαμέναις" },
+					{ text: "σαμένοις" },
 					
-					{ text: "σαμένους" },
-					{ text: "σαμένας" },
-					{ text: "σάμενα" }
+					{ text: "σαμένους" },
+					{ text: "σαμένας" },
+					{ text: "σάμενα" }
 				]
 			},
 			
@@ -812,37 +804,37 @@ const constants = {
 				],
 				
 				elements: [
-					{ text: "θείς" },
+					{ text: "θείς" },
 					{ text: "θεῖσα" },
-					{ text: "θέν" },
+					{ text: "θέν" },
 					
-					{ text: "θέντος" },
-					{ text: "θείσης" },
-					{ text: "θέντος" },
+					{ text: "θέντος" },
+					{ text: "θείσης" },
+					{ text: "θέντος" },
 					
-					{ text: "θέντι" },
-					{ text: "θείσῃ" },
-					{ text: "θέντι" },
+					{ text: "θέντι" },
+					{ text: "θείσῃ" },
+					{ text: "θέντι" },
 					
-					{ text: "θέντα" },
+					{ text: "θέντα" },
 					{ text: "θεῖσαν" },
-					{ text: "θέν" },
+					{ text: "θέν" },
 					
-					{ text: "θέντες" },
+					{ text: "θέντες" },
 					{ text: "θεῖσαι" },
-					{ text: "θέντα" },
+					{ text: "θέντα" },
 					
-					{ text: "θέντων" },
+					{ text: "θέντων" },
 					{ text: "θεισῶν" },
-					{ text: "θέντων" },
+					{ text: "θέντων" },
 					
 					{ text: "θεῖσι(ν)" },
-					{ text: "θείσαις" },
+					{ text: "θείσαις" },
 					{ text: "θεῖσι(ν)" },
 					
-					{ text: "θέντας" },
-					{ text: "θείσας" },
-					{ text: "θέντα" }
+					{ text: "θέντας" },
+					{ text: "θείσας" },
+					{ text: "θέντα" }
 				]
 			},
 			
@@ -866,37 +858,37 @@ const constants = {
 				],
 				
 				elements: [
-					{ text: "ών" },
+					{ text: "ών" },
 					{ text: "οῦσα" },
-					{ text: "όν" },
+					{ text: "όν" },
 					
-					{ text: "όντος" },
-					{ text: "ούσης" },
-					{ text: "όντος" },
+					{ text: "όντος" },
+					{ text: "ούσης" },
+					{ text: "όντος" },
 					
-					{ text: "όντι" },
-					{ text: "ούσῃ" },
-					{ text: "όντι" },
+					{ text: "όντι" },
+					{ text: "ούσῃ" },
+					{ text: "όντι" },
 					
-					{ text: "όντα" },
+					{ text: "όντα" },
 					{ text: "οῦσαν" },
-					{ text: "όν" },
+					{ text: "όν" },
 					
-					{ text: "όντες" },
+					{ text: "όντες" },
 					{ text: "οῦσαι" },
-					{ text: "όντα" },
+					{ text: "όντα" },
 					
-					{ text: "όντων" },
+					{ text: "όντων" },
 					{ text: "ουσῶν" },
-					{ text: "όντων" },
+					{ text: "όντων" },
 					
 					{ text: "οῦσι(ν)" },
-					{ text: "ούσαις" },
+					{ text: "ούσαις" },
 					{ text: "οῦσι(ν)" },
 					
-					{ text: "όντας" },
-					{ text: "ούσας" },
-					{ text: "όντα" }
+					{ text: "όντας" },
+					{ text: "ούσας" },
+					{ text: "όντα" }
 				]
 			},
 			
@@ -920,37 +912,37 @@ const constants = {
 				],
 				
 				elements: [
-					{ text: "όμενος" },
-					{ text: "ομένη" },
-					{ text: "όμενον" },
+					{ text: "όμενος" },
+					{ text: "ομένη" },
+					{ text: "όμενον" },
 					
-					{ text: "ομένου" },
-					{ text: "ομένης" },
-					{ text: "ομένου" },
+					{ text: "ομένου" },
+					{ text: "ομένης" },
+					{ text: "ομένου" },
 					
-					{ text: "ομένῳ" },
-					{ text: "ομένῃ" },
-					{ text: "ομένῳ" },
+					{ text: "ομένῳ" },
+					{ text: "ομένῃ" },
+					{ text: "ομένῳ" },
 					
-					{ text: "όμενον" },
-					{ text: "ομένην" },
-					{ text: "όμενον" },
+					{ text: "όμενον" },
+					{ text: "ομένην" },
+					{ text: "όμενον" },
 					
-					{ text: "όμενοι" },
-					{ text: "όμεναι" },
-					{ text: "όμενα" },
+					{ text: "όμενοι" },
+					{ text: "όμεναι" },
+					{ text: "όμενα" },
 					
-					{ text: "ομένων" },
-					{ text: "ομένων" },
-					{ text: "ομένων" },
+					{ text: "ομένων" },
+					{ text: "ομένων" },
+					{ text: "ομένων" },
 					
-					{ text: "ομένοις" },
-					{ text: "ομέναις" },
-					{ text: "ομένοις" },
+					{ text: "ομένοις" },
+					{ text: "ομέναις" },
+					{ text: "ομένοις" },
 					
-					{ text: "ομένους" },
-					{ text: "ομένας" },
-					{ text: "όμενα" }
+					{ text: "ομένους" },
+					{ text: "ομένας" },
+					{ text: "όμενα" }
 				]
 			},
 			
@@ -974,37 +966,145 @@ const constants = {
 				],
 				
 				elements: [
-					{ text: "είς" },
+					{ text: "είς" },
 					{ text: "εῖσα" },
-					{ text: "έν" },
+					{ text: "έν" },
 					
-					{ text: "έντος" },
-					{ text: "είσης" },
-					{ text: "έντος" },
+					{ text: "έντος" },
+					{ text: "είσης" },
+					{ text: "έντος" },
 					
-					{ text: "έντι" },
-					{ text: "είσῃ" },
-					{ text: "έντι" },
+					{ text: "έντι" },
+					{ text: "είσῃ" },
+					{ text: "έντι" },
 					
-					{ text: "έντα" },
+					{ text: "έντα" },
 					{ text: "εῖσαν" },
-					{ text: "έν" },
+					{ text: "έν" },
 					
-					{ text: "έντες" },
+					{ text: "έντες" },
 					{ text: "εῖσαι" },
-					{ text: "έντα" },
+					{ text: "έντα" },
 					
-					{ text: "έντων" },
+					{ text: "έντων" },
 					{ text: "εισῶν" },
-					{ text: "έντων" },
+					{ text: "έντων" },
 					
 					{ text: "εῖσι(ν)" },
-					{ text: "είσαις" },
+					{ text: "είσαις" },
 					{ text: "εῖσι(ν)" },
 					
-					{ text: "έντας" },
-					{ text: "είσας" },
-					{ text: "έντα" }
+					{ text: "έντας" },
+					{ text: "είσας" },
+					{ text: "έντα" }
+				]
+			},
+			
+			"1st Perfect Active Endings (Inflected)": {
+				columnLabels: [
+					"",
+					"Masculine\n(3rd)",
+					"Feminine\n(1st)",
+					"Neuter\n(3rd)"
+				],
+				
+				rowLabels: [
+					"Nominative\nSingular",
+					"Genitive\nSingular",
+					"Dative\nSingular",
+					"Accusative\nSingular",
+					"Nominative\nPlural",
+					"Genitive\nPlural",
+					"Dative\nPlural",
+					"Accusative\nPlural"
+				],
+				
+				elements: [
+					{ text: "κώς" },
+					{ text: "κυῖα" },
+					{ text: "κός" },
+					
+					{ text: "κότος" },
+					{ text: "κυίας" },
+					{ text: "κότος" },
+					
+					{ text: "κότι" },
+					{ text: "κυίᾳ" },
+					{ text: "κότι" },
+					
+					{ text: "κότα" },
+					{ text: "κυῖαν" },
+					{ text: "κός" },
+					
+					{ text: "κότες" },
+					{ text: "κυῖαι" },
+					{ text: "κότα" },
+					
+					{ text: "κότων" },
+					{ text: "κυιῶν" },
+					{ text: "κότων" },
+					
+					{ text: "κόσι(ν)" },
+					{ text: "κυίαις" },
+					{ text: "κόσι(ν)" },
+					
+					{ text: "κότας" },
+					{ text: "κυίας" },
+					{ text: "κότα" }
+				]
+			},
+			
+			"1st Perfect Middle/Passive Endings (Inflected)": {
+				columnLabels: [
+					"",
+					"Masculine\n(3rd)",
+					"Feminine\n(1st)",
+					"Neuter\n(3rd)"
+				],
+				
+				rowLabels: [
+					"Nominative\nSingular",
+					"Genitive\nSingular",
+					"Dative\nSingular",
+					"Accusative\nSingular",
+					"Nominative\nPlural",
+					"Genitive\nPlural",
+					"Dative\nPlural",
+					"Accusative\nPlural"
+				],
+				
+				elements: [
+					{ text: "μένος" },
+					{ text: "μένη" },
+					{ text: "μένον" },
+					
+					{ text: "μένου" },
+					{ text: "μένης" },
+					{ text: "μένου" },
+					
+					{ text: "μένῳ" },
+					{ text: "μένῃ" },
+					{ text: "μένῳ" },
+					
+					{ text: "μένον" },
+					{ text: "μένην" },
+					{ text: "μένον" },
+					
+					{ text: "μένοι" },
+					{ text: "μέναι" },
+					{ text: "μένα" },
+					
+					{ text: "μένων" },
+					{ text: "μένων" },
+					{ text: "μένων" },
+					
+					{ text: "μένοις" },
+					{ text: "μέναις" },
+					{ text: "μένοις" },
+					
+					{ text: "μένους" },
+					{ text: "μένας" },
+					{ text: "μένα" }
 				]
 			}
 		},
@@ -1362,6 +1462,43 @@ const constants = {
 					{ text: "θ" },
 					{ text: "σ" }
 				]
+			},
+			
+			"Periphrastic Constructions": {
+				name: "Periphrastic Constructions",
+				
+				columnLabels: [
+					"Periphrastic Tense",
+					"εἰμί Tense",
+					"Participle Tense"
+				],
+				
+				elements: [
+					{ text: "Present" },
+					{ text: "Present" },
+					{ text: "Present" },
+					
+					{ text: "Imperfect" },
+					{ text: "Imperfect" },
+					{ text: "Present" },
+					
+					{ text: "Future" },
+					{ text: "Future" },
+					{ text: "Present" },
+					
+					{ text: "Perfect" },
+					{ text: "Present" },
+					{ text: "Perfect" },
+					
+					{ text: "Pluperfect" },
+					{ text: "Imperfect" },
+					{ text: "Perfect" },
+					
+					{ text: "Future Perfect" },
+					{ text: "Future" },
+					{ text: "Perfect" }
+				]
+				
 			},
 			
 			εἰμί: {
