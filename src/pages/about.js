@@ -3,8 +3,8 @@ import { html } from "uhtml";
 import constants from "../constants.js";
 
 export default {
-	content: () => html
-		`<div class = "page-container flex-column-top grow full-width full-height xx-large-gap medium-padding">
+	content:
+		() => html`<div class = "page-container flex-column-top grow full-width full-height xx-large-gap medium-padding">
 			<div class = "medium-width flex-column-top xx-large-gap">
 				<p class = "small-font">Contact: <a class = "grayA" href = "mailto:contact@biblicalgreek.app">contact@biblicalgreek.app</a></p>
 				
@@ -88,18 +88,21 @@ export default {
 					<p class = "small-font grayA">Mappings between the headwords of various NT Greek lexicons, the lemmas of MorphGNT and Nestle 1904, and Strongs and GK numbers</p>
 				</div>
 				
-				${ constants.errors.length > 0 ? html
-					`<div class = "medium-width flex-column-top large-gap">
+				${
+					constants.errors.length > 0
+						? html`<div class = "medium-width flex-column-top large-gap">
 						<p class = "small-font">This website uses an automated parser to generate its data. The data may contain inaccuracies or errors. Some errors are caught during the parsing process. These errors are listed below. There may be more errors that are not listed. These errors may also be outdated or inaccurate.</p>
 						
 						<div class = "flex-column medium-width x-large-gap">
 							<div class = "flex-column-left full-width small-gap">
-								${ constants.errors.map (error => html
-									`<pre class = "text-left small-font grayA">${ error }</pre>`
-								) }
+								${constants.errors.map(
+									(error) =>
+										html`<pre class = "text-left small-font grayA">${error}</pre>`,
+								)}
 							</div>
 						</div>
-					</div>` : null
+					</div>`
+						: null
 				}
-		</div>`
+		</div>`,
 };
