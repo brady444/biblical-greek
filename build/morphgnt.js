@@ -1,12 +1,12 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
 import constants from "./constants.js";
 import utilities from "./utilities.js";
 
 const getFormUse = (formText, partOfSpeech, parsingCode, addError) => {
 	const use = {
-		frequency: 1
+		frequency: 1,
 	};
 
 	switch (partOfSpeech) {
@@ -89,7 +89,9 @@ const getFormUse = (formText, partOfSpeech, parsingCode, addError) => {
 		}
 
 		default: {
-			addError("Form \"" + formText + "\" has an invalid partOfSpeech \"" + partOfSpeech);
+			addError(
+				`Form \"${formText}\" has an invalid partOfSpeech \"${partOfSpeech}`,
+			);
 		}
 	}
 
@@ -117,7 +119,9 @@ const getFormUse = (formText, partOfSpeech, parsingCode, addError) => {
 		}
 
 		default: {
-			addError("Form \"" + formText + "\" has an invalid person \"" + parsingCode[0]);
+			addError(
+				`Form \"${formText}\" has an invalid person \"${parsingCode[0]}`,
+			);
 		}
 	}
 
@@ -163,7 +167,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode, addError) => {
 		}
 
 		default: {
-			addError("Form \"" + formText + "\" has an invalid tense \"" + parsingCode[1]);
+			addError(`Form \"${formText}\" has an invalid tense \"${parsingCode[1]}`);
 		}
 	}
 
@@ -191,7 +195,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode, addError) => {
 		}
 
 		default: {
-			addError("Form \"" + formText + "\" has an invalid voice \"" + parsingCode[2]);
+			addError(`Form \"${formText}\" has an invalid voice \"${parsingCode[2]}`);
 		}
 	}
 
@@ -237,7 +241,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode, addError) => {
 		}
 
 		default: {
-			addError("Form \"" + formText + "\" has an invalid mood \"" + parsingCode[3]);
+			addError(`Form \"${formText}\" has an invalid mood \"${parsingCode[3]}`);
 		}
 	}
 
@@ -277,7 +281,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode, addError) => {
 		}
 
 		default: {
-			addError("Form \"" + formText + "\" has an invalid case \"" + parsingCode[4]);
+			addError(`Form \"${formText}\" has an invalid case \"${parsingCode[4]}`);
 		}
 	}
 
@@ -299,7 +303,9 @@ const getFormUse = (formText, partOfSpeech, parsingCode, addError) => {
 		}
 
 		default: {
-			addError("Form \"" + formText + "\" has an invalid number \"" + parsingCode[5]);
+			addError(
+				`Form \"${formText}\" has an invalid number \"${parsingCode[5]}`,
+			);
 		}
 	}
 
@@ -327,7 +333,9 @@ const getFormUse = (formText, partOfSpeech, parsingCode, addError) => {
 		}
 
 		default: {
-			addError("Form \"" + formText + "\" has an invalid gender \"" + parsingCode[6]);
+			addError(
+				`Form \"${formText}\" has an invalid gender \"${parsingCode[6]}`,
+			);
 		}
 	}
 
@@ -349,7 +357,9 @@ const getFormUse = (formText, partOfSpeech, parsingCode, addError) => {
 		}
 
 		default: {
-			addError("Form \"" + formText + "\" has an invalid degree \"" + parsingCode[7]);
+			addError(
+				`Form \"${formText}\" has an invalid degree \"${parsingCode[7]}`,
+			);
 		}
 	}
 
@@ -385,19 +395,24 @@ const sortFormUses = (a, b) => {
 };
 
 const approximatePrincipalPart = (formText, use) => {
-	const endingCategories = constants.personalEndings[use.tense === "present" || use.tense === "future" ? "primary" : "secondary"][use.person][use.voice];
+	const endingCategories =
+		constants.personalEndings[
+			use.tense === "present" || use.tense === "future"
+				? "primary"
+				: "secondary"
+		][use.person][use.voice];
 
 	for (let i = 0; i < endingCategories.length; i++) {
 		const endingGroup = endingCategories[i];
 
 		for (let j = 0; j < endingGroup.endings.length; j++) {
 			if (formText.endsWith(endingGroup.endings[j])) {
-				return "[" + formText.slice(0, -endingGroup.endings[j].length) + endingGroup.firstSingular + "]";
+				return `[${formText.slice(0, -endingGroup.endings[j].length)}${endingGroup.firstSingular}]`;
 			}
 		}
 	}
 
-	return "[" + formText + "]";
+	return `[${formText}]`;
 };
 
 const getPrincipalParts = (word, addError) => {
@@ -405,28 +420,28 @@ const getPrincipalParts = (word, addError) => {
 
 	const principalPartsData = [
 		{
-			text: "-"
+			text: "-",
 		},
 
 		{
-			text: "-"
+			text: "-",
 		},
 
 		{
-			text: "-"
+			text: "-",
 		},
 
 		{
-			text: "-"
+			text: "-",
 		},
 
 		{
-			text: "-"
+			text: "-",
 		},
 
 		{
-			text: "-"
-		}
+			text: "-",
+		},
 	];
 
 	for (let j = 0; j < word.forms.length; j++) {
@@ -455,36 +470,29 @@ const getPrincipalParts = (word, addError) => {
 			}
 
 			// Future Active/Middle
-			else if (use.tense === "future" &&
-				use.voice !== "passive") {
+			else if (use.tense === "future" && use.voice !== "passive") {
 				partIndex = 1;
 			}
 
 			// Aorist Active/Middle
-			else if (use.tense === "aorist" &&
-				use.voice !== "passive") {
+			else if (use.tense === "aorist" && use.voice !== "passive") {
 				partIndex = 2;
 			}
 
 			// Perfect Active
-			else if (use.tense === "perfect" &&
-				use.voice === "active") {
+			else if (use.tense === "perfect" && use.voice === "active") {
 				partIndex = 3;
 			}
 
 			// Perfect Middle/Passive
-			else if (use.tense === "perfect" &&
-				use.voice !== "active") {
+			else if (use.tense === "perfect" && use.voice !== "active") {
 				partIndex = 4;
 			}
 
 			// Aorist Passive
-			else if (use.tense === "aorist" &&
-				use.voice === "passive") {
+			else if (use.tense === "aorist" && use.voice === "passive") {
 				partIndex = 5;
-			}
-
-			else {
+			} else {
 				// If this use doesn't match any parts
 				continue;
 			}
@@ -503,15 +511,17 @@ const getPrincipalParts = (word, addError) => {
 			if (use.person === "1st" && use.number === "singular") {
 				principalPartsData[partIndex] = {
 					text: form.text,
-					voice: use.voice
+					voice: use.voice,
 				};
 
 				continue;
 			}
 
 			// Don't overwrite the part if the current use has a lower voice
-			if ((currentPart.voice === "active" && use.voice !== "active") ||
-				(currentPart.voice === "middle" && use.voice === "passive")) {
+			if (
+				(currentPart.voice === "active" && use.voice !== "active") ||
+				(currentPart.voice === "middle" && use.voice === "passive")
+			) {
 				continue;
 			}
 
@@ -519,44 +529,56 @@ const getPrincipalParts = (word, addError) => {
 			const approximatedPart = approximatePrincipalPart(form.text, use);
 
 			// If this is present tense, and the form is different from the lexical form
-			if (partIndex === 0 && approximatedPart !== "[" + word.lexicalForm + "]") {
+			if (partIndex === 0 && approximatedPart !== `[${word.lexicalForm}]`) {
 				// TODO add other exceptions
 				// If this is a contract verb, the lexicalForm is expected to be different
-				if ((!word.lexicalForm.endsWith("άω") &&
-					!word.lexicalForm.endsWith("έω") &&
-					!word.lexicalForm.endsWith("όω")) || approximatedPart.endsWith("ῶ")) {
-					addError("Lexical form \"" + word.lexicalForm + "\" has an approximated present principal part \"" + approximatedPart + "\" that is different from its lexical form");
+				if (
+					(!word.lexicalForm.endsWith("άω") &&
+						!word.lexicalForm.endsWith("έω") &&
+						!word.lexicalForm.endsWith("όω")) ||
+					approximatedPart.endsWith("ῶ")
+				) {
+					addError(
+						`Lexical form \"${word.lexicalForm}\" has an approximated present principal part \"${approximatedPart}\" that is different from its lexical form`,
+					);
 				}
 			}
 
 			// If the approximatedPrincipalPart is the same as form.text
-			if (approximatedPart === "[" + form.text + "]") {
-				addError("Lexical form \"" + word.lexicalForm + "\" has an approximated principal part that is the same as a non-first person singular form, part: \"" + approximatedPart + "\"");
+			if (approximatedPart === `[${form.text}]`) {
+				addError(
+					`Lexical form \"${word.lexicalForm}\" has an approximated principal part that is the same as a non-first person singular form, part: \"${approximatedPart}\"`,
+				);
 			}
 
 			// If the principal part was already approximated
-			if (isPartSet && isPartApproximated &&
+			if (
+				isPartSet &&
+				isPartApproximated &&
 				// , and differs from the new approximation
-				currentPart.text !== approximatedPart) {
-				addError("Lexical form \"" + word.lexicalForm + "\" has multiple approximations for the same principal part, index: " + partIndex + ", parts: \"" + currentPart.text + ", " + approximatedPart + "\"");
+				currentPart.text !== approximatedPart
+			) {
+				addError(
+					`Lexical form \"${word.lexicalForm}\" has multiple approximations for the same principal part, index: ${partIndex}, parts: \"${currentPart.text}, ${approximatedPart}\"`,
+				);
 			}
 
 			principalPartsData[partIndex] = {
 				text: approximatedPart,
-				voice: use.voice
+				voice: use.voice,
 			};
 		}
 	}
 
-	return hasVerbUse ? principalPartsData.map(part => part.text) : undefined;
+	return hasVerbUse ? principalPartsData.map((part) => part.text) : undefined;
 };
 
 export default {
-	getData: addError => {
+	getData: (addError) => {
 		const data = {
 			// Map of lexicalForm -> word
 			vocabulary: {},
-			newTestament: []
+			newTestament: [],
 		};
 
 		// Map of simplified form text -> list of forms
@@ -572,7 +594,15 @@ export default {
 			}
 
 			// Exclude the last line since it's empty
-			lines = lines.concat(fs.readFileSync(path.normalize(constants.morphGntPath + "/" + files[i]), "utf8").split("\n").slice(0, -1));
+			lines = lines.concat(
+				fs
+					.readFileSync(
+						path.normalize(`${constants.morphGntPath}/${files[i]}`),
+						"utf8",
+					)
+					.split("\n")
+					.slice(0, -1),
+			);
 		}
 
 		for (let i = 0; i < lines.length; i++) {
@@ -587,9 +617,9 @@ export default {
 			const simplifiedFormText = utilities.simplifyGreek(normalizedFormText);
 			const lexicalForm = columns[6];
 
-			const book = parseInt(location.slice(0, 2));
-			const chapter = parseInt(location.slice(2, 4));
-			const verse = parseInt(location.slice(4, 6));
+			const book = Number.parseInt(location.slice(0, 2));
+			const chapter = Number.parseInt(location.slice(2, 4));
+			const verse = Number.parseInt(location.slice(4, 6));
 
 			const bookIndex = book - 1;
 			const chapterIndex = chapter - 1;
@@ -602,18 +632,23 @@ export default {
 			if (word === undefined) {
 				word = {
 					lexicalForm: lexicalForm,
-					forms: []
+					forms: [],
 				};
 
 				data.vocabulary[lexicalForm] = word;
 			}
 
-			let use = getFormUse(normalizedFormText, partOfSpeech, parsingCode, addError);
+			let use = getFormUse(
+				normalizedFormText,
+				partOfSpeech,
+				parsingCode,
+				addError,
+			);
 
 			let form = {
 				text: normalizedFormText,
 				lexicalForm: lexicalForm,
-				uses: [use]
+				uses: [use],
 			};
 
 			// List of existing forms that match the simplifiedFormText
@@ -625,15 +660,16 @@ export default {
 			if (existingFormList) {
 				for (let j = 0; j < existingFormList.length; j++) {
 					// If existingFormList [j] matches the current form
-					if (existingFormList[j].text === form.text && existingFormList[j].lexicalForm === form.lexicalForm) {
+					if (
+						existingFormList[j].text === form.text &&
+						existingFormList[j].lexicalForm === form.lexicalForm
+					) {
 						existingForm = existingFormList[j];
 
 						break;
 					}
 				}
-			}
-
-			else {
+			} else {
 				simplifiedFormTextMap[simplifiedFormText] = [];
 			}
 
@@ -644,7 +680,8 @@ export default {
 				let existingUse;
 
 				for (let j = 0; j < existingForm.uses.length; j++) {
-					if (existingForm.uses[j].person === use.person &&
+					if (
+						existingForm.uses[j].person === use.person &&
 						existingForm.uses[j].tense === use.tense &&
 						existingForm.uses[j].voice === use.voice &&
 						existingForm.uses[j].mood === use.mood &&
@@ -652,7 +689,8 @@ export default {
 						existingForm.uses[j].number === use.number &&
 						existingForm.uses[j].gender === use.gender &&
 						existingForm.uses[j].degree === use.degree &&
-						existingForm.uses[j].partOfSpeech === use.partOfSpeech) {
+						existingForm.uses[j].partOfSpeech === use.partOfSpeech
+					) {
 						existingUse = existingForm.uses[j];
 
 						break;
@@ -688,7 +726,9 @@ export default {
 				data.newTestament[bookIndex][chapterIndex] = [];
 			}
 
-			if (data.newTestament[bookIndex][chapterIndex][verseIndex] === undefined) {
+			if (
+				data.newTestament[bookIndex][chapterIndex][verseIndex] === undefined
+			) {
 				data.newTestament[bookIndex][chapterIndex][verseIndex] = [];
 			}
 
@@ -696,7 +736,7 @@ export default {
 				text: text,
 				word: word,
 				form: form,
-				use: use
+				use: use,
 			});
 		}
 
@@ -718,5 +758,5 @@ export default {
 		}
 
 		return data;
-	}
+	},
 };

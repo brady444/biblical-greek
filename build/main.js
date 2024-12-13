@@ -1,5 +1,5 @@
 import fs from "node:fs/promises";
-import path from "path";
+import path from "node:path";
 import html from "bun-plugin-html";
 
 import constants from "./constants";
@@ -12,9 +12,12 @@ import parser from "./parser";
 
 const dataPath = path.join(constants.generatedPath, "data.js");
 
-console.log("Writing " + dataPath);
+console.log(`Writing ${dataPath}`);
 
-await Bun.write(dataPath, "export default " + JSON.stringify(parser.data, null, "\t") + ";");
+await Bun.write(
+	dataPath,
+	`export default ${JSON.stringify(parser.data, null, "\t")};`,
+);
 
 // Generate pages.js
 
@@ -31,26 +34,24 @@ for (let i = 0; i < pageFiles.length; i++) {
 	pagesText += `pages.${page} = ${page};`;
 }
 
-pagesText += "export default pages;"
+pagesText += "export default pages;";
 
-console.log("Writing " + pagesPath);
+console.log(`Writing ${pagesPath}`);
 
 await Bun.write(pagesPath, pagesText);
 
 // Clear the output path
 
-console.log("Deleting " + constants.outputPath);
+console.log(`Deleting ${constants.outputPath}`);
 
 await fs.rm(constants.outputPath, { recursive: true });
 
 // Bundle and write to the output path
 
-console.log("Bundling and writing to " + constants.outputPath);
+console.log(`Bundling and writing to ${constants.outputPath}`);
 
 await Bun.build({
 	entrypoints: ["src/index.html"],
 	outdir: constants.outputPath,
-	plugins: [
-		html()
-	]
+	plugins: [html()],
 });

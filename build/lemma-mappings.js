@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "node:fs";
 
 import yaml from "js-yaml";
 
@@ -8,10 +8,12 @@ export default {
 	getData: () => {
 		const data = {
 			// Map of lexicalForm -> word
-			vocabulary: []
+			vocabulary: [],
 		};
 
-		const vocabularyNumberMap = yaml.load(fs.readFileSync(constants.strongsMappingPath, "utf8"));
+		const vocabularyNumberMap = yaml.load(
+			fs.readFileSync(constants.strongsMappingPath, "utf8"),
+		);
 
 		const numbers = Object.keys(vocabularyNumberMap);
 
@@ -25,16 +27,14 @@ export default {
 
 				if (word === undefined) {
 					data.vocabulary[lexicalForms[j]] = {
-						numbers: ["G" + number]
+						numbers: [`G${number}`],
 					};
-				}
-
-				else {
-					word.numbers.push("G" + number);
+				} else {
+					word.numbers.push(`G${number}`);
 				}
 			}
 		}
 
 		return data;
-	}
+	},
 };

@@ -1,16 +1,16 @@
-import utilities from "./utilities.js";
-import strongs from "./strongs.js";
-import step from "./step.js";
-import morphGnt from "./morphgnt.js";
 import lemmaMappings from "./lemma-mappings.js";
+import morphGnt from "./morphgnt.js";
+import step from "./step.js";
+import strongs from "./strongs.js";
+import utilities from "./utilities.js";
 
 console.log("Running the parser");
 
 let outputData = {
-	errors: new Set()
+	errors: new Set(),
 };
 
-const addError = error => {
+const addError = (error) => {
 	outputData.errors.add(error);
 };
 
@@ -18,7 +18,7 @@ const data = {
 	strongs: strongs.getData(addError),
 	step: step.getData(addError),
 	morphGnt: morphGnt.getData(addError),
-	lemmaMappings: lemmaMappings.getData(addError)
+	lemmaMappings: lemmaMappings.getData(addError),
 };
 
 // Merge data
@@ -32,7 +32,7 @@ for (let i = 0; i < outputData.vocabulary.length; i++) {
 	outputData.vocabulary[i] = {
 		...word,
 		// Add the data from STEPBible's vocabulary (for any duplicate fields, this overwrites Strong's data with STEPBible's)
-		...data.step.vocabulary[word.number]
+		...data.step.vocabulary[word.number],
 	};
 }
 
@@ -62,7 +62,9 @@ for (let i = 0; i < morphGntLexicalForms.length; i++) {
 	const lemmaMapping = data.lemmaMappings.vocabulary[morphGntWord.lexicalForm];
 
 	if (lemmaMapping === undefined) {
-		addError("Lexical form \"" + morphGntLexicalForms[i] + "\" doesn't have a Strong's number");
+		addError(
+			`Lexical form "${morphGntLexicalForms[i]}\" doesn't have a Strong's number`,
+		);
 
 		continue;
 	}
@@ -72,12 +74,14 @@ for (let i = 0; i < morphGntLexicalForms.length; i++) {
 
 		// If there are multiple Strong's numbers for this lexical form
 		if (j === 1) {
-			addError("Lexical form \"" + morphGntLexicalForms[i] + "\" has multiple Strong's numbers: " + lemmaMapping.numbers.join(", "));
+			addError(
+				`Lexical form "${morphGntLexicalForms[i]}\" has multiple Strong's numbers: ${lemmaMapping.numbers.join(", ")}`,
+			);
 		}
 
 		// If there are multiple lexical forms for this Strong's number
 		if (vocabularyNumberMap[number].forms.length > 0) {
-			addError("Word " + number + " has multiple lexical forms");
+			addError(`Word ${number} has multiple lexical forms`);
 		}
 
 		// If this word's lexical form appears in outputData.vocabulary with a different Strong's number
@@ -86,17 +90,33 @@ for (let i = 0; i < morphGntLexicalForms.length; i++) {
 		if (existingWords !== undefined) {
 			for (let k = 0; k < existingWords.length; k++) {
 				if (existingWords[k].number !== number) {
-					addError("Word \"" + morphGntWord.lexicalForm + "\"'s Strong's numbers are " + existingWords.map(existingWord => existingWord.number + " (\"" + existingWord.lexicalForm + "\")").join(", ") + ", but MorphGNT says they're " + lemmaMapping.numbers.map(lemmaMappingNumber => lemmaMappingNumber + " (Strong's: \"" + vocabularyNumberMap[lemmaMappingNumber].lexicalForm + "\")").join(", "));
+					addError(
+						`Word "${morphGntWord.lexicalForm}\"'s Strong's numbers are ${existingWords
+							.map(
+								(existingWord) =>
+									`${existingWord.number} ("${existingWord.lexicalForm}")`,
+							)
+							.join(", ")}, but MorphGNT says they're ${lemmaMapping.numbers
+							.map(
+								(lemmaMappingNumber) =>
+									`${lemmaMappingNumber} (Strong's: \"${vocabularyNumberMap[lemmaMappingNumber].lexicalForm}")`,
+							)
+							.join(", ")}`,
+					);
 				}
 			}
 		}
 
-		vocabularyNumberMap[number].forms = vocabularyNumberMap[number].forms.concat(morphGntWord.forms);
+		vocabularyNumberMap[number].forms = vocabularyNumberMap[
+			number
+		].forms.concat(morphGntWord.forms);
 		vocabularyNumberMap[number].principalParts = morphGntWord.principalParts;
 
 		// TODO Set multiple indices when there are two numbers for a lexical form
 		// Set vocabularyIndex so that forms can be mapped to words in the main vocabulary array (used below for the New Testament words)
-		morphGntWord.vocabularyIndex = outputData.vocabulary.indexOf(vocabularyNumberMap[number]);
+		morphGntWord.vocabularyIndex = outputData.vocabulary.indexOf(
+			vocabularyNumberMap[number],
+		);
 	}
 }
 
@@ -104,12 +124,12 @@ for (let i = 0; i < outputData.vocabulary.length; i++) {
 	const word = outputData.vocabulary[i];
 
 	if (word.forms.length === 0) {
-		addError("Word " + word.number + " has no forms");
+		addError(`Word ${word.number} has no forms`);
 	}
 
 	for (let j = 0; j < word.forms.length; j++) {
 		// Delete redundant data
-		delete word.forms[j].lexicalForm;
+		word.forms[j].lexicalForm = undefined;
 	}
 }
 
@@ -168,10 +188,10 @@ for (let i = 0; i < outputData.newTestament.length; i++) {
 			for (let l = 0; l < verse.length; l++) {
 				const word = verse[l];
 
-				delete word.use;
-				delete word.word;
-				delete word.form;
-				delete word.use;
+				word.use = undefined;
+				word.word = undefined;
+				word.form = undefined;
+				word.use = undefined;
 			}
 		}
 	}
@@ -179,16 +199,21 @@ for (let i = 0; i < outputData.newTestament.length; i++) {
 
 console.log("Parsing complete");
 
-console.log("Error count: " + outputData.errors.length.toLocaleString());
+console.log(`Error count: ${outputData.errors.length.toLocaleString()}`);
 
 const outputDataKeys = Object.keys(outputData);
 
-console.log("Data size: " +
-	(new Blob([JSON.stringify(outputData)]).size / 1000000).toLocaleString() +
-	"MB (" +
-	outputDataKeys.map(key => key + " " + (new Blob([JSON.stringify(outputData[key])]).size / 1000000).toLocaleString() + "MB").join(", ") +
-	")");
+console.log(
+	`Data size: ${(new Blob([JSON.stringify(outputData)]).size / 1000000).toLocaleString()}MB (${outputDataKeys
+		.map(
+			(key) =>
+				`${key} ${(
+					new Blob([JSON.stringify(outputData[key])]).size / 1000000
+				).toLocaleString()}MB`,
+		)
+		.join(", ")})`,
+);
 
 export default {
-	data: outputData
+	data: outputData,
 };

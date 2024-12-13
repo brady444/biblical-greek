@@ -1,38 +1,42 @@
-import { render, html } from "uhtml";
+import { html, render } from "uhtml";
 
-import utilities from "./utilities";
 import pages from "./generated/pages";
+import utilities from "./utilities";
 
 let currentPage = "main";
 
-globalThis.update = () => render (document.body, html
-	`<div id = "container" class = "flex-column">
+globalThis.update = () =>
+	render(
+		document.body,
+		html`<div id = "container" class = "flex-column">
 		<div class = "full-width flex small-padding gray1-bg">
 			<a id = "title" class = "medium-font" href = "#">Biblical Greek</a>
 		</div>
 		
-		${ pages [currentPage].content () }
-	</div>`
-);
+		${pages[currentPage].content()}
+	</div>`,
+	);
 
-globalThis.navigate = fullPath => {
-	const path = fullPath.split ("/").map (section => decodeURIComponent (section));
-	
-	currentPage = pages [path [0]] ? path [0] : "main";
-	
-	utilities.setPath (currentPage === "main" ? "" : fullPath);
-	
+globalThis.navigate = (fullPath) => {
+	const path = fullPath
+		.split("/")
+		.map((section) => decodeURIComponent(section));
+
+	currentPage = pages[path[0]] ? path[0] : "main";
+
+	utilities.setPath(currentPage === "main" ? "" : fullPath);
+
 	globalThis.pageData = {};
-	
-	if (pages [currentPage].setup?. (path) === false) {
+
+	if (pages[currentPage].setup?.(path) === false) {
 		return;
 	}
-	
-	update ();
+
+	update();
 };
 
-window.addEventListener ("hashchange", () => {
-	navigate (location.hash.slice (2));
+window.addEventListener("hashchange", () => {
+	navigate(location.hash.slice(2));
 });
 
-navigate (location.hash.slice (2));
+navigate(location.hash.slice(2));
