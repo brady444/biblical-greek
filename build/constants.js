@@ -2,6 +2,7 @@ import path from "node:path";
 
 export default {
 	outputPath: path.join(__dirname, "../../website/ui/greek"),
+	srcPath: path.join(__dirname, "../src"),
 	generatedPath: path.join(__dirname, "../src/generated"),
 	pagesPath: path.join(__dirname, "../src/pages"),
 

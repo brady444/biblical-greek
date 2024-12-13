@@ -51,7 +51,7 @@ await fs.rm(constants.outputPath, { recursive: true });
 console.log(`Bundling and writing to ${constants.outputPath}`);
 
 await Bun.build({
-	entrypoints: ["src/index.html"],
+	entrypoints: [path.join(constants.srcPath, "index.html")],
 	outdir: constants.outputPath,
 	plugins: [html()],
 });
