@@ -1,25 +1,11 @@
 {
-  "name": "biblical-greek",
-  "private": true,
-  "version": "1.0.0",
-  "type": "module",
-  "scripts": {
-    "prepare": "husky install",
-    "parser": "eslint_d parser/src/**/*.js && bun parser/src/main.js",
-    "start": "bun parser && vite",
-    "build": "bun parser && vite build"
-  },
-  "devDependencies": {
-    "eslint": "^8.48.0",
-    "husky": "^8.0.3",
-    "js-yaml": "^4.1.0",
-    "stylelint": "^15.10.3",
-    "terser": "^5.19.4",
-    "uhtml": "^3.2.1",
-    "vite": "^4.4.9",
-    "vite-plugin-eslint": "^1.8.1",
-    "vite-plugin-filter-replace": "^0.1.12",
-    "vite-plugin-stylelint": "^5.1.1",
-    "vite-plugin-watch": "^0.2.0"
-  }
+	"scripts": {
+		"build": "bun run build/main.js",
+		"start": "watchexec -e html,css,js,json,yaml,txt -i src/generated/ -r 'clear && bun run build'"
+	},
+	"dependencies": {
+		"bun-plugin-html": "^2.2.4",
+		"js-yaml": "^4.1.0",
+		"uhtml": "^4.7.0"
+	}
 }

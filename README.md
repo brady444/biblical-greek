@@ -1,3 +1,3 @@
-# README
+# Biblical Greek
 
-See [the about page](https://biblicalgreek.app/#/about) of [the website](https://biblicalgreek.app).
+See [the about page](http://greek.bradywestveer.com/#/about) of [the website](http://greek.bradywestveer.com).
