@@ -15,7 +15,7 @@ export default {
 
 	invalidCharacterRegex: /.*[\w[\]\\{}|;:,<.>/?@$%^_=+"'~`*()-].*/giu,
 
-	// Verb personal endings, used for generating principal parts
+	// Verb personal endings, used for approximating principal parts
 	personalEndings: {
 		primary: {
 			"1st": {

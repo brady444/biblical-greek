@@ -1,6 +1,6 @@
 import { html } from "uhtml";
 
-import constants from "../constants.js";
+import constants from "../constants";
 
 export default {
 	content:

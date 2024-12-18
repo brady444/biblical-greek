@@ -1,4 +1,4 @@
-import data from "./data.js";
+import data from "./data";
 import utilities from "./utilities";
 
 const constants = {

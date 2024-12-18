@@ -1,8 +1,8 @@
 import { html } from "uhtml";
 
-import components from "../components.js";
-import constants from "../constants.js";
-import utilities from "../utilities.js";
+import components from "../components";
+import constants from "../constants";
+import utilities from "../utilities";
 
 export default {
 	setup: (path) => {

@@ -4,37 +4,38 @@ import yaml from "js-yaml";
 
 import constants from "./constants";
 
-export default {
-	getData: () => {
-		const data = {
-			// Map of lexicalForm -> word
-			vocabulary: [],
-		};
+console.time("lemma-mappings");
 
-		const vocabularyNumberMap = yaml.load(
-			fs.readFileSync(constants.strongsMappingPath, "utf8"),
-		);
+const data = {
+	// Map of lexicalForm -> word
+	lexicalFormVocabularyMap: {},
+};
 
-		const numbers = Object.keys(vocabularyNumberMap);
+// Map of Strong's number -> array of lexical forms
+const strongsNumberMap = yaml.load(
+	fs.readFileSync(constants.strongsMappingPath, "utf8"),
+);
 
-		for (let i = 0; i < numbers.length; i++) {
-			const number = numbers[i];
+const numbers = Object.keys(strongsNumberMap);
 
-			const lexicalForms = vocabularyNumberMap[number];
+for (let i = 0; i < numbers.length; i++) {
+	const number = numbers[i];
 
-			for (let j = 0; j < lexicalForms.length; j++) {
-				const word = data.vocabulary[lexicalForms[j]];
+	const lexicalForms = strongsNumberMap[number];
 
-				if (word === undefined) {
-					data.vocabulary[lexicalForms[j]] = {
-						numbers: [`G${number}`],
-					};
-				} else {
-					word.numbers.push(`G${number}`);
-				}
-			}
+	for (let j = 0; j < lexicalForms.length; j++) {
+		const lexicalForm = lexicalForms[j];
+
+		if (data.lexicalFormVocabularyMap[lexicalForm] === undefined) {
+			data.lexicalFormVocabularyMap[lexicalForm] = { numbers: [] };
 		}
 
-		return data;
-	},
+		data.lexicalFormVocabularyMap[lexicalForm].numbers.push(`G${number}`);
+	}
+}
+
+console.timeEnd("lemma-mappings");
+
+export default {
+	data,
 };
