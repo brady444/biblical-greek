@@ -1,0 +1,1 @@
+biome check --write --unsafe && bun run build
