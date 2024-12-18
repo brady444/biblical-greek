@@ -1,15 +1,16 @@
-import utilities from "./utilities";
-
 import lemmaMappings from "./lemma-mappings";
 import morphGnt from "./morphgnt";
 import step from "./step";
 import strongs from "./strongs";
+import utilities from "./utilities";
 
 console.time("parser");
 
 // Final data to output to the data file
 let outputData = {
 	errors: new Set(),
+	vocabulary: strongs.data.vocabulary,
+	newTestament: morphGnt.data.newTestament,
 };
 
 const addError = (error) => outputData.errors.add(error);
@@ -19,8 +20,6 @@ outputData.errors = outputData.errors
 	.union(morphGnt.data.errors)
 	.union(step.data.errors)
 	.union(strongs.data.errors);
-
-outputData.vocabulary = strongs.data.vocabulary;
 
 // Add STEPBible data to vocabulary
 for (let i = 0; i < outputData.vocabulary.length; i++) {
@@ -118,30 +117,6 @@ for (let i = 0; i < morphGntLexicalForms.length; i++) {
 	}
 }
 
-for (let i = 0; i < outputData.vocabulary.length; i++) {
-	const word = outputData.vocabulary[i];
-
-	if (word.forms.length === 0) {
-		addError(`Word ${word.number} has no forms`);
-	}
-
-	for (let j = 0; j < word.forms.length; j++) {
-		// Delete redundant data
-		word.forms[j].lexicalForm = undefined;
-	}
-}
-
-// Change errors to an array
-outputData.errors = [...outputData.errors];
-
-// Sort errors
-outputData.errors.sort();
-
-// Run oxiaToTonos on outputData (excluding newTestament)
-outputData = JSON.parse(utilities.oxiaToTonos(JSON.stringify(outputData)));
-
-outputData.newTestament = morphGnt.data.newTestament;
-
 // Set word, form, and use indices for newTestament
 for (let i = 0; i < outputData.newTestament.length; i++) {
 	const book = outputData.newTestament[i];
@@ -166,6 +141,19 @@ for (let i = 0; i < outputData.newTestament.length; i++) {
 				];
 			}
 		}
+	}
+}
+
+for (let i = 0; i < outputData.vocabulary.length; i++) {
+	const word = outputData.vocabulary[i];
+
+	if (word.forms.length === 0) {
+		addError(`Word ${word.number} has no forms`);
+	}
+
+	for (let j = 0; j < word.forms.length; j++) {
+		// Remove redundant data
+		word.forms[j].lexicalForm = undefined;
 	}
 }
 
@@ -194,6 +182,14 @@ for (let i = 0; i < outputData.newTestament.length; i++) {
 		}
 	}
 }
+
+// Change errors to an array
+outputData.errors = [...outputData.errors];
+
+// Sort errors
+outputData.errors.sort();
+
+outputData = JSON.parse(utilities.oxiaToTonos(JSON.stringify(outputData)));
 
 console.timeEnd("parser");
 

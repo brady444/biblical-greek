@@ -3,6 +3,7 @@ import fs from "node:fs";
 import yaml from "js-yaml";
 
 import constants from "./constants";
+import utilities from "./utilities";
 
 console.time("lemma-mappings");
 
@@ -13,7 +14,7 @@ const data = {
 
 // Map of Strong's number -> array of lexical forms
 const strongsNumberMap = yaml.load(
-	fs.readFileSync(constants.strongsMappingPath, "utf8"),
+	utilities.oxiaToTonos(fs.readFileSync(constants.strongsMappingPath, "utf8")),
 );
 
 const numbers = Object.keys(strongsNumberMap);

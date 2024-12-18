@@ -1,6 +1,12 @@
+import utilities from "./utilities";
+
 import strongsGreekDictionary from "./data/strongs-greek-dictionary";
 
 console.time("strongs");
+
+const dictionary = JSON.parse(
+	utilities.oxiaToTonos(JSON.stringify(strongsGreekDictionary)),
+);
 
 const data = {
 	vocabulary: [],
@@ -10,7 +16,7 @@ const data = {
 const addError = (error) => data.errors.add(error);
 
 // Get a sorted array of keys (G1, G2, etc.)
-const vocabularyNumbers = Object.keys(strongsGreekDictionary).sort(
+const vocabularyNumbers = Object.keys(dictionary).sort(
 	(a, b) => Number.parseInt(a.slice(1)) - Number.parseInt(b.slice(1)),
 );
 
@@ -19,15 +25,14 @@ for (let i = 0; i < vocabularyNumbers.length; i++) {
 
 	const word = {
 		number: number,
-		lexicalForm: strongsGreekDictionary[number].lemma?.trim(),
-		transliteration: `/${strongsGreekDictionary[number].translit}/`,
+		lexicalForm: dictionary[number].lemma?.trim(),
+		transliteration: `/${dictionary[number].translit}/`,
 		strongsDefinition: (
-			(strongsGreekDictionary[number].derivation ?? "") +
-			strongsGreekDictionary[number].strongs_def
+			(dictionary[number].derivation ?? "") + dictionary[number].strongs_def
 		)
 			.split(";")
 			.map((line) => line.trim()),
-		strongsKjvDefinition: strongsGreekDictionary[number].kjv_def,
+		strongsKjvDefinition: dictionary[number].kjv_def,
 		forms: [],
 	};
 

@@ -596,10 +596,9 @@ for (let i = 0; i < files.length; i++) {
 
 	// Exclude the last line since it's empty
 	lines = lines.concat(
-		fs
-			.readFileSync(
-				path.normalize(`${constants.morphGntPath}/${files[i]}`),
-				"utf8",
+		utilities
+			.oxiaToTonos(
+				fs.readFileSync(path.join(constants.morphGntPath, files[i]), "utf8"),
 			)
 			.split("\n")
 			.slice(0, -1),
