@@ -48,6 +48,7 @@ for (let i = 0; i < outputData.vocabulary.length; i++) {
 
 	lexicalFormVocabularyMap[word.lexicalForm].push(word);
 
+	// TODO what if multiple words have the same Strong's number?
 	strongsNumberVocabularyMap[word.number] = word;
 }
 
@@ -68,39 +69,36 @@ for (let i = 0; i < morphGntLexicalForms.length; i++) {
 		continue;
 	}
 
+	// If there are multiple Strong's numbers for this lexical form
+	if (lemmaMapping.numbers.length > 1) {
+		addError(
+			`Lexical form "${morphGntLexicalForms[i]}" has multiple Strong's numbers: ${lemmaMapping.numbers.join(", ")}`,
+		);
+	}
+
 	for (let j = 0; j < lemmaMapping.numbers.length; j++) {
 		const number = lemmaMapping.numbers[j];
 
-		// If there are multiple Strong's numbers for this lexical form
-		if (j === 1) {
-			addError(
-				`Lexical form "${morphGntLexicalForms[i]}" has multiple Strong's numbers: ${lemmaMapping.numbers.join(", ")}`,
-			);
-		}
-
-		// If there are multiple lexical forms for this Strong's number
+		// If there are multiple lexical forms for this Strong's number (since forms have already been added)
 		if (strongsNumberVocabularyMap[number].forms.length > 0) {
 			addError(`Word ${number} has multiple lexical forms`);
 		}
 
-		// If this word's lexical form appears in outputData.vocabulary with a different Strong's number
-		const existingWords = lexicalFormVocabularyMap[morphGntWord.lexicalForm];
+		const matchingWords = lexicalFormVocabularyMap[morphGntWord.lexicalForm];
 
-		if (existingWords !== undefined) {
-			for (let k = 0; k < existingWords.length; k++) {
-				if (existingWords[k].number !== number) {
+		if (matchingWords !== undefined) {
+			for (let k = 0; k < matchingWords.length; k++) {
+				// If this word's lexical form appears in outputData.vocabulary with a different Strong's number
+				// TODO vice versa?
+				if (matchingWords[k].number !== number) {
 					addError(
-						`Word "${morphGntWord.lexicalForm}"'s Strong's numbers are ${existingWords
-							.map(
-								(existingWord) =>
-									`${existingWord.number} ("${existingWord.lexicalForm}")`,
-							)
-							.join(", ")}, but MorphGNT says they're ${lemmaMapping.numbers
-							.map(
-								(lemmaMappingNumber) =>
-									`${lemmaMappingNumber} (Strong's: "${strongsNumberVocabularyMap[lemmaMappingNumber].lexicalForm}")`,
-							)
-							.join(", ")}`,
+						`Word "${morphGntWord.lexicalForm}"'s Strong's numbers are ${matchingWords
+							.map((word) => word.number)
+							.join(
+								", ",
+							)} according to lexicalFormVocabularyMap, but are ${lemmaMapping.numbers.join(
+							", ",
+						)} according to lemmaMappings`,
 					);
 				}
 			}
