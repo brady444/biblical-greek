@@ -10,7 +10,7 @@ import parser from "./parser";
 
 // Generate data.js
 
-const dataPath = path.join(constants.generatedPath, "data.js");
+const dataPath = path.join(constants.srcPath, "data.js");
 
 console.log(`Writing ${dataPath}`);
 
