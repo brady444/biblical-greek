@@ -1843,13 +1843,13 @@ for (let i = 0; i < constants.newTestament.length; i++) {
 			for (let l = 0; l < verse.length; l++) {
 				const word = verse[l];
 
-				const vocabularyWord = constants.vocabulary[word.wordIndex];
+				const vocabularyWord = constants.vocabulary[word.indices[0]];
 
 				verse[l] = {
 					text: word.text,
 					word: vocabularyWord,
-					form: vocabularyWord?.forms[word.formIndex],
-					use: vocabularyWord?.forms[word.formIndex]?.uses[word.useIndex],
+					form: vocabularyWord?.forms[word.indices[1]],
+					use: vocabularyWord?.forms[word.indices[1]]?.uses[word.indices[2]],
 				};
 			}
 		}

@@ -161,11 +161,11 @@ for (let i = 0; i < outputData.newTestament.length; i++) {
 			for (let l = 0; l < verse.length; l++) {
 				const word = verse[l];
 
-				if (word.word !== undefined) {
-					word.wordIndex = word.word.vocabularyIndex;
-					word.formIndex = word.word.forms.indexOf(word.form);
-					word.useIndex = word.form.uses.indexOf(word.use);
-				}
+				word.indices = [
+					word.word.vocabularyIndex,
+					word.word.forms.indexOf(word.form),
+					word.form.uses.indexOf(word.use),
+				];
 			}
 		}
 	}
