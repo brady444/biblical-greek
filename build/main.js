@@ -55,3 +55,13 @@ await Bun.build({
 	outdir: constants.outputPath,
 	plugins: [html()],
 });
+
+const outputFiles = fs.readdirSync(constants.outputPath);
+
+for (let i = 0; i < outputFiles.length; i++) {
+	if (outputFiles[i].endsWith(".js")) {
+		console.log(
+			`${outputFiles[i]} size: ${Math.round((fs.statSync(path.join(constants.outputPath, outputFiles[i])).size / 1_000_000) * 100) / 100} MB`,
+		);
+	}
+}
