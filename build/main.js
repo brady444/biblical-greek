@@ -53,6 +53,7 @@ console.log(`Bundling and writing to ${constants.outputPath}`);
 await Bun.build({
 	entrypoints: [path.join(constants.srcPath, "index.html")],
 	outdir: constants.outputPath,
+	minify: true,
 	plugins: [html()],
 });
 
@@ -60,8 +61,17 @@ const outputFiles = fs.readdirSync(constants.outputPath);
 
 for (let i = 0; i < outputFiles.length; i++) {
 	if (outputFiles[i].endsWith(".js")) {
+		const outputFilePath = path.join(constants.outputPath, outputFiles[i]);
+
+		console.log(`Removing tabs from ${outputFiles[i]}`);
+
+		await Bun.write(
+			outputFilePath,
+			fs.readFileSync(outputFilePath, "utf8").replaceAll("\t", ""),
+		);
+
 		console.log(
-			`${outputFiles[i]} size: ${Math.round((fs.statSync(path.join(constants.outputPath, outputFiles[i])).size / 1_000_000) * 100) / 100} MB`,
+			`${outputFiles[i]} size: ${Math.round((fs.statSync(outputFilePath).size / 1_000_000) * 1000) / 1000} MB`,
 		);
 	}
 }
