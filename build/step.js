@@ -26,7 +26,7 @@ for (let i = 0; i < lines.length; i++) {
 	const extendedStrongsNumber = `G${Number.parseInt(columns[0].slice(1))}`;
 	// const disambiguatedStrongsNumber = columns [1];
 	// const unifiedStrongsNumber = columns [2];
-	const lexicalForm = columns[3];
+	let lexicalForm = columns[3];
 	const transliteration = `/${columns[4]}/`;
 	// const morph = columns [5];
 	const gloss = columns[6];
@@ -35,6 +35,15 @@ for (let i = 0; i < lines.length; i++) {
 	// Stop at G6000
 	if (extendedStrongsNumber === "G6000") {
 		break;
+	}
+
+	// TODO what does the equal sign mean? Some words are different on each side of the equal sign
+	const lexicalFormEqualSignParts = lexicalForm.split("=");
+
+	if (lexicalFormEqualSignParts.length === 2) {
+		if (lexicalFormEqualSignParts[0] === lexicalFormEqualSignParts[1]) {
+			lexicalForm = lexicalFormEqualSignParts[0];
+		}
 	}
 
 	if (data.vocabulary[extendedStrongsNumber] === undefined) {
