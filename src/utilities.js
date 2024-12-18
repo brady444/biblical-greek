@@ -6,7 +6,15 @@ const utilities = {
 
 	randomElement: (array) => array[utilities.randomInteger(0, array.length - 1)],
 
-	isNumber: (text) => text[0] === "G" && !Number.isNaN(text[1]),
+	getNumber: (text) => {
+		let numberText = text;
+
+		if (numberText[0] === "G") {
+			numberText = numberText.slice(1);
+		}
+
+		return Number.isNaN(numberText) ? undefined : `G${numberText}`;
+	},
 
 	simplifyGreek: (text) =>
 		utilities

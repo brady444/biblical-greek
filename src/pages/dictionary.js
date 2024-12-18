@@ -48,7 +48,7 @@ export default {
 				utilities.englishToGreek(formattedQuery),
 			);
 
-			const isNumber = utilities.isNumber(trimmedQuery);
+			const number = utilities.getNumber(trimmedQuery);
 
 			for (let i = 0; i < constants.vocabulary.length; i++) {
 				const word = constants.vocabulary[i];
@@ -58,8 +58,8 @@ export default {
 					lexicalForm: word.lexicalForm,
 				};
 
-				if (isNumber) {
-					if (word.number.startsWith(trimmedQuery)) {
+				if (number) {
+					if (word.number.startsWith(number)) {
 						dictionaryWord.subtitle = word.number;
 
 						vocabulary.push(dictionaryWord);
