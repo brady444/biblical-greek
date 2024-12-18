@@ -1,4 +1,4 @@
-import fs from "node:fs/promises";
+import fs from "node:fs";
 import path from "node:path";
 import html from "bun-plugin-html";
 
@@ -25,7 +25,7 @@ const pagesPath = path.join(constants.generatedPath, "pages.js");
 
 let pagesText = "const pages = {};";
 
-const pageFiles = await fs.readdir(constants.pagesPath, { recursive: true });
+const pageFiles = fs.readdirSync(constants.pagesPath, { recursive: true });
 
 for (let i = 0; i < pageFiles.length; i++) {
 	const page = pageFiles[i].split(".")[0];
@@ -44,7 +44,7 @@ await Bun.write(pagesPath, pagesText);
 
 console.log(`Deleting ${constants.outputPath}`);
 
-await fs.rm(constants.outputPath, { recursive: true });
+fs.rmSync(constants.outputPath, { recursive: true });
 
 // Bundle and write to the output path
 
