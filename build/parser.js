@@ -51,7 +51,6 @@ for (let i = 0; i < outputData.vocabulary.length; i++) {
 	strongsNumberVocabularyMap[word.number] = word;
 }
 
-// Assign the forms and principal parts of words based on matching Strong's numbers
 const morphGntLexicalForms = Object.keys(morphGnt.data.vocabulary);
 
 for (let i = 0; i < morphGntLexicalForms.length; i++) {
@@ -103,9 +102,11 @@ for (let i = 0; i < morphGntLexicalForms.length; i++) {
 			}
 		}
 
+		// Assign the forms and principal parts of words based on matching Strong's numbers
 		strongsNumberVocabularyMap[number].forms = strongsNumberVocabularyMap[
 			number
 		].forms.concat(morphGntWord.forms);
+
 		strongsNumberVocabularyMap[number].principalParts =
 			morphGntWord.principalParts;
 
