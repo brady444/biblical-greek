@@ -62,7 +62,7 @@ for (let i = 0; i < morphGntLexicalForms.length; i++) {
 
 	if (lemmaMapping === undefined) {
 		addError(
-			`Lexical form "${morphGntLexicalForms[i]}\" doesn't have a Strong's number`,
+			`Lexical form "${morphGntLexicalForms[i]}" doesn't have a Strong's number`,
 		);
 
 		continue;
@@ -74,7 +74,7 @@ for (let i = 0; i < morphGntLexicalForms.length; i++) {
 		// If there are multiple Strong's numbers for this lexical form
 		if (j === 1) {
 			addError(
-				`Lexical form "${morphGntLexicalForms[i]}\" has multiple Strong's numbers: ${lemmaMapping.numbers.join(", ")}`,
+				`Lexical form "${morphGntLexicalForms[i]}" has multiple Strong's numbers: ${lemmaMapping.numbers.join(", ")}`,
 			);
 		}
 
@@ -90,7 +90,7 @@ for (let i = 0; i < morphGntLexicalForms.length; i++) {
 			for (let k = 0; k < existingWords.length; k++) {
 				if (existingWords[k].number !== number) {
 					addError(
-						`Word "${morphGntWord.lexicalForm}\"'s Strong's numbers are ${existingWords
+						`Word "${morphGntWord.lexicalForm}"'s Strong's numbers are ${existingWords
 							.map(
 								(existingWord) =>
 									`${existingWord.number} ("${existingWord.lexicalForm}")`,
@@ -98,7 +98,7 @@ for (let i = 0; i < morphGntLexicalForms.length; i++) {
 							.join(", ")}, but MorphGNT says they're ${lemmaMapping.numbers
 							.map(
 								(lemmaMappingNumber) =>
-									`${lemmaMappingNumber} (Strong's: \"${strongsNumberVocabularyMap[lemmaMappingNumber].lexicalForm}")`,
+									`${lemmaMappingNumber} (Strong's: "${strongsNumberVocabularyMap[lemmaMappingNumber].lexicalForm}")`,
 							)
 							.join(", ")}`,
 					);
@@ -204,11 +204,11 @@ console.log(`Error count: ${outputData.errors.length.toLocaleString()}`);
 const outputDataKeys = Object.keys(outputData);
 
 console.log(
-	`Data size: ${(new Blob([JSON.stringify(outputData)]).size / 1000000).toLocaleString()}MB (${outputDataKeys
+	`Data size: ${(new Blob([JSON.stringify(outputData)]).size / 1_000_000).toLocaleString()}MB (${outputDataKeys
 		.map(
 			(key) =>
 				`${key} ${(
-					new Blob([JSON.stringify(outputData[key])]).size / 1000000
+					new Blob([JSON.stringify(outputData[key])]).size / 1_000_000
 				).toLocaleString()}MB`,
 		)
 		.join(", ")})`,

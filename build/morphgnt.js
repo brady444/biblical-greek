@@ -101,7 +101,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode) => {
 
 		default: {
 			addError(
-				`Form \"${formText}\" has an invalid partOfSpeech \"${partOfSpeech}`,
+				`Form "${formText}" has an invalid partOfSpeech "${partOfSpeech}`,
 			);
 		}
 	}
@@ -130,9 +130,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode) => {
 		}
 
 		default: {
-			addError(
-				`Form \"${formText}\" has an invalid person \"${parsingCode[0]}`,
-			);
+			addError(`Form "${formText}" has an invalid person "${parsingCode[0]}`);
 		}
 	}
 
@@ -178,7 +176,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode) => {
 		}
 
 		default: {
-			addError(`Form \"${formText}\" has an invalid tense \"${parsingCode[1]}`);
+			addError(`Form "${formText}" has an invalid tense "${parsingCode[1]}`);
 		}
 	}
 
@@ -206,7 +204,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode) => {
 		}
 
 		default: {
-			addError(`Form \"${formText}\" has an invalid voice \"${parsingCode[2]}`);
+			addError(`Form "${formText}" has an invalid voice "${parsingCode[2]}`);
 		}
 	}
 
@@ -252,7 +250,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode) => {
 		}
 
 		default: {
-			addError(`Form \"${formText}\" has an invalid mood \"${parsingCode[3]}`);
+			addError(`Form "${formText}" has an invalid mood "${parsingCode[3]}`);
 		}
 	}
 
@@ -292,7 +290,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode) => {
 		}
 
 		default: {
-			addError(`Form \"${formText}\" has an invalid case \"${parsingCode[4]}`);
+			addError(`Form "${formText}" has an invalid case "${parsingCode[4]}`);
 		}
 	}
 
@@ -314,9 +312,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode) => {
 		}
 
 		default: {
-			addError(
-				`Form \"${formText}\" has an invalid number \"${parsingCode[5]}`,
-			);
+			addError(`Form "${formText}" has an invalid number "${parsingCode[5]}`);
 		}
 	}
 
@@ -344,9 +340,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode) => {
 		}
 
 		default: {
-			addError(
-				`Form \"${formText}\" has an invalid gender \"${parsingCode[6]}`,
-			);
+			addError(`Form "${formText}" has an invalid gender "${parsingCode[6]}`);
 		}
 	}
 
@@ -368,9 +362,7 @@ const getFormUse = (formText, partOfSpeech, parsingCode) => {
 		}
 
 		default: {
-			addError(
-				`Form \"${formText}\" has an invalid degree \"${parsingCode[7]}`,
-			);
+			addError(`Form "${formText}" has an invalid degree "${parsingCode[7]}`);
 		}
 	}
 
@@ -558,7 +550,7 @@ const getPrincipalParts = (word) => {
 					approximatedPart.endsWith("ῶ")
 				) {
 					addError(
-						`Lexical form \"${word.lexicalForm}\" has an approximated present principal part \"${approximatedPart}\" that is different from its lexical form`,
+						`Lexical form "${word.lexicalForm}" has an approximated present principal part "${approximatedPart}" that is different from its lexical form`,
 					);
 				}
 			}
@@ -566,14 +558,14 @@ const getPrincipalParts = (word) => {
 			// If the approximatedPrincipalPart is the same as form.text (meaning its ending is probably missing from constants.personalEndings)
 			if (approximatedPart === `[${form.text}]`) {
 				addError(
-					`Lexical form \"${word.lexicalForm}\" has an approximated principal part that is the same as a non-first person singular form, part: \"${approximatedPart}\"`,
+					`Lexical form "${word.lexicalForm}" has an approximated principal part that is the same as a non-first person singular form, part: "${approximatedPart}"`,
 				);
 			}
 
 			// If the principal part was already approximated and the new approximation differs
 			if (isPartApproximated && currentPart.text !== approximatedPart) {
 				addError(
-					`Lexical form \"${word.lexicalForm}\" has multiple approximations for the same principal part, index: ${partIndex}, parts: \"${currentPart.text}, ${approximatedPart}\"`,
+					`Lexical form "${word.lexicalForm}" has multiple approximations for the same principal part, index: ${partIndex}, parts: "${currentPart.text}, ${approximatedPart}"`,
 				);
 			}
 
